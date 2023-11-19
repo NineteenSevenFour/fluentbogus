@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NineteenSevenFour.Testing.Core", "NineteenSevenFour.Testing.Core\NineteenSevenFour.Testing.Core.csproj", "{C704AAC5-0827-4D3B-A08C-A3EE95C22701}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NineteenSevenFour.Testing.FluentBogus", "NineteenSevenFour.Testing.FluentBogus\NineteenSevenFour.Testing.FluentBogus.csproj", "{4228B028-9D94-4FF3-9073-EDAA9DAA6070}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NineteenSevenFour.Testing.FluentBogus.UnitTest", "NineteenSevenFour.Testing.FluentBogus.UnitTest\NineteenSevenFour.Testing.FluentBogus.UnitTest.csproj", "{EB94A4F9-6A0D-42E6-85E1-616C2BEB6FE6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NineteenSevenFour.Testing.FluentMapper", "NineteenSevenFour.Testing.FluentBogus.AutoMapper\NineteenSevenFour.Testing.FluentMapper.csproj", "{29A21581-2AE7-4C4D-8863-5AB54207B14C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{52E6E30B-1652-41D5-AAC7-46B25E2BAD29}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		LICENSE = LICENSE
+		NineteenFourSeven_logo.ico = NineteenFourSeven_logo.ico
+		nineteensevenfour-public.snk = nineteensevenfour-public.snk
+		README.md = README.md
+		SECURITY.md = SECURITY.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C704AAC5-0827-4D3B-A08C-A3EE95C22701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C704AAC5-0827-4D3B-A08C-A3EE95C22701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C704AAC5-0827-4D3B-A08C-A3EE95C22701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C704AAC5-0827-4D3B-A08C-A3EE95C22701}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4228B028-9D94-4FF3-9073-EDAA9DAA6070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4228B028-9D94-4FF3-9073-EDAA9DAA6070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4228B028-9D94-4FF3-9073-EDAA9DAA6070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4228B028-9D94-4FF3-9073-EDAA9DAA6070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB94A4F9-6A0D-42E6-85E1-616C2BEB6FE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB94A4F9-6A0D-42E6-85E1-616C2BEB6FE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB94A4F9-6A0D-42E6-85E1-616C2BEB6FE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB94A4F9-6A0D-42E6-85E1-616C2BEB6FE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29A21581-2AE7-4C4D-8863-5AB54207B14C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29A21581-2AE7-4C4D-8863-5AB54207B14C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29A21581-2AE7-4C4D-8863-5AB54207B14C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29A21581-2AE7-4C4D-8863-5AB54207B14C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7AC5B6A3-E16F-4A48-92BF-4F5B7B19A033}
+	EndGlobalSection
+EndGlobal
