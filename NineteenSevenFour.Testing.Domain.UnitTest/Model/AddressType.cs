@@ -1,4 +1,4 @@
-namespace NineteenSevenFour.Testing.Core.UnitTest.Model;
+namespace NineteenSevenFour.Testing.Domain.UnitTest.Model;
 
 public enum AddressType
 {

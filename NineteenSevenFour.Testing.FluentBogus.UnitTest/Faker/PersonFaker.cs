@@ -1,4 +1,4 @@
-using NineteenSevenFour.Testing.FluentBogus.Relation.Extension;
+using NineteenSevenFour.Testing.Domain.UnitTest.Model;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest.Faker;
 
@@ -32,11 +32,6 @@ public class PersonFaker : AutoFaker<PersonModel>
 
     FinishWith((f, o) =>
     {
-      o.HasMany(parent => parent.Addresses)
-        .HasKey(parent => parent.Id)
-        .WithOne(child => child.Person)
-        .WithForeignKey(child => child.PersonId)
-        .Apply();
     });
   }
 }

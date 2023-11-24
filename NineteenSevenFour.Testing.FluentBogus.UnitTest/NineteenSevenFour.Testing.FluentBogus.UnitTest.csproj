@@ -30,9 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NineteenSevenFour.Testing.Core.UnitTest\NineteenSevenFour.Testing.Core.UnitTest.csproj" />
     <ProjectReference Include="..\NineteenSevenFour.Testing.Core\NineteenSevenFour.Testing.Core.csproj" />
-    <ProjectReference Include="..\NineteenSevenFour.Testing.FluentBogus.Relation\NineteenSevenFour.Testing.FluentBogus.Relation.csproj" />
+    <ProjectReference Include="..\NineteenSevenFour.Testing.Domain.UnitTest\NineteenSevenFour.Testing.Domain.csproj" />
     <ProjectReference Include="..\NineteenSevenFour.Testing.FluentBogus\NineteenSevenFour.Testing.FluentBogus.csproj" />
   </ItemGroup>
 

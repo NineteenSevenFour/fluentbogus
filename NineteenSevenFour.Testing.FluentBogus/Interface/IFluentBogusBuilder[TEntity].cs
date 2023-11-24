@@ -1,7 +1,5 @@
 using AutoBogus;
 
-using System.Linq.Expressions;
-
 namespace NineteenSevenFour.Testing.FluentBogus.Interface;
 
 public interface IFluentBogusBuilder<TEntity>

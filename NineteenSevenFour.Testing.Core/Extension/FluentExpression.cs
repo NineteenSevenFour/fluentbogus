@@ -11,19 +11,19 @@ public static class FluentExpression
   public static string? MemberNameFor<T, TProp>(Expression<Func<T, TProp>> expression)
   {
     Expression body = expression.Body;
-    return body?.AsMemberExpression()?.Member?.Name;
+    return body.AsMemberExpression()?.Member.Name;
   }
 
   public static string? MemberNameFor<T>(Expression<Func<T, object>> expression)
   {
     Expression body = expression.Body;
-    return body?.AsMemberExpression()?.Member?.Name;
+    return body.AsMemberExpression()?.Member?.Name;
   }
 
   public static string? MemberNameFor(Expression<Func<object>> expression)
   {
     Expression body = expression.Body;
-    return body?.AsMemberExpression()?.Member?.Name;
+    return body.AsMemberExpression()?.Member?.Name;
   }
   #endregion
 
