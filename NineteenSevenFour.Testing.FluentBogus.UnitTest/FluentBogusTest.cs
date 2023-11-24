@@ -14,13 +14,13 @@ public class FluentBogusTest
 
     // Act
     var model = FluentBogusBuilder
-                            .Fake<PersonModel>()
-                            .WithDefault()
-                            .Generate();
+                  .Fake<PersonModel>()
+                  .WithDefault()
+                  .Generate();
 
     // Assert
     model.Should().NotBeNull();
-    model.Addresses.Should().NotBeNullOrEmpty(); 
+    model.Addresses.Should().NotBeNullOrEmpty();
     model.Relatives.Should().NotBeNullOrEmpty();
   }
 
@@ -31,9 +31,9 @@ public class FluentBogusTest
 
     // Act
     var model = FluentBogusBuilder
-                            .Fake<PersonModel>()
-                            .With<PersonFaker>()
-                            .Generate();
+                  .Fake<PersonModel>()
+                  .With<PersonFaker>()
+                  .Generate();
 
     // Assert
     model.Should().NotBeNull();
@@ -51,9 +51,9 @@ public class FluentBogusTest
 
     // Act
     var models = FluentBogusBuilder
-                                      .Fake<PersonModel>()
-                                      .WithDefault()
-                                      .Generate(count);
+                  .Fake<PersonModel>()
+                  .WithDefault()
+                  .Generate(count);
 
     // Assert
     models.Should()
@@ -79,11 +79,11 @@ public class FluentBogusTest
 
     // Act
     var models = FluentBogusBuilder
-                                      .Fake<PersonModel>()
-                                      .With<PersonFaker>()
-                                      .Skip(e => e.Addresses)
-                                      .Skip(e => e.Relatives)
-                                      .Generate(count);
+                  .Fake<PersonModel>()
+                  .With<PersonFaker>()
+                  .Skip(e => e.Addresses)
+                  .Skip(e => e.Relatives)
+                  .Generate(count);
 
     // Assert
     models.Should()
@@ -109,11 +109,11 @@ public class FluentBogusTest
 
     // Act
     var models = FluentBogusBuilder
-                                      .Fake<PersonModel>()
-                                      .WithDefault()
-                                      .Skip(e => e.Addresses)
-                                      .Skip(e => e.Relatives)
-                                      .Generate(count);
+                  .Fake<PersonModel>()
+                  .WithDefault()
+                  .Skip(e => e.Addresses)
+                  .Skip(e => e.Relatives)
+                  .Generate(count);
 
     // Assert
     models.Should()
@@ -139,12 +139,12 @@ public class FluentBogusTest
 
     // Act
     var models = FluentBogusBuilder
-                                      .Fake<PersonModel>()
-                                      .WithDefault()
-                                      .Skip(
-                                      e => e.Addresses,
-                                      e => e.Relatives)
-                                      .Generate(count);
+                  .Fake<PersonModel>()
+                  .WithDefault()
+                  .Skip(
+                    e => e.Addresses,
+                    e => e.Relatives)
+                  .Generate(count);
 
     // Assert
     models.Should()
@@ -170,11 +170,11 @@ public class FluentBogusTest
 
     // Act
     var models = FluentBogusBuilder
-                                      .Fake<PersonModel>()
-                                      .With<PersonFaker>()
-                                      .Skip(e => e.Addresses)
-                                      .Skip(e => e.Relatives)
-                                      .Generate(count);
+                  .Fake<PersonModel>()
+                  .With<PersonFaker>()
+                  .Skip(e => e.Addresses)
+                  .Skip(e => e.Relatives)
+                  .Generate(count);
 
     // Assert
     models.Should()
@@ -200,12 +200,12 @@ public class FluentBogusTest
 
     // Act
     var models = FluentBogusBuilder
-                                      .Fake<PersonModel>()
-                                      .With<PersonFaker>()
-                                      .Skip(
-                                      e => e.Addresses,
-                                      e => e.Relatives)
-                                      .Generate(count);
+                  .Fake<PersonModel>()
+                  .With<PersonFaker>()
+                  .Skip(
+                    e => e.Addresses,
+                    e => e.Relatives)
+                  .Generate(count);
 
     // Assert
     models.Should()
@@ -233,14 +233,14 @@ public class FluentBogusTest
 
     // Act
     var models = FluentBogusBuilder
-                                      .Fake<PersonModel>()
-                                      .With<PersonFaker>()
-                                      .UseSeed(count)
-                                      .Skip(
-                                      e => e.Addresses,
-                                      e => e.Relatives)
-                                      .UseRuleSet(ruleSet)
-                                      .Generate(count);
+                  .Fake<PersonModel>()
+                  .With<PersonFaker>()
+                  .UseSeed(count)
+                  .Skip(
+                    e => e.Addresses,
+                    e => e.Relatives)
+                  .UseRuleSet(ruleSet)
+                  .Generate(count);
 
     // Assert
     models.Should()
@@ -264,13 +264,13 @@ public class FluentBogusTest
     // Act
 #pragma warning disable IDE0039 // Use local function
     var result = () => FluentBogusBuilder
-                            .Fake<PersonModel>()
-                            .With<PersonFaker>()
-                            .Skip(
-                              e => e.Addresses,
-                              e => e.Addresses,
-                              e => e.Relatives)
-                            .Generate();
+                        .Fake<PersonModel>()
+                        .With<PersonFaker>()
+                        .Skip(
+                          e => e.Addresses,
+                          e => e.Addresses,
+                          e => e.Relatives)
+                        .Generate();
 #pragma warning restore IDE0039 // Use local function
 
     // Assert

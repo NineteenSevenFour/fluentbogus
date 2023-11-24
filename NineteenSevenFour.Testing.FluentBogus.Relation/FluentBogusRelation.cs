@@ -1,10 +1,8 @@
 using NineteenSevenFour.Testing.Core.Extension;
-using NineteenSevenFour.Testing.FluentBogus.Interface;
-
+using NineteenSevenFour.Testing.FluentBogus.Relation.Interface;
 using System.Linq.Expressions;
 
-namespace NineteenSevenFour.Testing.FluentBogus;
-
+namespace NineteenSevenFour.Testing.FluentBogus.Relation;
 
 public class FluentBogusRelation<TSource> : IFluentBogusRelation<TSource>
     where TSource : class

@@ -1,9 +1,7 @@
 using AutoBogus;
+using NineteenSevenFour.Testing.FluentBogus.AutoMapper.Interface;
 
-using NineteenSevenFour.Testing.FluentBogus;
-using NineteenSevenFour.Testing.FluentMapper.Interface;
-
-namespace NineteenSevenFour.Testing.FluentMapper.Extension;
+namespace NineteenSevenFour.Testing.FluentBogus.AutoMapper.Extension;
 
 public static class FluentBuilderExtension
 {

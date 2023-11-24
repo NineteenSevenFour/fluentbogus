@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -15,11 +14,11 @@
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Description>NineteenSevenFour FluentBogus is a fluent API sitting on top of AutoBogus aiming at simplifying the setup and use of reusable custom Faker</Description>
 		<SignAssembly>True</SignAssembly>
 		<DelaySign>True</DelaySign>
 		<AssemblyOriginatorKeyFile>..\nineteensevenfour-public.snk</AssemblyOriginatorKeyFile>
 		<ApplicationIcon>..\NineteenFourSeven_logo.ico</ApplicationIcon>
+		<Description>NineteenSevenFour FluentBogus is a fluent API sitting on top of AutoBogus aiming at simplifying the setup and use of reusable custom Faker</Description>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

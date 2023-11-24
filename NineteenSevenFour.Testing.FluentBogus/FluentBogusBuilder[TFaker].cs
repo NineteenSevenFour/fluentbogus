@@ -8,18 +8,6 @@ using System.Linq.Expressions;
 
 namespace NineteenSevenFour.Testing.FluentBogus;
 
-public class FluentBogusBuilder<TEntity> : IFluentBogusBuilder<TEntity>
-    where TEntity : class
-{
-  /// <inheritdoc/>>
-  public IFluentBogusBuilder<AutoFaker<TEntity>, TEntity> WithDefault(params object?[]? args)
-    => new FluentBogusBuilder<AutoFaker<TEntity>, TEntity>(args);
-
-  /// <inheritdoc/>>
-  public IFluentBogusBuilder<TFaker, TEntity> With<TFaker>(params object?[]? args)
-      where TFaker : AutoFaker<TEntity>, new() => new FluentBogusBuilder<TFaker, TEntity>(args);
-}
-
 public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, IFluentBogusBuilder<TFaker, TEntity>
     where TFaker : AutoFaker<TEntity>, new()
     where TEntity : class
@@ -75,6 +63,7 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
 
   internal void UseRuleSetInternal(string ruleset)
   {
+    // TODO: Validate RuleSet against TFaker
     if (string.IsNullOrWhiteSpace(ruleset))
     {
       throw new ArgumentOutOfRangeException(nameof(ruleset), $"A ruleset must be provided.");

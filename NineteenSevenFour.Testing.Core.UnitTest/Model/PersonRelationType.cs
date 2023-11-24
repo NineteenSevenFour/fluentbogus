@@ -1,4 +1,4 @@
-﻿namespace NineteenSevenFour.Testing.FluentBogus.UnitTest.Model;
+namespace NineteenSevenFour.Testing.Core.UnitTest.Model;
 
 public enum PersonRelationType
 {

@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace NineteenSevenFour.Testing.FluentBogus.Interface;
+namespace NineteenSevenFour.Testing.FluentBogus.Relation.Interface;
 
 public interface IFluentBogusRelation
 {

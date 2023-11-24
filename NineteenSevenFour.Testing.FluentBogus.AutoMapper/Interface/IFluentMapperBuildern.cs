@@ -2,7 +2,7 @@ using AutoBogus;
 
 using AutoMapper;
 
-namespace NineteenSevenFour.Testing.FluentMapper.Interface;
+namespace NineteenSevenFour.Testing.FluentBogus.AutoMapper.Interface;
 
 public interface IFluentMapperBuilder<TFaker, TEntity, TModel>
     where TFaker : AutoFaker<TEntity>, new()

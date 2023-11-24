@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>NineteenSevenFour FluentBogus/Relation</Title>
+    <Copyright>NineteenSevenFour</Copyright>
+    <PackageProjectUrl>https://github.com/NineteenSevenFour/fluentbogus</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/NineteenSevenFour/fluentbogus</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <SignAssembly>True</SignAssembly>
+    <DelaySign>True</DelaySign>
+    <AssemblyOriginatorKeyFile>..\nineteensevenfour-public.snk</AssemblyOriginatorKeyFile>
+    <ApplicationIcon>..\NineteenFourSeven_logo.ico</ApplicationIcon>
+    <Description>NineteenSevenFour FluentBogus/Relation is a fluent API aimed at helping generating linked data via navigation properties.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\NineteenFourSeven_logo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\NineteenSevenFour.Testing.Core\NineteenSevenFour.Testing.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,6 @@
 using NineteenSevenFour.Testing.FluentBogus.Relation.Extension;
 
-namespace NineteenSevenFour.Testing.FluentBogus.UnitTest.Faker;
+namespace NineteenSevenFour.Testing.FluentBogus.AutoMapper.UnitTest.Faker;
 
 public class PersonFaker : AutoFaker<PersonModel>
 {

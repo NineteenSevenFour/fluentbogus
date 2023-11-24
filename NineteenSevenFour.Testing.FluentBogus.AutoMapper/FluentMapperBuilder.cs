@@ -3,11 +3,9 @@ using AutoBogus;
 using AutoMapper;
 using AutoMapper.EquivalencyExpression;
 using AutoMapper.Extensions.ExpressionMapping;
+using NineteenSevenFour.Testing.FluentBogus.AutoMapper.Interface;
 
-using NineteenSevenFour.Testing.FluentBogus;
-using NineteenSevenFour.Testing.FluentMapper.Interface;
-
-namespace NineteenSevenFour.Testing.FluentMapper;
+namespace NineteenSevenFour.Testing.FluentBogus.AutoMapper;
 
 public class FluentMapperBuilder<TFaker, TEntity, TModel> : FluentBogusBuilder<TFaker, TEntity>, IFluentMapperBuilder<TFaker, TEntity, TModel>
     where TFaker : AutoFaker<TEntity>, new()
