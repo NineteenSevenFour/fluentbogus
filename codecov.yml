@@ -1,0 +1,3 @@
+# sample regex patterns
+ignore:
+  - "NineteenSevenFour.Testing.Example.Domain"  # ignore folders and all its contents

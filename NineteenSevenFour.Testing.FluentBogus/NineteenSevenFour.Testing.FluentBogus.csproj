@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>NineteenSevenFour FluentBogus</Title>
+		<Copyright>NineteenSevenFour</Copyright>
+		<PackageProjectUrl>https://github.com/NineteenSevenFour/fluentbogus</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/NineteenSevenFour/fluentbogus</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<SignAssembly>True</SignAssembly>
+		<DelaySign>True</DelaySign>
+		<AssemblyOriginatorKeyFile>..\nineteensevenfour-public.snk</AssemblyOriginatorKeyFile>
+		<ApplicationIcon>..\NineteenFourSeven_logo.ico</ApplicationIcon>
+		<Description>NineteenSevenFour FluentBogus is a fluent API sitting on top of AutoBogus aiming at simplifying the setup and use of reusable custom Faker</Description>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<NoWarn>1701;1702,NU1803,1591</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<NoWarn>1701;1702,NU1803,1591</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Include="..\NineteenFourSeven_logo.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoBogus" Version="2.13.1" />
+		<PackageReference Include="AutoBogus.Moq" Version="2.13.1" />
+		<PackageReference Include="Bogus" Version="34.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\NineteenSevenFour.Testing.Core\NineteenSevenFour.Testing.Core.csproj" />
+	</ItemGroup>
+</Project>

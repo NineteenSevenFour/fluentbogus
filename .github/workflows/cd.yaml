@@ -1,0 +1,60 @@
+name: cd
+
+on:
+  push:
+    branches:
+      - next
+      - beta
+      - alpha
+      - '*.x' # maintenance releases branches
+
+jobs:
+  build:
+    runs-on: ubuntu-latest #self-hosted
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        dotnet-version: [7.0.x]
+
+    steps:
+      - name: Checkout all commits
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - uses: ./.github/actions/prepareGit
+        with:
+          baseRef: main
+
+      - uses: ./.github/actions/prepareDotnet
+        with:
+          version: ${{ matrix.dotnet-version }} # uses the matrix defined above
+          registry: https://nuget.pkg.github.com # optional / default value
+          scope: nineteensevenfour # optional / default value
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          sln: ./nineteensevenfour.sln
+
+      - uses: ./.github/actions/prepareNode
+        with:
+          version: ${{ matrix.node-version }} # uses the matrix defined above
+          registry: https://npm.pkg.github.com # optional / default value
+          scope: nineteensevenfour # optional / default value
+          gh_token: ${{ secrets.GH_TOKEN }}
+          npm_token: ${{ secrets.NPM_TOKEN }}
+
+      - uses: ./.github/actions/validate
+        with:
+          codecov_token: ${{ secrets.CODECOV_TOKEN }}
+          coverage_directory: './testresults/'
+          #coverage_files: ./testresults/apps/adcon/cobertura-coverage.xml,./testresults/apps/portal/cobertura-coverage.xml,./testresults/libs/sdk/cobertura-coverage.xml
+          coverage_report_name: nineteensevenfour-gate
+
+      - uses: ./.github/actions/build
+
+      - uses: ./.github/actions/release
+        with:
+          npmRegistry: https://npm.pkg.github.com # optional / default value
+          scope: nineteensevenfour # optional / default value
+          gh_token: ${{ secrets.GH_TOKEN }}

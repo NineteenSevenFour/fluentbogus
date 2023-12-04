@@ -3,12 +3,9 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-# FluentBogus
+# FluentBogus/Mapper
 
-FluentBogus is a fluent testing api based on AutoBogus/Bogus and is compose of :
-- The FluentBogus API.
-- The FluentBogus/Mapper API
-- The FluentBogus/Relation extensions.
+Testing SDK based on FluentBogus, AutoMapper
 
 ## Contributors
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->

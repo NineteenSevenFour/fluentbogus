@@ -3,12 +3,18 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-# FluentBogus
+# FluentBogus/Relation
 
-FluentBogus is a fluent testing api based on AutoBogus/Bogus and is compose of :
-- The FluentBogus API.
-- The FluentBogus/Mapper API
-- The FluentBogus/Relation extensions.
+AutoFaker provides a convenient FinishWith() action which can be used to 
+finalize the data generation such as assigning foreign keys for dependancies.
+
+When overriding AutoFaker<> to have reusable Fakers, the FinishWith() can also 
+be defined, this is where FluentBogus/Relation shines as it provides a fluent
+language to define the relation between the models and automatically update 
+the properties defined in the relation.
+
+As this is using the .net Expression<> to define the relation between the models,
+it is compile time safe and use the out-of-the-box intellisense of any recent IDE.
 
 ## Contributors
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->

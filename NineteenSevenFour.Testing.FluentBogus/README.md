@@ -5,10 +5,15 @@
 
 # FluentBogus
 
-FluentBogus is a fluent testing api based on AutoBogus/Bogus and is compose of :
-- The FluentBogus API.
-- The FluentBogus/Mapper API
-- The FluentBogus/Relation extensions.
+FluentBogus is a fluent testing api based on AutoBogus/Bogus and is compose 
+of the FluentBogus API and the FluentBogusRelation extensions.
+
+The FluentBogus API provides a straightforward ways to configure (arrange) 
+a test by (re)using default AutoFaker<> or custom derived AutoFaker<> and 
+configure the underlying (Bogus) Faker.
+
+This is a simple but powerfull wrapper that simplifies setting up test as
+shown in the UnitTest project.
 
 ## Contributors
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->

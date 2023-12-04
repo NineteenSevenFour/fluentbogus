@@ -1,0 +1,56 @@
+name: Checks
+description: Run code checks
+
+inputs:
+  codecov_token:
+    description: CodeCov TOKEN
+    required: true
+
+  coverage_files:
+    description: Coverage file list
+    required: false
+    default: ''
+
+  coverage_directory:
+    description: Coverage directory to search
+    required: false
+    default: ./testresults
+
+  coverage_report_name:
+    description: Coverage file list
+    required: true
+
+runs:
+  using: composite
+  steps:
+  #  - name: Run linting check
+  #    uses: MansaGroup/nrwl-nx-action@v3.1.0
+  #    with:
+  #      targets: lint
+  #      all: true
+
+    - name: Run formating check
+      shell: bash
+      run: dotnet format
+
+    - name: Run tests
+      run: dotnet test --no-restore --configuration Debug --collect:"XPlat Code Coverage"  --results-directory:"${{ inputs.coverage_directory }}" "--settings" "./coverlet.runsettings"
+      shell: bash
+
+    - name: Report coverage (files)
+      uses: codecov/codecov-action@v3
+      if: "${{ inputs.coverage_files != '' }}"
+      with:
+        token: ${{ inputs.codecov_token }}
+        flags: unittests # optional
+        name: ${{ inputs.coverage_report_name }} # optional
+        files: ${{ inputs.coverage_files }}
+
+    - name: Report coverage (directory)
+      uses: codecov/codecov-action@v3
+      if: "${{ inputs.coverage_directory != '' }}"
+      with:
+        token: ${{ inputs.codecov_token }}
+        flags: unittests # optional
+        name: ${{ inputs.coverage_report_name }} # optional
+        directory: ${{ inputs.coverage_directory }}
