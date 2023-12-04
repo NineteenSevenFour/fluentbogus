@@ -34,7 +34,7 @@ runs:
       run: dotnet format
 
     - name: Run tests
-      run: dotnet test --no-restore --configuration Debug --collect:"XPlat Code Coverage"  --results-directory:"${{ inputs.coverage_directory }}" "--settings" "../../coverlet.runsettings"
+      run: dotnet test --no-restore --configuration Debug --collect:"XPlat Code Coverage"  --results-directory:"${{ inputs.coverage_directory }}" "--settings" "../coverlet.runsettings"
       shell: bash
 
     - name: Report coverage (files)
