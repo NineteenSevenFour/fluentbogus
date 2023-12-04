@@ -15,7 +15,7 @@ on:
 
 jobs:
   build:
-    name: build-${{matrix.os}-net${{matrix.dotnet}}}
+    name: build-${{matrix.os}}-net${{matrix.dotnet}}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
