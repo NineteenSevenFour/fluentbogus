@@ -1,0 +1,51 @@
+name: ci
+
+on:
+  pull_request:
+    branches:
+      - main
+      - next
+      - beta
+      - alpha
+      - '*.x' # maintenance releases branches
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  build:
+    name: build-${{matrix.os}-net${{matrix.dotnet}}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        dotnet: [6.0.x, 7.0.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - uses: ./.github/actions/prepareGit
+        with:
+          baseRef: main
+
+      - uses: ./.github/actions/prepareDotnet
+        with:
+          version: ${{ matrix.dotnet }} # uses the matrix defined above
+          registry: https://nuget.pkg.github.com # optional / default value
+          scope: nineteensevenfour # optional / default value
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          sln: ./nineteensevenfour.fluentbogus.sln
+
+      - uses: ./.github/actions/validate
+        with:
+          codecov_token: ${{ secrets.CODECOV_TOKEN }}
+          coverage_directory: './testresults/'
+          #coverage_files: ./testresults/apps/adcon/cobertura-coverage.xml,./testresults/apps/portal/cobertura-coverage.xml,./testresults/libs/sdk/cobertura-coverage.xml
+          coverage_report_name: nineteensevenfour-fluentbogus
+
+      - uses: ./.github/actions/build

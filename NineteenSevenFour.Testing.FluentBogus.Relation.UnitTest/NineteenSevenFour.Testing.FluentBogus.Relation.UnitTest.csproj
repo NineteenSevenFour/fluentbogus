@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
@@ -17,13 +17,13 @@
     <PackageReference Include="AutoBogus.Moq" Version="2.13.1" />
     <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.6.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="3.1.2">
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NineteenSevenFour.Testing.Core\NineteenSevenFour.Testing.Core.csproj" />
-    <ProjectReference Include="..\NineteenSevenFour.Testing.Domain.UnitTest\NineteenSevenFour.Testing.Domain.csproj" />
+    <ProjectReference Include="..\NineteenSevenFour.Testing.Example.Domain\NineteenSevenFour.Testing.Example.Domain.csproj" />
     <ProjectReference Include="..\NineteenSevenFour.Testing.FluentBogus.Relation\NineteenSevenFour.Testing.FluentBogus.Relation.csproj" />
     <ProjectReference Include="..\NineteenSevenFour.Testing.FluentBogus\NineteenSevenFour.Testing.FluentBogus.csproj" />
   </ItemGroup>

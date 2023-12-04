@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
@@ -11,7 +11,7 @@
   <ItemGroup>
     <Content Include="..\NineteenFourSeven_logo.ico" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="AutoBogus" Version="2.13.1" />
     <PackageReference Include="AutoBogus.Moq" Version="2.13.1" />
@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NineteenSevenFour.Testing.Core\NineteenSevenFour.Testing.Core.csproj" />
-    <ProjectReference Include="..\NineteenSevenFour.Testing.Domain.UnitTest\NineteenSevenFour.Testing.Domain.csproj" />
+    <ProjectReference Include="..\NineteenSevenFour.Testing.Example.Domain\NineteenSevenFour.Testing.Example.Domain.csproj" />
   </ItemGroup>
-  
+
 </Project>

@@ -1,4 +1,4 @@
-namespace NineteenSevenFour.Testing.Domain.UnitTest.Model;
+namespace NineteenSevenFour.Testing.Example.Domain.Model;
 
 public enum PersonRelationType
 {

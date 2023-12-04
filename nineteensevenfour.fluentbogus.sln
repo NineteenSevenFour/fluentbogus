@@ -35,9 +35,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{4A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{EDCAE64E-4595-4C3F-BED5-6ED4EB2CDC65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NineteenSevenFour.Testing.Core.UnitTest", "NineteenSevenFour.Testing.Core.UnitTest\NineteenSevenFour.Testing.Core.UnitTest.csproj", "{B6725983-8A75-47A0-9E3C-6384462D71B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NineteenSevenFour.Testing.Core.UnitTest", "NineteenSevenFour.Testing.Core.UnitTest\NineteenSevenFour.Testing.Core.UnitTest.csproj", "{B6725983-8A75-47A0-9E3C-6384462D71B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NineteenSevenFour.Testing.Domain", "NineteenSevenFour.Testing.Domain.UnitTest\NineteenSevenFour.Testing.Domain.csproj", "{3F210157-DEAB-49A6-9802-95D28C00BAE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NineteenSevenFour.Testing.Example.Domain", "NineteenSevenFour.Testing.Example.Domain\NineteenSevenFour.Testing.Example.Domain.csproj", "{3F210157-DEAB-49A6-9802-95D28C00BAE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{67204806-B010-462A-9D7D-93F30EECFF05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,7 +96,7 @@ Global
 		{75EF8FFC-2B93-42A0-9510-EDE3107E93E6} = {4A8C8D19-7F71-4DAB-98A7-240677806E2F}
 		{B2359040-B209-45FC-B270-C34153CC7958} = {4A8C8D19-7F71-4DAB-98A7-240677806E2F}
 		{B6725983-8A75-47A0-9E3C-6384462D71B9} = {4A8C8D19-7F71-4DAB-98A7-240677806E2F}
-		{3F210157-DEAB-49A6-9802-95D28C00BAE4} = {4A8C8D19-7F71-4DAB-98A7-240677806E2F}
+		{3F210157-DEAB-49A6-9802-95D28C00BAE4} = {67204806-B010-462A-9D7D-93F30EECFF05}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AC5B6A3-E16F-4A48-92BF-4F5B7B19A033}

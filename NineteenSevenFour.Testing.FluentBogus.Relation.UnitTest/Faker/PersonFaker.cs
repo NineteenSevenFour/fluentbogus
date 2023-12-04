@@ -1,4 +1,4 @@
-using NineteenSevenFour.Testing.Domain.UnitTest.Model;
+using NineteenSevenFour.Testing.Example.Domain.Model;
 using NineteenSevenFour.Testing.FluentBogus.Relation.Extension;
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest.Faker;

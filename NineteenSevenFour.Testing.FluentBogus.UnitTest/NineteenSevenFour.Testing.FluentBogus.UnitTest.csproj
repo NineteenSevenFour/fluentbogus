@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NineteenSevenFour.Testing.Core\NineteenSevenFour.Testing.Core.csproj" />
-    <ProjectReference Include="..\NineteenSevenFour.Testing.Domain.UnitTest\NineteenSevenFour.Testing.Domain.csproj" />
+    <ProjectReference Include="..\NineteenSevenFour.Testing.Example.Domain\NineteenSevenFour.Testing.Example.Domain.csproj" />
     <ProjectReference Include="..\NineteenSevenFour.Testing.FluentBogus\NineteenSevenFour.Testing.FluentBogus.csproj" />
   </ItemGroup>
 
