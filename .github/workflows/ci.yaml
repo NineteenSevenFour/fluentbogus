@@ -44,7 +44,7 @@ jobs:
       - uses: ./.github/actions/validate
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
-          coverage_directory: '**/testresults/'
+          coverage_directory: './testresults/'
           #coverage_files: ./testresults/apps/adcon/cobertura-coverage.xml,./testresults/apps/portal/cobertura-coverage.xml,./testresults/libs/sdk/cobertura-coverage.xml
           coverage_report_name: nineteensevenfour-fluentbogus-${{matrix.os}}-net${{matrix.dotnet}}
 
