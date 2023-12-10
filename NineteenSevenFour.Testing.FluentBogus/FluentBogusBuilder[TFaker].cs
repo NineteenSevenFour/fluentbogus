@@ -12,13 +12,13 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
     where TFaker : AutoFaker<TEntity>, new()
     where TEntity : class
 {
-  private Action<IAutoGenerateConfigBuilder>? fakerConfigBuilder;
-  private AutoFaker<TEntity>? faker;
-  private object?[]? fakerArgs;
-  private int seed;
-  private readonly List<string> skipProperties = new();
-  private readonly List<string> ruleSets = new();
-  private string RuleSetString => string.Join(",", ruleSets);
+  internal Action<IAutoGenerateConfigBuilder>? fakerConfigBuilder;
+  internal AutoFaker<TEntity>? faker;
+  internal object?[]? fakerArgs;
+  internal int seed;
+  internal readonly List<string> skipProperties = new();
+  internal readonly List<string> ruleSets = new();
+  internal string RuleSetString => string.Join(",", ruleSets);
 
   internal void SkipInternal<TProperty>(Expression<Func<TEntity, TProperty>> expr)
   {
@@ -160,10 +160,6 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
   /// <inheritdoc/>>
   public IFluentBogusBuilder<TFaker, TEntity> Skip<TProperty>(Expression<Func<TEntity, TProperty>> property)
   {
-    if (property == null)
-    {
-      throw new ArgumentOutOfRangeException(nameof(property), $"A valid expression to a property must be provided.");
-    }
     SkipInternal(property);
     return this;
   }
