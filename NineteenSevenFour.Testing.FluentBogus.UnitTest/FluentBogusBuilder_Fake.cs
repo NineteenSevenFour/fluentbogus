@@ -5,10 +5,10 @@ using NineteenSevenFour.Testing.FluentBogus.Extension;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest;
 
-public class FluentBogusBuilder_FakeTest
+public class FluentBogusBuilder_Fake
 {
   [Fact]
-  public void Should_Return_ABuilder_WhenCalling_Fake()
+  public void Should_Return_ABuilder_WhenCalled()
   {
     // Arrange
 
