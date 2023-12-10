@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 
+using NineteenSevenFour.Testing.Example.Domain.Faker;
 using NineteenSevenFour.Testing.Example.Domain.Model;
 using NineteenSevenFour.Testing.FluentBogus.Extension;
-using NineteenSevenFour.Testing.FluentBogus.UnitTest.Faker;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest;
 

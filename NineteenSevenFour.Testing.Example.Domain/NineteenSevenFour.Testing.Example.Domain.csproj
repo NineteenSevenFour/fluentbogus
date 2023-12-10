@@ -15,4 +15,8 @@
     <Content Include="..\NineteenFourSeven_logo.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoBogus" Version="2.13.1" />
+  </ItemGroup>
+
 </Project>

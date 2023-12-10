@@ -94,7 +94,7 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
     }
   }
 
-  internal void EnsureFaker()
+  internal void EnsureFakerInternal()
   {
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
     faker = (AutoFaker<TEntity>)Activator.CreateInstance(typeof(TFaker), fakerArgs);
@@ -120,7 +120,7 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
   /// <inheritdoc/>>
   public ICollection<TEntity> Generate(int count)
   {
-    EnsureFaker();
+    EnsureFakerInternal();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
     return faker
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
@@ -132,7 +132,7 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
   /// <inheritdoc/>>
   public TEntity Generate()
   {
-    EnsureFaker();
+    EnsureFakerInternal();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
     return faker
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
@@ -179,10 +179,8 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
       throw new ArgumentOutOfRangeException(nameof(rulesets), $"A List of ruleset must be provided.");
     }
 
-    foreach (var rule in rulesets)
-    {
-      UseRuleSetInternal(rule);
-    }
+    UseRuleSetInternal(rulesets);
+
     return this;
   }
 
