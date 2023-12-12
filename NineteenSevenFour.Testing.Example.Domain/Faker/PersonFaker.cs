@@ -1,7 +1,12 @@
+using AutoBogus;
+
 using NineteenSevenFour.Testing.Example.Domain.Model;
 
-namespace NineteenSevenFour.Testing.FluentBogus.UnitTest.Faker;
+using System.Diagnostics.CodeAnalysis;
 
+namespace NineteenSevenFour.Testing.Example.Domain.Faker;
+
+[ExcludeFromCodeCoverage]
 public class PersonFaker : AutoFaker<PersonModel>
 {
   public PersonFaker(int Id) : this()

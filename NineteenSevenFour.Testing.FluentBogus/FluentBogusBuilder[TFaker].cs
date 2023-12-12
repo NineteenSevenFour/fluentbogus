@@ -12,13 +12,13 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
     where TFaker : AutoFaker<TEntity>, new()
     where TEntity : class
 {
-  private Action<IAutoGenerateConfigBuilder>? fakerConfigBuilder;
-  private AutoFaker<TEntity>? faker;
-  private object?[]? fakerArgs;
-  private int seed;
-  private readonly List<string> skipProperties = new();
-  private readonly List<string> ruleSets = new();
-  private string RuleSetString => string.Join(",", ruleSets);
+  internal Action<IAutoGenerateConfigBuilder>? fakerConfigBuilder;
+  internal AutoFaker<TEntity>? faker;
+  internal object?[]? fakerArgs;
+  internal int seed;
+  internal readonly List<string> skipProperties = new();
+  internal readonly List<string> ruleSets = new();
+  internal string RuleSetString => string.Join(",", ruleSets);
 
   internal void SkipInternal<TProperty>(Expression<Func<TEntity, TProperty>> expr)
   {
@@ -94,7 +94,7 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
     }
   }
 
-  internal void EnsureFaker()
+  internal void EnsureFakerInternal()
   {
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
     faker = (AutoFaker<TEntity>)Activator.CreateInstance(typeof(TFaker), fakerArgs);
@@ -120,7 +120,7 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
   /// <inheritdoc/>>
   public ICollection<TEntity> Generate(int count)
   {
-    EnsureFaker();
+    EnsureFakerInternal();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
     return faker
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
@@ -132,7 +132,7 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
   /// <inheritdoc/>>
   public TEntity Generate()
   {
-    EnsureFaker();
+    EnsureFakerInternal();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
     return faker
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
@@ -160,10 +160,6 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
   /// <inheritdoc/>>
   public IFluentBogusBuilder<TFaker, TEntity> Skip<TProperty>(Expression<Func<TEntity, TProperty>> property)
   {
-    if (property == null)
-    {
-      throw new ArgumentOutOfRangeException(nameof(property), $"A valid expression to a property must be provided.");
-    }
     SkipInternal(property);
     return this;
   }
@@ -183,10 +179,8 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
       throw new ArgumentOutOfRangeException(nameof(rulesets), $"A List of ruleset must be provided.");
     }
 
-    foreach (var rule in rulesets)
-    {
-      UseRuleSetInternal(rule);
-    }
+    UseRuleSetInternal(rulesets);
+
     return this;
   }
 
