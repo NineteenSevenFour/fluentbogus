@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 
 using NineteenSevenFour.Testing.Example.Domain.Faker;
 using NineteenSevenFour.Testing.Example.Domain.Model;
@@ -23,38 +23,6 @@ public class FluentBogusBuilder_UseConfig
     // Assert
     var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
     Assert.NotNull(typedBuilder);
-    typedBuilder.fakerConfigBuilder.Should()
-                                   .NotBeNull().And
-                                   .BeEquivalentTo(fakerConfig);
+    typedBuilder.fakerConfigBuilder.Should().NotBeNull().And.BeEquivalentTo(fakerConfig);
   }
-}
-
-public class FluentBogusBuilder_EnsureFakerInternal
-{
-  // Arrange
-  // Act
-  // Assert
-}
-
-public class FluentBogusBuilder_ConfigureFakerInternal
-{
-  // Arrange
-  // Act
-  // Assert
-}
-
-public class FluentBogusBuilder_GenerateOne
-{
-  // Validate EnsureFakerInternal is called
-
-  // Validate ConfigureFakerInternal is called
-
-}
-
-public class FluentBogusBuilder_GenerateMany
-{
-  // Validate EnsureFakerInternal is called
-
-  // Validate ConfigureFakerInternal is called
-
 }
