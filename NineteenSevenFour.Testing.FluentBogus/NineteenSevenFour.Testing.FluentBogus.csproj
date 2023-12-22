@@ -1,32 +1,42 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
 	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
-		<ImplicitUsings>disable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<IsPackable>true</IsPackable>
 		<Title>NineteenSevenFour FluentBogus</Title>
-		<Copyright>NineteenSevenFour</Copyright>
-		<PackageProjectUrl>https://github.com/NineteenSevenFour/fluentbogus</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/NineteenSevenFour/fluentbogus</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<Description>NineteenSevenFour FluentBogus is a fluent API sitting on top of AutoBogus aiming at simplifying the setup and use of reusable custom Faker</Description>
+
+		<TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
+		<RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
+
+		<ImplicitUsings>disable</ImplicitUsings>
 		<IncludeSymbols>True</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Nullable>enable</Nullable>
+
+		<NoWarn>1701;1702,NU1803</NoWarn>
+		<WarningLevel>7</WarningLevel>
+		<AnalysisLevel>latest-recommended</AnalysisLevel>
+		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<CodeAnalysisRuleSet>..\StyleCopAnalyzersDefault.ruleset</CodeAnalysisRuleSet>
+
 		<SignAssembly>True</SignAssembly>
 		<DelaySign>True</DelaySign>
 		<AssemblyOriginatorKeyFile>..\nineteensevenfour-public.snk</AssemblyOriginatorKeyFile>
+
 		<ApplicationIcon>..\NineteenFourSeven_logo.ico</ApplicationIcon>
-		<Description>NineteenSevenFour FluentBogus is a fluent API sitting on top of AutoBogus aiming at simplifying the setup and use of reusable custom Faker</Description>
-	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<NoWarn>1701;1702,NU1803,1591</NoWarn>
-	</PropertyGroup>
+		<Authors>$(Authors)</Authors>
+		<Copyright>NineteenFourSeven @2024</Copyright>
+		<RepositoryUrl>https://github.com/NineteenSevenFour/fluentbogus</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<NoWarn>1701;1702,NU1803,1591</NoWarn>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageProjectUrl>https://github.com/NineteenSevenFour/fluentbogus</PackageProjectUrl>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -34,11 +44,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Include="..\LICENSE">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
-		<None Include="README.md">
+		<None Include="..\README.md">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
@@ -47,7 +61,12 @@
 	<ItemGroup>
 		<PackageReference Include="AutoBogus" Version="2.13.1" />
 		<PackageReference Include="AutoBogus.Moq" Version="2.13.1" />
-		<PackageReference Include="Bogus" Version="34.0.2" />
+		<PackageReference Include="Bogus" Version="35.6.1" />
+		<PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<!-- Added specific version to prevent vulnerable transitive packages -->
 	</ItemGroup>
 
 	<ItemGroup>

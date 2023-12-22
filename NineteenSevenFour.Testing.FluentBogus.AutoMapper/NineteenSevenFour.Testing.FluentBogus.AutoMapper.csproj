@@ -1,23 +1,42 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <Title>NineteenSevenFour Testing FluentBogus/AutoMapper</Title>
+    <Description>NineteenSevenFour FluentBogus/AutoMapper is a fluent API sitting atop of FluentBogus to add support for automapper.</Description>
+
+    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
+    <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
+
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>NineteenSevenFour FluentBogus/AutoMapper</Title>
-    <Copyright>NineteenSevenFour</Copyright>
-    <PackageProjectUrl>https://github.com/NineteenSevenFour/fluentbogus</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/NineteenSevenFour/fluentbogus</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>True</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <NoWarn>1701;1702,NU1803</NoWarn>
+    <WarningLevel>7</WarningLevel>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <CodeAnalysisRuleSet>..\StyleCopAnalyzersDefault.ruleset</CodeAnalysisRuleSet>
+
     <SignAssembly>True</SignAssembly>
     <DelaySign>True</DelaySign>
     <AssemblyOriginatorKeyFile>..\nineteensevenfour-public.snk</AssemblyOriginatorKeyFile>
+
     <ApplicationIcon>..\NineteenFourSeven_logo.ico</ApplicationIcon>
+
+    <Authors>$(Authors)</Authors>
+    <Copyright>NineteenFourSeven @2024</Copyright>
+    <RepositoryUrl>https://github.com/NineteenSevenFour/fluentbogus</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/NineteenSevenFour/fluentbogus</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,11 +44,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="README.md">
+    <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
@@ -38,11 +61,15 @@
   <ItemGroup>
     <PackageReference Include="AutoBogus" Version="2.13.1" />
     <PackageReference Include="AutoBogus.Moq" Version="2.13.1" />
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="AutoMapper.Collection" Version="9.0.0" />
-    <PackageReference Include="AutoMapper.Extensions.EnumMapping" Version="3.1.0" />
-    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="6.0.4" />
-    <PackageReference Include="Bogus" Version="34.0.2" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="AutoMapper.Collection" Version="10.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.EnumMapping" Version="3.2.0" />
+    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="7.0.2" />
+    <PackageReference Include="Bogus" Version="35.6.1" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

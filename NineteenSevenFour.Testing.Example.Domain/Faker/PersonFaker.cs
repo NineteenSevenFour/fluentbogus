@@ -1,49 +1,59 @@
+// <copyright file="PersonFaker.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
+
+namespace NineteenSevenFour.Testing.Example.Domain.Faker;
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 using AutoBogus;
 
 using NineteenSevenFour.Testing.Example.Domain.Model;
+using NineteenSevenFour.Testing.FluentBogus.Relation;
 
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-
-namespace NineteenSevenFour.Testing.Example.Domain.Faker
+/// <summary>
+/// Defines a <see cref="PersonFaker"/> without a <see cref="FluentBogusRelation"/> configured.
+/// </summary>
+[ExcludeFromCodeCoverage]
+public class PersonFaker : AutoFaker<PersonModel>
 {
-  [ExcludeFromCodeCoverage]
-  public class PersonFaker : AutoFaker<PersonModel>
+  /// <summary>
+  /// Initializes a new instance of the <see cref="PersonFaker"/> class.
+  /// </summary>
+  /// <param name="id">The ID of the <see cref="PersonModel"/>.</param>
+  public PersonFaker(int? id)
   {
-    public PersonFaker(int Id) : this()
-    {
-      RuleFor(o => o.Id, () => Id);
-    }
+    this.StrictMode(true);
 
-    public PersonFaker() : base()
+    this.RuleFor(o => o.Id, f => id ?? f.Random.Int(1));
+    this.RuleFor(o => o.Name, f => f.Person.FirstName);
+    this.RuleFor(o => o.Surname, f => f.Name.LastName().ToUpperInvariant());
+    this.RuleFor(o => o.Age, f => f.Random.Int(0, 99));
+    this.RuleFor(o => o.Type, (f, o) =>
     {
-      StrictMode(true);
-
-      RuleFor(o => o.Id, f => f.Random.Int(1));
-      RuleFor(o => o.Name, f => f.Person.FirstName);
-      RuleFor(o => o.Surname, f => f.Name.LastName().ToUpper());
-      RuleFor(o => o.Age, f => f.Random.Int(0, 99));
-      RuleFor(o => o.Birthday, f => f.Person.DateOfBirth);
-      RuleFor(o => o.Type, (f, o) =>
+      return o.Age switch
       {
-        return o.Age switch
-        {
-          int age when age <= 5 => PersonType.Infant,
-          int age when age > 5 && age < 18 => PersonType.Child,
-          _ => PersonType.Adult,
-        };
-      });
-      RuleFor(o => o.Addresses, _ => new List<AddressModel>());
-      RuleFor(o => o.Relatives, _ => new List<PersonRelativeModel>());
+        <= 5 => PersonType.Infant,
+        > 5 and < 18 => PersonType.Child,
+        _ => PersonType.Adult,
+      };
+    });
+    this.RuleFor(o => o.Birthday, (f, o) => DateTime.UtcNow.AddYears(-o.Age));
 
-      //FinishWith((f, e) =>
-      //{
-      //  e.HasMany(p => p.Addresses)
-      //    .HasKey(p => p.Id)
-      //    .WithOne(a => a.Person)
-      //    .WithForeignKey(a => a.PersonId)
-      //    .Apply();
-      //});
-    }    
+    // Navigation property to One-to-Many relation.
+    this.RuleFor(o => o.Relatives, _ => null);
+
+    // Navigation property to One-to-One relation.
+    this.RuleFor(o => o.Address, _ => null);
+  }
+
+  /// <summary>
+  /// Initializes a new instance of the <see cref="PersonFaker"/> class.
+  /// </summary>
+  public PersonFaker()
+    : this(null)
+  {
   }
 }
