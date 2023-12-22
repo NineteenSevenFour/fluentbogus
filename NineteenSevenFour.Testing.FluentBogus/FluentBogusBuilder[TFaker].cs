@@ -19,6 +19,7 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
   internal readonly List<string> skipProperties = new();
   internal readonly List<string> ruleSets = new();
   internal string RuleSetString => string.Join(",", ruleSets);
+  internal Dictionary<string, dynamic> rulesFor = new();
 
   internal void SkipInternal<TProperty>(Expression<Func<TEntity, TProperty>> expr)
   {
@@ -34,22 +35,6 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
     else
     {
       throw new InvalidOperationException($"The property {propertyOrFieldName} for type {typeof(TEntity).Name} is already set to be skipped.");
-    }
-  }
-
-  internal void SkipInternal(IEnumerable<string> properties)
-  {
-    foreach (var propertyOrFieldName in properties)
-    {
-      FluentExpression.EnsureMemberExists<TEntity>(propertyOrFieldName);
-      if (!skipProperties.Contains(propertyOrFieldName))
-      {
-        skipProperties.Add(propertyOrFieldName);
-      }
-      else
-      {
-        throw new InvalidOperationException($"The property {propertyOrFieldName} for type {typeof(TEntity).Name} is already set to be skipped.");
-      }
     }
   }
 
@@ -105,11 +90,12 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
 
   internal FluentBogusBuilder(FluentBogusBuilder<TFaker, TEntity> fluentBogus)
   {
-    UseSeed(fluentBogus.seed);
-    UseArgs(fluentBogus.fakerArgs);
-    SkipInternal(fluentBogus.skipProperties);
-    UseRuleSetInternal(fluentBogus.ruleSets);
+    seed = fluentBogus.seed;
+    fakerArgs = fluentBogus.fakerArgs;
+    skipProperties = fluentBogus.skipProperties;
+    ruleSets = fluentBogus.ruleSets;
     fakerConfigBuilder = fluentBogus.fakerConfigBuilder;
+    rulesFor = fluentBogus.rulesFor;
   }
 
   public FluentBogusBuilder(params object?[]? args)
@@ -204,4 +190,54 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
     this.fakerConfigBuilder = configBuilder;
     return this;
   }
+
+  /// <inheritdoc/>>
+  public IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropEntity, TPropFaker>(
+      Expression<Func<TEntity, TProperty?>> property,
+      IFluentBogusBuilder<TPropFaker, TPropEntity> builder,
+      int count)
+      where TProperty : ICollection<TPropEntity?>?
+      where TPropEntity : class
+      where TPropFaker : AutoFaker<TPropEntity>, new()
+  {
+    var propOrFieldName = FluentExpression.MemberNameFor(property);
+    FluentExpression.EnsureMemberExists<TEntity>(propOrFieldName);
+
+    if (builder == null)
+    {
+      Skip(e => property);
+    }
+    else
+    {
+#pragma warning disable CS8604 // Possible null reference argument.
+      rulesFor.Add(propOrFieldName, builder.Generate(count));
+#pragma warning restore CS8604 // Possible null reference argument.
+    }
+    return this;
+  }
+
+  /// <inheritdoc/>>
+  public IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropFaker>(
+      Expression<Func<TEntity, TProperty?>> property,
+      IFluentBogusBuilder<TPropFaker, TProperty> builder)
+      where TProperty : class
+      where TPropFaker : AutoFaker<TProperty>, new()
+  {
+    var propOrFieldName = FluentExpression.MemberNameFor(property);
+    FluentExpression.EnsureMemberExists<TEntity>(propOrFieldName);
+
+    if (builder == null)
+    {
+      Skip(e => property);
+    }
+    else
+    {
+
+#pragma warning disable CS8604 // Possible null reference argument.
+      rulesFor.Add(propOrFieldName, builder.Generate());
+#pragma warning restore CS8604 // Possible null reference argument.           
+    }
+    return this;
+  }
+
 }

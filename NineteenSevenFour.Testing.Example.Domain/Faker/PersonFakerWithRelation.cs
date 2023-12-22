@@ -1,16 +1,18 @@
+using AutoBogus;
+
 using NineteenSevenFour.Testing.Example.Domain.Model;
 using NineteenSevenFour.Testing.FluentBogus.Relation.Extension;
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest.Faker;
 
-public class PersonFaker : AutoFaker<PersonModel>
+public class PersonFakerWithRelation : AutoFaker<PersonModel>
 {
-  public PersonFaker(int Id) : this()
+  public PersonFakerWithRelation(int Id) : this()
   {
     RuleFor(o => o.Id, () => Id);
   }
 
-  public PersonFaker() : base()
+  public PersonFakerWithRelation() : base()
   {
     StrictMode(true);
 

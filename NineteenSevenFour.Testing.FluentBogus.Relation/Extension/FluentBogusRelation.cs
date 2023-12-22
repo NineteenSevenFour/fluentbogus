@@ -1,4 +1,5 @@
 using NineteenSevenFour.Testing.FluentBogus.Relation.Interface;
+
 using System.Linq.Expressions;
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.Extension;

@@ -22,7 +22,19 @@ public interface IFluentBogusBuilder<TFaker, TEntity>
 
   IFluentBogusBuilder<TFaker, TEntity> Skip<TProperty>(Expression<Func<TEntity, TProperty>> property);
 
-  // TODO: Add RuleFor wrapper to pass in FluentBogusBuilder
+  IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropEntity, TPropFaker>(
+      Expression<Func<TEntity, TProperty?>> property,
+      IFluentBogusBuilder<TPropFaker, TPropEntity> builder,
+      int count)
+      where TPropEntity : class
+      where TProperty : ICollection<TPropEntity?>?
+      where TPropFaker : AutoFaker<TPropEntity>, new();
+
+  IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropFaker>(
+      Expression<Func<TEntity, TProperty?>> property,
+      IFluentBogusBuilder<TPropFaker, TProperty> builder)
+      where TProperty : class
+      where TPropFaker : AutoFaker<TProperty>, new();
 
   ICollection<TEntity> Generate(int count);
 
