@@ -1,45 +1,29 @@
-using AutoBogus;
-
 using NineteenSevenFour.Testing.Example.Domain.Model;
 using NineteenSevenFour.Testing.FluentBogus.Relation.Extension;
 
-namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest.Faker;
+using System;
 
-public class PersonFakerWithRelation : AutoFaker<PersonModel>
+namespace NineteenSevenFour.Testing.Example.Domain.Faker
 {
-  public PersonFakerWithRelation(int Id) : this()
+  public class PersonFakerWithRelation : PersonFaker
   {
-    RuleFor(o => o.Id, () => Id);
-  }
-
-  public PersonFakerWithRelation() : base()
-  {
-    StrictMode(true);
-
-    RuleFor(o => o.Id, f => f.Random.Int(1));
-    RuleFor(o => o.Name, f => f.Person.FirstName);
-    RuleFor(o => o.Surname, f => f.Name.LastName().ToUpper());
-    RuleFor(o => o.Age, f => f.Random.Int(0, 99));
-    RuleFor(o => o.Birthday, f => f.Person.DateOfBirth);
-    RuleFor(o => o.Type, (f, o) =>
-    {
-      return o.Age switch
+    private readonly Action<Bogus.Faker, PersonModel> finishWith = (f, o) =>
       {
-        int age when age <= 5 => PersonType.Infant,
-        int age when age > 5 && age < 18 => PersonType.Child,
-        _ => PersonType.Adult,
+        o.HasMany(parent => parent.Addresses)
+          .HasKey(parent => parent.Id)
+          .WithOne(child => child.Person)
+          .WithForeignKey(child => child.PersonId)
+          .Apply();
       };
-    });
-    RuleFor(o => o.Addresses, _ => new List<AddressModel>());
-    RuleFor(o => o.Relatives, _ => new List<PersonRelativeModel>());
 
-    FinishWith((f, o) =>
+    public PersonFakerWithRelation(int Id) : base(Id)
     {
-      o.HasMany(parent => parent.Addresses)
-        .HasKey(parent => parent.Id)
-        .WithOne(child => child.Person)
-        .WithForeignKey(child => child.PersonId)
-        .Apply();
-    });
+      FinishWith(finishWith);
+    }
+
+    public PersonFakerWithRelation() : base()
+    {
+      FinishWith(finishWith);
+    }
   }
 }

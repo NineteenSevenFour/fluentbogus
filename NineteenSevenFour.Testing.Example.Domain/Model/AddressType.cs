@@ -1,8 +1,9 @@
-namespace NineteenSevenFour.Testing.Example.Domain.Model;
-
-public enum AddressType
+namespace NineteenSevenFour.Testing.Example.Domain.Model
 {
-  Personal,
-  Business,
-  Other
+  public enum AddressType
+  {
+    Personal,
+    Business,
+    Other
+  }
 }
