@@ -1,14 +1,15 @@
-namespace NineteenSevenFour.Testing.Example.Domain.Model;
-
-public enum PersonRelationType
+namespace NineteenSevenFour.Testing.Example.Domain.Model
 {
-  GrandParent,
-  Father,
-  Mother,
-  Son,
-  Daughter,
-  Sibling,
-  Aunt,
-  Uncle,
-  Cousin
+  public enum PersonRelationType
+  {
+    GrandParent,
+    Father,
+    Mother,
+    Son,
+    Daughter,
+    Sibling,
+    Aunt,
+    Uncle,
+    Cousin
+  }
 }

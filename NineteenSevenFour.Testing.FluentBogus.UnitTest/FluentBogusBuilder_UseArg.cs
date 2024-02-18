@@ -4,25 +4,26 @@ using NineteenSevenFour.Testing.Example.Domain.Faker;
 using NineteenSevenFour.Testing.Example.Domain.Model;
 using NineteenSevenFour.Testing.FluentBogus.Extension;
 
-namespace NineteenSevenFour.Testing.FluentBogus.UnitTest;
-
-public class FluentBogusBuilder_UseArg
+namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  [Fact]
-  public void Should_StoreFakerArg_WhenCalled()
+  public class FluentBogusBuilder_UseArg
   {
-    // Arrange
-    var args = new[] { "argOne", "argTwo" };
-    var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+    [Fact]
+    public void Should_StoreFakerArg_WhenCalled()
+    {
+      // Arrange
+      var args = new[] { "argOne", "argTwo" };
+      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
 
-    // Act
-    builder.UseArgs(args);
+      // Act
+      builder.UseArgs(args);
 
-    // Assert
-    var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
-    Assert.NotNull(typedBuilder);
-    typedBuilder.fakerArgs.Should()
-                          .NotBeEmpty().And
-                          .HaveCount(args.Length);
+      // Assert
+      var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
+      Assert.NotNull(typedBuilder);
+      typedBuilder.fakerArgs.Should()
+                            .NotBeEmpty().And
+                            .HaveCount(args.Length);
+    }
   }
 }

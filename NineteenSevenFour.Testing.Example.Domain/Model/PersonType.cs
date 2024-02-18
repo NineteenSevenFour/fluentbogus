@@ -1,8 +1,9 @@
-namespace NineteenSevenFour.Testing.Example.Domain.Model;
-
-public enum PersonType
+namespace NineteenSevenFour.Testing.Example.Domain.Model
 {
-  Adult,
-  Child,
-  Infant
+  public enum PersonType
+  {
+    Adult,
+    Child,
+    Infant
+  }
 }

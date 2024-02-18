@@ -1,9 +1,13 @@
-namespace NineteenSevenFour.Testing.Example.Domain.Model;
+using System.Diagnostics.CodeAnalysis;
 
-public class PersonRelativeModel
+namespace NineteenSevenFour.Testing.Example.Domain.Model
 {
-  public int Id { get; set; }
-  public int PersonId { get; set; }
-  public PersonRelationType RelationType { get; set; }
-  public virtual PersonModel? Relative { get; set; }
+  [ExcludeFromCodeCoverage]
+  public class PersonRelativeModel
+  {
+    public int Id { get; set; }
+    public int PersonId { get; set; }
+    public PersonRelationType RelationType { get; set; }
+    public virtual PersonModel? Relative { get; set; }
+  }
 }

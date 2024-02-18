@@ -4,25 +4,26 @@ using NineteenSevenFour.Testing.Example.Domain.Faker;
 using NineteenSevenFour.Testing.Example.Domain.Model;
 using NineteenSevenFour.Testing.FluentBogus.Extension;
 
-namespace NineteenSevenFour.Testing.FluentBogus.UnitTest;
-
-public class FluentBogusBuilder_UseConfig
+namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  [Fact]
-  public void Should_StoreFakerconfig_WhenCalled()
+  public class FluentBogusBuilder_UseConfig
   {
-    // Arrange
+    [Fact]
+    public void Should_StoreFakerconfig_WhenCalled()
+    {
+      // Arrange
 #pragma warning disable IDE0039 // Use local function
-    Action<IAutoGenerateConfigBuilder> fakerConfig = (config) => config.WithTreeDepth(0);
+      Action<IAutoGenerateConfigBuilder> fakerConfig = (config) => config.WithTreeDepth(0);
 #pragma warning restore IDE0039 // Use local function
-    var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
 
-    // Act
-    builder.UseConfig(fakerConfig);
+      // Act
+      builder.UseConfig(fakerConfig);
 
-    // Assert
-    var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
-    Assert.NotNull(typedBuilder);
-    typedBuilder.fakerConfigBuilder.Should().NotBeNull().And.BeEquivalentTo(fakerConfig);
+      // Assert
+      var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
+      Assert.NotNull(typedBuilder);
+      typedBuilder.fakerConfigBuilder.Should().NotBeNull().And.BeEquivalentTo(fakerConfig);
+    }
   }
 }

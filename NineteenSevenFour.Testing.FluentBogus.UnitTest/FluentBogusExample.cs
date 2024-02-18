@@ -1,255 +1,256 @@
-﻿namespace NineteenSevenFour.Testing.FluentBogus.UnitTest;
-
-public class FluentBogusExample
+namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  // TODO: Move to FluentBogus exemple project
+  public class FluentBogusExample
+  {
+    // TODO: Move to FluentBogus exemple project
 
-  //[Fact]
-  //public void Should_FakeOne_PersonModel_WithDefaultFaker()
-  //{
-  //  // Arrange
+    //[Fact]
+    //public void Should_FakeOne_PersonModel_WithDefaultFaker()
+    //{
+    //  // Arrange
 
-  //  // Act
-  //  var model = FluentBogusBuilder
-  //                .Fake<PersonModel>()
-  //                .WithDefault()
-  //                .Generate();
+    //  // Act
+    //  var model = FluentBogusBuilder
+    //                .Fake<PersonModel>()
+    //                .WithDefault()
+    //                .Generate();
 
-  //  // Assert
-  //  model.Should().NotBeNull();
-  //  model.Addresses.Should().NotBeNullOrEmpty();
-  //  model.Relatives.Should().NotBeNullOrEmpty();
-  //}
+    //  // Assert
+    //  model.Should().NotBeNull();
+    //  model.Addresses.Should().NotBeNullOrEmpty();
+    //  model.Relatives.Should().NotBeNullOrEmpty();
+    //}
 
-  //[Fact]
-  //public void Should_FakeOne_PersonModel_WithCustomFaker()
-  //{
-  //  // Arrange
+    //[Fact]
+    //public void Should_FakeOne_PersonModel_WithCustomFaker()
+    //{
+    //  // Arrange
 
-  //  // Act
-  //  var model = FluentBogusBuilder
-  //                .Fake<PersonModel>()
-  //                .With<PersonFaker>()
-  //                .Generate();
+    //  // Act
+    //  var model = FluentBogusBuilder
+    //                .Fake<PersonModel>()
+    //                .With<PersonFaker>()
+    //                .Generate();
 
-  //  // Assert
-  //  model.Should().NotBeNull();
-  //  model.Addresses.Should().BeNullOrEmpty();
-  //  model.Relatives.Should().BeNullOrEmpty();
-  //}
+    //  // Assert
+    //  model.Should().NotBeNull();
+    //  model.Addresses.Should().BeNullOrEmpty();
+    //  model.Relatives.Should().BeNullOrEmpty();
+    //}
 
-  //[Theory]
-  //[InlineData(0)]
-  //[InlineData(1)]
-  //[InlineData(3)]
-  //public void Should_FakeMany_PersonModel_WithDefaultFaker(int count)
-  //{
-  //  // Arrange
+    //[Theory]
+    //[InlineData(0)]
+    //[InlineData(1)]
+    //[InlineData(3)]
+    //public void Should_FakeMany_PersonModel_WithDefaultFaker(int count)
+    //{
+    //  // Arrange
 
-  //  // Act
-  //  var models = FluentBogusBuilder
-  //                .Fake<PersonModel>()
-  //                .WithDefault()
-  //                .Generate(count);
+    //  // Act
+    //  var models = FluentBogusBuilder
+    //                .Fake<PersonModel>()
+    //                .WithDefault()
+    //                .Generate(count);
 
-  //  // Assert
-  //  models.Should()
-  //        .NotBeNull()
-  //        .And
-  //        .HaveCount(count);
+    //  // Assert
+    //  models.Should()
+    //        .NotBeNull()
+    //        .And
+    //        .HaveCount(count);
 
-  //  foreach (var model in models)
-  //  {
-  //    model.Should().NotBeNull();
-  //    model.Addresses.Should().NotBeNullOrEmpty(); // Neither PersonModel nor Default Faker initialize the collection
-  //    model.Relatives.Should().NotBeNullOrEmpty(); // Neither PersonModel nor Default Faker initialize the collection
-  //  }
-  //}
+    //  foreach (var model in models)
+    //  {
+    //    model.Should().NotBeNull();
+    //    model.Addresses.Should().NotBeNullOrEmpty(); // Neither PersonModel nor Default Faker initialize the collection
+    //    model.Relatives.Should().NotBeNullOrEmpty(); // Neither PersonModel nor Default Faker initialize the collection
+    //  }
+    //}
 
-  //[Theory]
-  //[InlineData(0)]
-  //[InlineData(1)]
-  //[InlineData(3)]
-  //public void Should_FakeMany_PersonModel_WithCustomFaker(int count)
-  //{
-  //  // Arrange
+    //[Theory]
+    //[InlineData(0)]
+    //[InlineData(1)]
+    //[InlineData(3)]
+    //public void Should_FakeMany_PersonModel_WithCustomFaker(int count)
+    //{
+    //  // Arrange
 
-  //  // Act
-  //  var models = FluentBogusBuilder
-  //                .Fake<PersonModel>()
-  //                .With<PersonFaker>()
-  //                .Skip(e => e.Addresses)
-  //                .Skip(e => e.Relatives)
-  //                .Generate(count);
+    //  // Act
+    //  var models = FluentBogusBuilder
+    //                .Fake<PersonModel>()
+    //                .With<PersonFaker>()
+    //                .Skip(e => e.Addresses)
+    //                .Skip(e => e.Relatives)
+    //                .Generate(count);
 
-  //  // Assert
-  //  models.Should()
-  //        .NotBeNull()
-  //        .And
-  //        .HaveCount(count);
+    //  // Assert
+    //  models.Should()
+    //        .NotBeNull()
+    //        .And
+    //        .HaveCount(count);
 
-  //  foreach (var model in models)
-  //  {
-  //    model.Should().NotBeNull();
-  //    model.Addresses.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
-  //    model.Relatives.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
-  //  }
-  //}
+    //  foreach (var model in models)
+    //  {
+    //    model.Should().NotBeNull();
+    //    model.Addresses.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
+    //    model.Relatives.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
+    //  }
+    //}
 
-  //[Theory]
-  //[InlineData(0)]
-  //[InlineData(1)]
-  //[InlineData(3)]
-  //public void Should_FakeMany_PersonModel_WithDefaultFaker_And_SkipNavigationProperties(int count)
-  //{
-  //  // Arrange
+    //[Theory]
+    //[InlineData(0)]
+    //[InlineData(1)]
+    //[InlineData(3)]
+    //public void Should_FakeMany_PersonModel_WithDefaultFaker_And_SkipNavigationProperties(int count)
+    //{
+    //  // Arrange
 
-  //  // Act
-  //  var models = FluentBogusBuilder
-  //                .Fake<PersonModel>()
-  //                .WithDefault()
-  //                .Skip(e => e.Addresses)
-  //                .Skip(e => e.Relatives)
-  //                .Generate(count);
+    //  // Act
+    //  var models = FluentBogusBuilder
+    //                .Fake<PersonModel>()
+    //                .WithDefault()
+    //                .Skip(e => e.Addresses)
+    //                .Skip(e => e.Relatives)
+    //                .Generate(count);
 
-  //  // Assert
-  //  models.Should()
-  //        .NotBeNull()
-  //        .And
-  //        .HaveCount(count);
+    //  // Assert
+    //  models.Should()
+    //        .NotBeNull()
+    //        .And
+    //        .HaveCount(count);
 
-  //  foreach (var model in models)
-  //  {
-  //    model.Should().NotBeNull();
-  //    model.Addresses.Should().BeNull(); // Neither PersonModel nor Default Faker initialize the collection
-  //    model.Relatives.Should().BeNull(); // Neither PersonModel nor Default Faker initialize the collection
-  //  }
-  //}
+    //  foreach (var model in models)
+    //  {
+    //    model.Should().NotBeNull();
+    //    model.Addresses.Should().BeNull(); // Neither PersonModel nor Default Faker initialize the collection
+    //    model.Relatives.Should().BeNull(); // Neither PersonModel nor Default Faker initialize the collection
+    //  }
+    //}
 
-  //[Theory]
-  //[InlineData(0)]
-  //[InlineData(1)]
-  //[InlineData(3)]
-  //public void Should_FakeMany_PersonModel_WithDefaultFaker_And_SkipNavigationPropertiesByArrray(int count)
-  //{
-  //  // Arrange
+    //[Theory]
+    //[InlineData(0)]
+    //[InlineData(1)]
+    //[InlineData(3)]
+    //public void Should_FakeMany_PersonModel_WithDefaultFaker_And_SkipNavigationPropertiesByArrray(int count)
+    //{
+    //  // Arrange
 
-  //  // Act
-  //  var models = FluentBogusBuilder
-  //                .Fake<PersonModel>()
-  //                .WithDefault()
-  //                .Skip(
-  //                  e => e.Addresses,
-  //                  e => e.Relatives)
-  //                .Generate(count);
+    //  // Act
+    //  var models = FluentBogusBuilder
+    //                .Fake<PersonModel>()
+    //                .WithDefault()
+    //                .Skip(
+    //                  e => e.Addresses,
+    //                  e => e.Relatives)
+    //                .Generate(count);
 
-  //  // Assert
-  //  models.Should()
-  //        .NotBeNull()
-  //        .And
-  //        .HaveCount(count);
+    //  // Assert
+    //  models.Should()
+    //        .NotBeNull()
+    //        .And
+    //        .HaveCount(count);
 
-  //  foreach (var model in models)
-  //  {
-  //    model.Should().NotBeNull();
-  //    model.Addresses.Should().BeNull(); // Neither PersonModel nor Default Faker initialize the collection
-  //    model.Relatives.Should().BeNull(); // Neither PersonModel nor Default Faker initialize the collection
-  //  }
-  //}
+    //  foreach (var model in models)
+    //  {
+    //    model.Should().NotBeNull();
+    //    model.Addresses.Should().BeNull(); // Neither PersonModel nor Default Faker initialize the collection
+    //    model.Relatives.Should().BeNull(); // Neither PersonModel nor Default Faker initialize the collection
+    //  }
+    //}
 
-  //[Theory]
-  //[InlineData(0)]
-  //[InlineData(1)]
-  //[InlineData(3)]
-  //public void Should_FakeMany_PersonModel_WithCustomFaker_And_SkipNavigationProperties(int count)
-  //{
-  //  // Arrange
+    //[Theory]
+    //[InlineData(0)]
+    //[InlineData(1)]
+    //[InlineData(3)]
+    //public void Should_FakeMany_PersonModel_WithCustomFaker_And_SkipNavigationProperties(int count)
+    //{
+    //  // Arrange
 
-  //  // Act
-  //  var models = FluentBogusBuilder
-  //                .Fake<PersonModel>()
-  //                .With<PersonFaker>()
-  //                .Skip(e => e.Addresses)
-  //                .Skip(e => e.Relatives)
-  //                .Generate(count);
+    //  // Act
+    //  var models = FluentBogusBuilder
+    //                .Fake<PersonModel>()
+    //                .With<PersonFaker>()
+    //                .Skip(e => e.Addresses)
+    //                .Skip(e => e.Relatives)
+    //                .Generate(count);
 
-  //  // Assert
-  //  models.Should()
-  //        .NotBeNull()
-  //        .And
-  //        .HaveCount(count);
+    //  // Assert
+    //  models.Should()
+    //        .NotBeNull()
+    //        .And
+    //        .HaveCount(count);
 
-  //  foreach (var model in models)
-  //  {
-  //    model.Should().NotBeNull();
-  //    model.Addresses.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
-  //    model.Relatives.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
-  //  }
-  //}
+    //  foreach (var model in models)
+    //  {
+    //    model.Should().NotBeNull();
+    //    model.Addresses.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
+    //    model.Relatives.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
+    //  }
+    //}
 
-  //[Theory]
-  //[InlineData(0)]
-  //[InlineData(1)]
-  //[InlineData(3)]
-  //public void Should_FakeMany_PersonModel_WithCustomFaker_And_SkipNavigationPropertiesByArrray(int count)
-  //{
-  //  // Arrange
+    //[Theory]
+    //[InlineData(0)]
+    //[InlineData(1)]
+    //[InlineData(3)]
+    //public void Should_FakeMany_PersonModel_WithCustomFaker_And_SkipNavigationPropertiesByArrray(int count)
+    //{
+    //  // Arrange
 
-  //  // Act
-  //  var models = FluentBogusBuilder
-  //                .Fake<PersonModel>()
-  //                .With<PersonFaker>()
-  //                .Skip(
-  //                  e => e.Addresses,
-  //                  e => e.Relatives)
-  //                .Generate(count);
+    //  // Act
+    //  var models = FluentBogusBuilder
+    //                .Fake<PersonModel>()
+    //                .With<PersonFaker>()
+    //                .Skip(
+    //                  e => e.Addresses,
+    //                  e => e.Relatives)
+    //                .Generate(count);
 
-  //  // Assert
-  //  models.Should()
-  //        .NotBeNull()
-  //        .And
-  //        .HaveCount(count);
+    //  // Assert
+    //  models.Should()
+    //        .NotBeNull()
+    //        .And
+    //        .HaveCount(count);
 
-  //  foreach (var model in models)
-  //  {
-  //    model.Should().NotBeNull();
-  //    model.Addresses.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
-  //    model.Relatives.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
-  //  }
-  //}
+    //  foreach (var model in models)
+    //  {
+    //    model.Should().NotBeNull();
+    //    model.Addresses.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
+    //    model.Relatives.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
+    //  }
+    //}
 
 
-  //[Theory]
-  //[InlineData(0)]
-  //[InlineData(1)]
-  //[InlineData(3)]
-  //public void Should_FakeMany_PersonModel_WithCustomFaker_And_ArgumentsOnCreation(int count)
-  //{
-  //  // Arrange
-  //  var ruleSet = "default"; // use , as separator to use multiple ruleset.
+    //[Theory]
+    //[InlineData(0)]
+    //[InlineData(1)]
+    //[InlineData(3)]
+    //public void Should_FakeMany_PersonModel_WithCustomFaker_And_ArgumentsOnCreation(int count)
+    //{
+    //  // Arrange
+    //  var ruleSet = "default"; // use , as separator to use multiple ruleset.
 
-  //  // Act
-  //  var models = FluentBogusBuilder
-  //                .Fake<PersonModel>()
-  //                .With<PersonFaker>()
-  //                .UseSeed(count)
-  //                .Skip(
-  //                  e => e.Addresses,
-  //                  e => e.Relatives)
-  //                .UseRuleSet(ruleSet)
-  //                .Generate(count);
+    //  // Act
+    //  var models = FluentBogusBuilder
+    //                .Fake<PersonModel>()
+    //                .With<PersonFaker>()
+    //                .UseSeed(count)
+    //                .Skip(
+    //                  e => e.Addresses,
+    //                  e => e.Relatives)
+    //                .UseRuleSet(ruleSet)
+    //                .Generate(count);
 
-  //  // Assert
-  //  models.Should()
-  //        .NotBeNull()
-  //        .And
-  //        .HaveCount(count);
+    //  // Assert
+    //  models.Should()
+    //        .NotBeNull()
+    //        .And
+    //        .HaveCount(count);
 
-  //  foreach (var model in models)
-  //  {
-  //    model.Should().NotBeNull();
-  //    model.Addresses.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
-  //    model.Relatives.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
-  //  }
-  //}
+    //  foreach (var model in models)
+    //  {
+    //    model.Should().NotBeNull();
+    //    model.Addresses.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
+    //    model.Relatives.Should().BeEmpty(); // The PersonFaker have a rule to initialize the collection
+    //  }
+    //}
+  }
 }
