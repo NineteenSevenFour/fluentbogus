@@ -4,45 +4,34 @@ using AutoBogus.Moq;
 using NineteenSevenFour.Testing.Core.Extension;
 using NineteenSevenFour.Testing.FluentBogus.Interface;
 
+using System.Collections.Generic;
+using System.Linq;
+using System;
 using System.Linq.Expressions;
 
-namespace NineteenSevenFour.Testing.FluentBogus;
-
-public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, IFluentBogusBuilder<TFaker, TEntity>
-    where TFaker : AutoFaker<TEntity>, new()
-    where TEntity : class
+namespace NineteenSevenFour.Testing.FluentBogus
 {
-  internal Action<IAutoGenerateConfigBuilder>? fakerConfigBuilder;
-  internal AutoFaker<TEntity>? faker;
-  internal object?[]? fakerArgs;
-  internal int seed;
-  internal readonly List<string> skipProperties = new();
-  internal readonly List<string> ruleSets = new();
-  internal string RuleSetString => string.Join(",", ruleSets);
-
-  internal void SkipInternal<TProperty>(Expression<Func<TEntity, TProperty>> expr)
+  public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, IFluentBogusBuilder<TFaker, TEntity>
+      where TFaker : AutoFaker<TEntity>, new()
+      where TEntity : class
   {
-    var propertyOrFieldName = FluentExpression.MemberNameFor(expr);
-    FluentExpression.EnsureMemberExists<TEntity>(propertyOrFieldName);
+    internal Action<IAutoGenerateConfigBuilder>? fakerConfigBuilder;
+    internal AutoFaker<TEntity>? faker;
+    internal object?[]? fakerArgs;
+    internal int seed;
+    internal readonly List<string> skipProperties = new List<string>();
+    internal readonly List<string> ruleSets = new List<string>();
+    internal string RuleSetString => string.Join(",", ruleSets);
+    internal Dictionary<string, dynamic> rulesFor = new Dictionary<string, dynamic>();
+
+    internal void SkipInternal<TProperty>(Expression<Func<TEntity, TProperty>> expr)
+    {
+      var propertyOrFieldName = FluentExpression.MemberNameFor(expr);
+      FluentExpression.EnsureMemberExists<TEntity>(propertyOrFieldName);
 
 #pragma warning disable CS8604 // Possible null reference argument.
-    if (!skipProperties.Contains(propertyOrFieldName))
-#pragma warning restore CS8604 // Possible null reference argument.
-    {
-      skipProperties.Add(propertyOrFieldName);
-    }
-    else
-    {
-      throw new InvalidOperationException($"The property {propertyOrFieldName} for type {typeof(TEntity).Name} is already set to be skipped.");
-    }
-  }
-
-  internal void SkipInternal(IEnumerable<string> properties)
-  {
-    foreach (var propertyOrFieldName in properties)
-    {
-      FluentExpression.EnsureMemberExists<TEntity>(propertyOrFieldName);
       if (!skipProperties.Contains(propertyOrFieldName))
+#pragma warning restore CS8604 // Possible null reference argument.
       {
         skipProperties.Add(propertyOrFieldName);
       }
@@ -51,157 +40,206 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
         throw new InvalidOperationException($"The property {propertyOrFieldName} for type {typeof(TEntity).Name} is already set to be skipped.");
       }
     }
-  }
 
-  internal void UseRuleSetInternal(IEnumerable<string> ruleSets)
-  {
-    foreach (var ruleSet in ruleSets)
+    internal void UseRuleSetInternal(IEnumerable<string> ruleSets)
     {
-      UseRuleSetInternal(ruleSet);
-    }
-  }
-
-  internal void UseRuleSetInternal(string ruleset)
-  {
-    // TODO: Validate RuleSet against TFaker
-    if (string.IsNullOrWhiteSpace(ruleset))
-    {
-      throw new ArgumentOutOfRangeException(nameof(ruleset), $"A ruleset must be provided.");
+      foreach (var ruleSet in ruleSets)
+      {
+        UseRuleSetInternal(ruleSet);
+      }
     }
 
-    if (!ruleSets.Contains(ruleset))
+    internal void UseRuleSetInternal(string ruleset)
     {
-      ruleSets.Add(ruleset);
+      // TODO: Validate RuleSet against TFaker
+      if (string.IsNullOrWhiteSpace(ruleset))
+      {
+        throw new ArgumentOutOfRangeException(nameof(ruleset), $"A ruleset must be provided.");
+      }
+
+      if (!ruleSets.Contains(ruleset))
+      {
+        ruleSets.Add(ruleset);
+      }
+      else
+      {
+        throw new InvalidOperationException($"The ruleset {ruleset} is already set to be used.");
+      }
     }
-    else
+
+    internal void ConfigureFakerInternal(IAutoGenerateConfigBuilder builder)
     {
-      throw new InvalidOperationException($"The ruleset {ruleset} is already set to be used.");
+      // Call user define Faker configuration overrides
+      fakerConfigBuilder?.Invoke(builder);
+
+      // Force 
+      builder.WithBinder<MoqBinder>();  // Configures the bind
+
+      // Configures members to be skipped for a typeer to use
+      foreach (var propName in skipProperties)
+      {
+        builder.WithSkip<TEntity>(propName);
+      }
     }
-  }
 
-  internal void ConfigureFakerInternal(IAutoGenerateConfigBuilder builder)
-  {
-    // Call user define Faker configuration overrides
-    fakerConfigBuilder?.Invoke(builder);
-
-    // Force 
-    builder.WithBinder<MoqBinder>();  // Configures the bind
-
-    // Configures members to be skipped for a typeer to use
-    foreach (var propName in skipProperties)
+    internal void EnsureFakerInternal()
     {
-      builder.WithSkip<TEntity>(propName);
+      faker = (AutoFaker<TEntity>)Activator.CreateInstance(typeof(TFaker), fakerArgs);
+
+      if (faker == null) throw new NullReferenceException("The faker instance is not set. Generation of data is impossible.");
     }
-  }
 
-  internal void EnsureFakerInternal()
-  {
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-    faker = (AutoFaker<TEntity>)Activator.CreateInstance(typeof(TFaker), fakerArgs);
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+    internal FluentBogusBuilder(FluentBogusBuilder<TFaker, TEntity> fluentBogus)
+    {
+      seed = fluentBogus.seed;
+      fakerArgs = fluentBogus.fakerArgs;
+      skipProperties = fluentBogus.skipProperties;
+      ruleSets = fluentBogus.ruleSets;
+      fakerConfigBuilder = fluentBogus.fakerConfigBuilder;
+      rulesFor = fluentBogus.rulesFor;
+    }
 
-    if (faker == null) throw new NullReferenceException("The faker instance is not set. Generation of data is impossible.");
-  }
+    public FluentBogusBuilder(params object?[]? args)
+    {
+      fakerArgs = args;
+    }
 
-  internal FluentBogusBuilder(FluentBogusBuilder<TFaker, TEntity> fluentBogus)
-  {
-    UseSeed(fluentBogus.seed);
-    UseArgs(fluentBogus.fakerArgs);
-    SkipInternal(fluentBogus.skipProperties);
-    UseRuleSetInternal(fluentBogus.ruleSets);
-    fakerConfigBuilder = fluentBogus.fakerConfigBuilder;
-  }
-
-  public FluentBogusBuilder(params object?[]? args)
-  {
-    fakerArgs = args;
-  }
-
-  /// <inheritdoc/>>
-  public ICollection<TEntity> Generate(int count)
-  {
-    EnsureFakerInternal();
+    /// <inheritdoc/>>
+    public ICollection<TEntity> Generate(int count)
+    {
+      EnsureFakerInternal();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-    return faker
+      return faker
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
-        .Configure((builder) => ConfigureFakerInternal(builder))
-        .UseSeed(seed)
-        .Generate(count, RuleSetString);
-  }
-
-  /// <inheritdoc/>>
-  public TEntity Generate()
-  {
-    EnsureFakerInternal();
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-    return faker
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-        .Configure((builder) => ConfigureFakerInternal(builder))
-        .UseSeed(seed)
-        .Generate(RuleSetString);
-  }
-
-  /// <inheritdoc/>>
-  public IFluentBogusBuilder<TFaker, TEntity> Skip(params Expression<Func<TEntity, object?>>[] properties)
-  {
-    if (properties?.All(expr => expr == null) ?? true)
-    {
-      throw new ArgumentOutOfRangeException(nameof(properties), $"A List of properties must be provided.");
+          .Configure((builder) => ConfigureFakerInternal(builder))
+          .UseSeed(seed)
+          .Generate(count, RuleSetString);
     }
 
-    foreach (var property in properties)
+    /// <inheritdoc/>>
+    public TEntity Generate()
+    {
+      EnsureFakerInternal();
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+      return faker
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+          .Configure((builder) => ConfigureFakerInternal(builder))
+          .UseSeed(seed)
+          .Generate(RuleSetString);
+    }
+
+    /// <inheritdoc/>>
+    public IFluentBogusBuilder<TFaker, TEntity> Skip(params Expression<Func<TEntity, object?>>[] properties)
+    {
+      if (properties?.All(expr => expr == null) ?? true)
+      {
+        throw new ArgumentOutOfRangeException(nameof(properties), $"A List of properties must be provided.");
+      }
+
+      foreach (var property in properties)
+      {
+        SkipInternal(property);
+      }
+
+      return this;
+    }
+
+    /// <inheritdoc/>>
+    public IFluentBogusBuilder<TFaker, TEntity> Skip<TProperty>(Expression<Func<TEntity, TProperty>> property)
     {
       SkipInternal(property);
+      return this;
     }
 
-    return this;
-  }
-
-  /// <inheritdoc/>>
-  public IFluentBogusBuilder<TFaker, TEntity> Skip<TProperty>(Expression<Func<TEntity, TProperty>> property)
-  {
-    SkipInternal(property);
-    return this;
-  }
-
-  /// <inheritdoc/>>
-  public IFluentBogusBuilder<TFaker, TEntity> UseRuleSet(string ruleset)
-  {
-    UseRuleSetInternal(ruleset);
-    return this;
-  }
-
-  /// <inheritdoc/>>
-  public IFluentBogusBuilder<TFaker, TEntity> UseRuleSet(params string[] rulesets)
-  {
-    if (rulesets?.All(r => string.IsNullOrWhiteSpace(r)) ?? true)
+    /// <inheritdoc/>>
+    public IFluentBogusBuilder<TFaker, TEntity> UseRuleSet(string ruleset)
     {
-      throw new ArgumentOutOfRangeException(nameof(rulesets), $"A List of ruleset must be provided.");
+      UseRuleSetInternal(ruleset);
+      return this;
     }
 
-    UseRuleSetInternal(rulesets);
+    /// <inheritdoc/>>
+    public IFluentBogusBuilder<TFaker, TEntity> UseRuleSet(params string[] rulesets)
+    {
+      if (rulesets?.All(r => string.IsNullOrWhiteSpace(r)) ?? true)
+      {
+        throw new ArgumentOutOfRangeException(nameof(rulesets), $"A List of ruleset must be provided.");
+      }
 
-    return this;
-  }
+      UseRuleSetInternal(rulesets);
 
-  /// <inheritdoc/>>
-  public IFluentBogusBuilder<TFaker, TEntity> UseSeed(int seed)
-  {
-    this.seed = seed;
-    return this;
-  }
+      return this;
+    }
 
-  /// <inheritdoc/>>
-  public IFluentBogusBuilder<TFaker, TEntity> UseArgs(object?[]? args)
-  {
-    this.fakerArgs = args;
-    return this;
-  }
+    /// <inheritdoc/>>
+    public IFluentBogusBuilder<TFaker, TEntity> UseSeed(int seed)
+    {
+      this.seed = seed;
+      return this;
+    }
 
-  /// <inheritdoc/>>
-  public IFluentBogusBuilder<TFaker, TEntity> UseConfig(Action<IAutoGenerateConfigBuilder> configBuilder)
-  {
-    this.fakerConfigBuilder = configBuilder;
-    return this;
+    /// <inheritdoc/>>
+    public IFluentBogusBuilder<TFaker, TEntity> UseArgs(object?[]? args)
+    {
+      this.fakerArgs = args;
+      return this;
+    }
+
+    /// <inheritdoc/>>
+    public IFluentBogusBuilder<TFaker, TEntity> UseConfig(Action<IAutoGenerateConfigBuilder> configBuilder)
+    {
+      this.fakerConfigBuilder = configBuilder;
+      return this;
+    }
+
+    /// <inheritdoc/>>
+    public IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropEntity, TPropFaker>(
+        Expression<Func<TEntity, TProperty>> property,
+        IFluentBogusBuilder<TPropFaker, TPropEntity> builder,
+        int count)
+        where TProperty : ICollection<TPropEntity?>?
+        where TPropEntity : class
+        where TPropFaker : AutoFaker<TPropEntity>, new()
+    {
+      var propOrFieldName = FluentExpression.MemberNameFor(property);
+      FluentExpression.EnsureMemberExists<TEntity>(propOrFieldName);
+
+      if (builder == null)
+      {
+        Skip(e => property);
+      }
+      else
+      {
+#pragma warning disable CS8604 // Possible null reference argument.
+        rulesFor.Add(propOrFieldName, builder.Generate(count));
+#pragma warning restore CS8604 // Possible null reference argument.
+      }
+      return this;
+    }
+
+    /// <inheritdoc/>>
+    public IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropFaker>(
+        Expression<Func<TEntity, TProperty?>> property,
+        IFluentBogusBuilder<TPropFaker, TProperty> builder)
+        where TProperty : class
+        where TPropFaker : AutoFaker<TProperty>, new()
+    {
+      var propOrFieldName = FluentExpression.MemberNameFor(property);
+      FluentExpression.EnsureMemberExists<TEntity>(propOrFieldName);
+
+      if (builder == null)
+      {
+        Skip(e => property);
+      }
+      else
+      {
+
+#pragma warning disable CS8604 // Possible null reference argument.
+        rulesFor.Add(propOrFieldName, builder.Generate());
+#pragma warning restore CS8604 // Possible null reference argument.           
+      }
+      return this;
+    }
+
   }
 }

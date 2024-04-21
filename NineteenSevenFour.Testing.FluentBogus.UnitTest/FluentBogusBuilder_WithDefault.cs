@@ -1,40 +1,41 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 
 using NineteenSevenFour.Testing.Example.Domain.Model;
 using NineteenSevenFour.Testing.FluentBogus.Extension;
 
-namespace NineteenSevenFour.Testing.FluentBogus.UnitTest;
-
-public class FluentBogusBuilder_WithDefault
+namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  [Fact]
-  public void Should_Return_ABuilder_WithDefaultAutoFaker_WhenCalled_WithoutArguments()
+  public class FluentBogusBuilder_WithDefault
   {
-    // Arrange
+    [Fact]
+    public void Should_Return_ABuilder_WithDefaultAutoFaker_WhenCalled_WithoutArguments()
+    {
+      // Arrange
 
-    // Act
-    var builder = FluentBogusBuilder.Fake<PersonModel>().WithDefault();
+      // Act
+      var builder = FluentBogusBuilder.Fake<PersonModel>().WithDefault();
 
-    // Assert
-    builder.Should()
-           .NotBeNull().And
-           .BeOfType<FluentBogusBuilder<AutoFaker<PersonModel>, PersonModel>>();
-  }
+      // Assert
+      builder.Should()
+             .NotBeNull().And
+             .BeOfType<FluentBogusBuilder<AutoFaker<PersonModel>, PersonModel>>();
+    }
 
-  [Fact]
-  public void Should_StoreArguments_WhenCalled_WithArguments()
-  {
-    // Arrange
-    var args = new[] { "argOne", "argTwo" };
+    [Fact]
+    public void Should_StoreArguments_WhenCalled_WithArguments()
+    {
+      // Arrange
+      var args = new[] { "argOne", "argTwo" };
 
-    // Act
-    var builder = FluentBogusBuilder.Fake<PersonModel>().WithDefault(args);
+      // Act
+      var builder = FluentBogusBuilder.Fake<PersonModel>().WithDefault(args);
 
-    // Assert
-    var typedBuilder = builder as FluentBogusBuilder<AutoFaker<PersonModel>, PersonModel>;
-    Assert.NotNull(typedBuilder);
-    typedBuilder.fakerArgs.Should()
-                          .NotBeEmpty().And
-                          .HaveCount(args.Length);
+      // Assert
+      var typedBuilder = builder as FluentBogusBuilder<AutoFaker<PersonModel>, PersonModel>;
+      Assert.NotNull(typedBuilder);
+      typedBuilder.fakerArgs.Should()
+                            .NotBeEmpty().And
+                            .HaveCount(args.Length);
+    }
   }
 }
