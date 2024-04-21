@@ -69,6 +69,10 @@ namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
       // Assert
       person.Should().NotBeNull();
       person.Addresses.Should().NotBeNull().And.HaveCount(1);
+
+
+      var personAddress = person.Addresses.First();
+      personAddress.Should().BeNull();
     }
 
     [Fact]
@@ -93,5 +97,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
       var personAddress = person.Addresses.First();
       personAddress.PersonId.Should().Be(person.Id);
     }
+
+
   }
 }
