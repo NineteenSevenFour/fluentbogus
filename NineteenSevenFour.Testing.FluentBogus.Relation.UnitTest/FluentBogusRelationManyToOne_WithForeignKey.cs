@@ -9,10 +9,10 @@ using Xunit;
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
 {
-  public class FluentBogusRelationManyToOne_WithForeignKey
+  public class FluentBogusRelationManyToOneWithForeignKey
   {
     [Fact]
-    public void ShouldSet_DependencyForeignKeyExpression_WhenCalledWith_NullExpression()
+    public void ShouldThrowArgumentNullException_DependencyForeignKeyExpression_WhenCalledWith_NullExpression()
     {
       // Arrange
       var person = new PersonModel() { Addresses = new Collection<AddressModel>() };

@@ -1,18 +1,9 @@
 name: ci
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-      - develop
-      - alpha
-      - beta
-      - next
-      - '*.x' # maintenance releases branches
-    types:
-      - opened
-      - reopened
-      - synchronize
 
 jobs:
   build:
@@ -50,3 +41,8 @@ jobs:
           coverage_report_name: nineteensevenfour-fluentbogus-${{matrix.os}}-net${{matrix.dotnet}}
 
       - uses: ./.github/actions/build
+
+          
+      - uses: ./.github/actions/release
+        with:
+          gh_token: ${{ secrets.GITHUB_TOKEN }}

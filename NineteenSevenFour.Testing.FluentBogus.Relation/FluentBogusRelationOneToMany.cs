@@ -42,36 +42,30 @@ namespace NineteenSevenFour.Testing.FluentBogus.Relation
     /// <inheritdoc/>>
     public void Apply()
     {
-      if (Dependency != null && SourceRefExpression != null)
+      if (Dependency == null || SourceRefExpression == null) return;
+      var sourceRef = SourceRefExpression.Compile().Invoke(Dependency);
+
+      sourceRef ??= default;
+      if (sourceRef?.Any() != false) return;
+      if (SourceForeignKeyExpression != null && WithKeyExpression != null)
       {
-        var sourceRef = SourceRefExpression.Compile().Invoke(Dependency);
+        var sourceForeignKey = SourceForeignKeyExpression.Compile().Invoke(Source);
+        var withKey = WithKeyExpression.Compile().Invoke(Dependency);
 
-        sourceRef ??= default;
-        if (sourceRef?.Any() == false)
+        if (sourceForeignKey == null || withKey == null) return;
+        sourceRef.Add(Source);
+        FluentExpression.SetField(Dependency, SourceRefExpression, sourceRef);
+        FluentExpression.SetField(Source, SourceForeignKeyExpression, withKey);
+      }
+      else
+      {
+        if (SourceForeignKeyExpression != null)
         {
-          if (SourceForeignKeyExpression != null && WithKeyExpression != null)
-          {
-            var sourceForeignKey = SourceForeignKeyExpression.Compile().Invoke(Source);
-            var withKey = WithKeyExpression.Compile().Invoke(Dependency);
-
-            if (sourceForeignKey != null && withKey != null)
-            {
-              sourceRef.Add(Source);
-              FluentExpression.SetField(Dependency, SourceRefExpression, sourceRef);
-              FluentExpression.SetField(Source, SourceForeignKeyExpression, withKey);
-            }
-          }
-          else
-          {
-            if (SourceForeignKeyExpression != null)
-            {
-              throw new ArgumentNullException(nameof(SourceForeignKeyExpression), "The Source Foreign Key must be defined using HasForeignKey().");
-            }
-            if (WithKeyExpression != null)
-            {
-              throw new ArgumentNullException(nameof(WithKeyExpression), "The dependency key must be defined using WithKey().");
-            }
-          }
+          throw new ArgumentNullException(nameof(SourceForeignKeyExpression), "The Source Foreign Key must be defined using HasForeignKey().");
+        }
+        if (WithKeyExpression != null)
+        {
+          throw new ArgumentNullException(nameof(WithKeyExpression), "The dependency key must be defined using WithKey().");
         }
       }
     }

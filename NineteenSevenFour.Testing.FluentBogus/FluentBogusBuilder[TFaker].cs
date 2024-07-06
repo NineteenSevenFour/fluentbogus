@@ -15,25 +15,25 @@ namespace NineteenSevenFour.Testing.FluentBogus
       where TFaker : AutoFaker<TEntity>, new()
       where TEntity : class
   {
-    internal Action<IAutoGenerateConfigBuilder>? fakerConfigBuilder;
-    internal AutoFaker<TEntity>? faker;
-    internal object?[]? fakerArgs;
-    internal int seed;
-    internal readonly List<string> skipProperties = new List<string>();
-    internal readonly List<string> ruleSets = new List<string>();
-    internal string RuleSetString => string.Join(",", ruleSets);
-    internal Dictionary<string, dynamic> rulesFor = new Dictionary<string, dynamic>();
+    private readonly Dictionary<string, dynamic> _rulesFor = new Dictionary<string, dynamic>();
+    private AutoFaker<TEntity>? _faker;
+    internal readonly List<string> SkipProperties = new List<string>();
+    internal readonly List<string> RuleSets = new List<string>();
+    internal Action<IAutoGenerateConfigBuilder>? FakerConfigBuilder;
+    internal object?[]? FakerArgs;
+    internal int Seed;
+    internal string RuleSetString => string.Join(",", RuleSets);
 
-    internal void SkipInternal<TProperty>(Expression<Func<TEntity, TProperty>> expr)
+    private void SkipInternal<TProperty>(Expression<Func<TEntity, TProperty>> expr)
     {
       var propertyOrFieldName = FluentExpression.MemberNameFor(expr);
       FluentExpression.EnsureMemberExists<TEntity>(propertyOrFieldName);
 
 #pragma warning disable CS8604 // Possible null reference argument.
-      if (!skipProperties.Contains(propertyOrFieldName))
+      if (!SkipProperties.Contains(propertyOrFieldName))
 #pragma warning restore CS8604 // Possible null reference argument.
       {
-        skipProperties.Add(propertyOrFieldName);
+        SkipProperties.Add(propertyOrFieldName);
       }
       else
       {
@@ -41,7 +41,7 @@ namespace NineteenSevenFour.Testing.FluentBogus
       }
     }
 
-    internal void UseRuleSetInternal(IEnumerable<string> ruleSets)
+    private void UseRuleSetInternal(IEnumerable<string> ruleSets)
     {
       foreach (var ruleSet in ruleSets)
       {
@@ -49,7 +49,7 @@ namespace NineteenSevenFour.Testing.FluentBogus
       }
     }
 
-    internal void UseRuleSetInternal(string ruleset)
+    private void UseRuleSetInternal(string ruleset)
     {
       // TODO: Validate RuleSet against TFaker
       if (string.IsNullOrWhiteSpace(ruleset))
@@ -57,9 +57,9 @@ namespace NineteenSevenFour.Testing.FluentBogus
         throw new ArgumentOutOfRangeException(nameof(ruleset), $"A ruleset must be provided.");
       }
 
-      if (!ruleSets.Contains(ruleset))
+      if (!RuleSets.Contains(ruleset))
       {
-        ruleSets.Add(ruleset);
+        RuleSets.Add(ruleset);
       }
       else
       {
@@ -67,41 +67,39 @@ namespace NineteenSevenFour.Testing.FluentBogus
       }
     }
 
-    internal void ConfigureFakerInternal(IAutoGenerateConfigBuilder builder)
+    private void ConfigureFakerInternal(IAutoGenerateConfigBuilder builder)
     {
       // Call user define Faker configuration overrides
-      fakerConfigBuilder?.Invoke(builder);
+      FakerConfigBuilder?.Invoke(builder);
 
       // Force 
       builder.WithBinder<MoqBinder>();  // Configures the bind
 
       // Configures members to be skipped for a typeer to use
-      foreach (var propName in skipProperties)
+      foreach (var propName in SkipProperties)
       {
         builder.WithSkip<TEntity>(propName);
       }
     }
 
-    internal void EnsureFakerInternal()
+    private void EnsureFakerInternal()
     {
-      faker = (AutoFaker<TEntity>)Activator.CreateInstance(typeof(TFaker), fakerArgs);
-
-      if (faker == null) throw new NullReferenceException("The faker instance is not set. Generation of data is impossible.");
+      _faker = (AutoFaker<TEntity>)Activator.CreateInstance(typeof(TFaker), FakerArgs);
     }
 
     internal FluentBogusBuilder(FluentBogusBuilder<TFaker, TEntity> fluentBogus)
     {
-      seed = fluentBogus.seed;
-      fakerArgs = fluentBogus.fakerArgs;
-      skipProperties = fluentBogus.skipProperties;
-      ruleSets = fluentBogus.ruleSets;
-      fakerConfigBuilder = fluentBogus.fakerConfigBuilder;
-      rulesFor = fluentBogus.rulesFor;
+      Seed = fluentBogus.Seed;
+      FakerArgs = fluentBogus.FakerArgs;
+      SkipProperties = fluentBogus.SkipProperties;
+      RuleSets = fluentBogus.RuleSets;
+      FakerConfigBuilder = fluentBogus.FakerConfigBuilder;
+      _rulesFor = fluentBogus._rulesFor;
     }
 
     public FluentBogusBuilder(params object?[]? args)
     {
-      fakerArgs = args;
+      FakerArgs = args;
     }
 
     /// <inheritdoc/>>
@@ -109,10 +107,10 @@ namespace NineteenSevenFour.Testing.FluentBogus
     {
       EnsureFakerInternal();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-      return faker
+      return _faker
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
-          .Configure((builder) => ConfigureFakerInternal(builder))
-          .UseSeed(seed)
+          .Configure(ConfigureFakerInternal)
+          .UseSeed(Seed)
           .Generate(count, RuleSetString);
     }
 
@@ -121,10 +119,10 @@ namespace NineteenSevenFour.Testing.FluentBogus
     {
       EnsureFakerInternal();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-      return faker
+      return _faker
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
-          .Configure((builder) => ConfigureFakerInternal(builder))
-          .UseSeed(seed)
+          .Configure(ConfigureFakerInternal)
+          .UseSeed(Seed)
           .Generate(RuleSetString);
     }
 
@@ -161,7 +159,7 @@ namespace NineteenSevenFour.Testing.FluentBogus
     /// <inheritdoc/>>
     public IFluentBogusBuilder<TFaker, TEntity> UseRuleSet(params string[] rulesets)
     {
-      if (rulesets?.All(r => string.IsNullOrWhiteSpace(r)) ?? true)
+      if (rulesets?.All(string.IsNullOrWhiteSpace) ?? true)
       {
         throw new ArgumentOutOfRangeException(nameof(rulesets), $"A List of ruleset must be provided.");
       }
@@ -174,28 +172,28 @@ namespace NineteenSevenFour.Testing.FluentBogus
     /// <inheritdoc/>>
     public IFluentBogusBuilder<TFaker, TEntity> UseSeed(int seed)
     {
-      this.seed = seed;
+      this.Seed = seed;
       return this;
     }
 
     /// <inheritdoc/>>
     public IFluentBogusBuilder<TFaker, TEntity> UseArgs(object?[]? args)
     {
-      this.fakerArgs = args;
+      this.FakerArgs = args;
       return this;
     }
 
     /// <inheritdoc/>>
     public IFluentBogusBuilder<TFaker, TEntity> UseConfig(Action<IAutoGenerateConfigBuilder> configBuilder)
     {
-      this.fakerConfigBuilder = configBuilder;
+      this.FakerConfigBuilder = configBuilder;
       return this;
     }
 
     /// <inheritdoc/>>
     public IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropEntity, TPropFaker>(
         Expression<Func<TEntity, TProperty>> property,
-        IFluentBogusBuilder<TPropFaker, TPropEntity> builder,
+        IFluentBogusBuilder<TPropFaker, TPropEntity>? builder,
         int count)
         where TProperty : ICollection<TPropEntity?>?
         where TPropEntity : class
@@ -211,7 +209,7 @@ namespace NineteenSevenFour.Testing.FluentBogus
       else
       {
 #pragma warning disable CS8604 // Possible null reference argument.
-        rulesFor.Add(propOrFieldName, builder.Generate(count));
+        _rulesFor.Add(propOrFieldName, builder.Generate(count));
 #pragma warning restore CS8604 // Possible null reference argument.
       }
       return this;
@@ -220,7 +218,7 @@ namespace NineteenSevenFour.Testing.FluentBogus
     /// <inheritdoc/>>
     public IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropFaker>(
         Expression<Func<TEntity, TProperty?>> property,
-        IFluentBogusBuilder<TPropFaker, TProperty> builder)
+        IFluentBogusBuilder<TPropFaker, TProperty>? builder)
         where TProperty : class
         where TPropFaker : AutoFaker<TProperty>, new()
     {
@@ -235,7 +233,7 @@ namespace NineteenSevenFour.Testing.FluentBogus
       {
 
 #pragma warning disable CS8604 // Possible null reference argument.
-        rulesFor.Add(propOrFieldName, builder.Generate());
+        _rulesFor.Add(propOrFieldName, builder.Generate());
 #pragma warning restore CS8604 // Possible null reference argument.           
       }
       return this;

@@ -15,7 +15,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.AutoMapper
       where TEntity : class
       where TModel : class
   {
-    internal readonly Dictionary<string, Profile> mappingProfiles = new Dictionary<string, Profile>();
+    internal readonly Dictionary<string, Profile> MappingProfiles = new Dictionary<string, Profile>();
     internal IMapper Mapper => MapperConfiguration.CreateMapper();
     internal IConfigurationProvider MapperConfiguration => new MapperConfiguration(cfg =>
     {
@@ -23,7 +23,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.AutoMapper
       cfg.AddCollectionMappers();
       cfg.AddExpressionMapping();
 
-      foreach (var profile in mappingProfiles.Values)
+      foreach (var profile in MappingProfiles.Values)
       {
         cfg.AddProfile(profile);
       }
@@ -42,11 +42,11 @@ namespace NineteenSevenFour.Testing.FluentBogus.AutoMapper
         throw new ArgumentException($"Not a valid mapping profile: {key}", nameof(profile));
       }
 
-      if (mappingProfiles.ContainsKey(key))
+      if (MappingProfiles.ContainsKey(key))
       {
         throw new InvalidOperationException($"The profile {profile.GetType().Name} is already registered ensure UseProfile() is called once per profile to add..");
       }
-      mappingProfiles.Add(key, profile);
+      MappingProfiles.Add(key, profile);
     }
 
     public FluentMapperBuilder(FluentBogusBuilder<TFaker, TEntity> builder) : base(builder)

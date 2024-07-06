@@ -6,7 +6,7 @@ using NineteenSevenFour.Testing.FluentBogus.Extension;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  public class FluentBogusBuilder_UseRule
+  public class FluentBogusBuilderUseRule
   {
     [Fact]
     public void Should_AddRulesetToList_WhenCalled_WithSingleRuleset()
@@ -20,7 +20,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
-      typedBuilder.ruleSets.Should()
+      typedBuilder.RuleSets.Should()
                            .NotBeNullOrEmpty()
                            .And
                            .HaveCount(1);
@@ -75,7 +75,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
-      typedBuilder.ruleSets.Should()
+      typedBuilder.RuleSets.Should()
                            .NotBeNullOrEmpty()
                            .And
                            .HaveCount(2);

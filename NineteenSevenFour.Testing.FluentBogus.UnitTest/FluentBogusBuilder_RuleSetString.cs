@@ -6,7 +6,7 @@ using NineteenSevenFour.Testing.FluentBogus.Extension;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  public class FluentBogusBuilder_RuleSetString
+  public class FluentBogusBuilderRuleSetString
   {
     [Fact]
     public void Should_ReturnJoinedList_WhenCalled_WithRuleset()

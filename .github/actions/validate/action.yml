@@ -23,12 +23,6 @@ inputs:
 runs:
   using: composite
   steps:
-  #  - name: Run linting check
-  #    uses: MansaGroup/nrwl-nx-action@v3.1.0
-  #    with:
-  #      targets: lint
-  #      all: true
-
     - name: Run formating check
       shell: bash
       run: dotnet format
@@ -47,7 +41,7 @@ runs:
         files: ${{ inputs.coverage_files }}
 
     - name: Report coverage (directory)
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       if: "${{ inputs.coverage_directory != '' }}"
       with:
         token: ${{ inputs.codecov_token }}

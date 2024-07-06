@@ -47,6 +47,15 @@ namespace NineteenSevenFour.Testing.FluentBogus.Relation
     /// <inheritdoc/>>
     public void Apply()
     {
+      if (SourceKeyExpression == null)
+      {
+        throw new InvalidOperationException("The Many to One relation is not setup properly. The Source Key must be defined using HasKey().");
+      }
+      if (DependencyForeignKeyExpression == null)
+      {
+        throw new InvalidOperationException("The Many to One relation is not setup properly. The dependency foreign key must be defined using WithForeignKey().");
+      }
+
       if (Dependency != null && SourceRefExpression != null)
       {
         foreach (var item in Dependency)
@@ -57,33 +66,26 @@ namespace NineteenSevenFour.Testing.FluentBogus.Relation
           var sourceRef = SourceRefExpression.Compile().Invoke(item);
           if (sourceRef == null)
           {
-            // Set Depndency's item foreign key to Source key
-            if (SourceKeyExpression != null && DependencyForeignKeyExpression != null)
-            {
-              var sourceKey = SourceKeyExpression.Compile().Invoke(Source);
-              var dependencyForeignKey = DependencyForeignKeyExpression.Compile().Invoke(item);
 
-              if (sourceKey != null)
-              {
-                FluentExpression.SetField(item, SourceRefExpression, Source);
-                FluentExpression.SetField(item, DependencyForeignKeyExpression, sourceKey);
-              }
-              else
-              {
-                throw new InvalidOperationException("The Many to One relation is not setup properly. Please review the relation definition as well as the entity definition.");
-              }
+            var sourceKey = SourceKeyExpression.Compile().Invoke(Source);
+            var dependencyForeignKey = DependencyForeignKeyExpression.Compile().Invoke(item);
+
+            // Set Dependency's item foreign key to Source key
+            if (sourceKey != null)
+            {
+              FluentExpression.SetField(item, SourceRefExpression, Source);
+              FluentExpression.SetField(item, DependencyForeignKeyExpression, sourceKey);
             }
             else
             {
-              if (SourceKeyExpression != null)
-              {
-                throw new ArgumentNullException(nameof(SourceKeyExpression), "The Source Key must be defined using HasKey().");
-              }
-              if (DependencyForeignKeyExpression != null)
-              {
-                throw new ArgumentNullException(nameof(DependencyForeignKeyExpression), "The dependency foreign key must be defined using WithForeignKey().");
-              }
+              // TODO: Is this an actual use case ?
+              throw new InvalidOperationException("The Many to One relation is not setup properly. Please review the relation definition as well as the entity definition.");
             }
+          }
+          else
+          {
+            // TODO: Is this an actual use case ?
+            throw new ArgumentNullException(nameof(SourceKeyExpression), "The Source has already been defined.");
           }
         }
       }

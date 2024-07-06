@@ -18,7 +18,7 @@ namespace NineteenSevenFour.Testing.Core.Extension
     /// <returns></returns>
     public static string? MemberNameFor<T, TProp>(Expression<Func<T, TProp>> expression)
     {
-      Expression body = expression.Body;
+      var body = expression.Body;
       return body.AsMemberExpression()?.Member.Name;
     }
 
@@ -30,7 +30,7 @@ namespace NineteenSevenFour.Testing.Core.Extension
     /// <returns></returns>
     public static string? MemberNameFor<T>(Expression<Func<T, object>> expression)
     {
-      Expression body = expression.Body;
+      var body = expression.Body;
       return body.AsMemberExpression()?.Member?.Name;
     }
 
@@ -41,7 +41,7 @@ namespace NineteenSevenFour.Testing.Core.Extension
     /// <returns></returns>
     public static string? MemberNameFor(Expression<Func<object>> expression)
     {
-      Expression body = expression.Body;
+      var body = expression.Body;
       return body.AsMemberExpression()?.Member?.Name;
     }
 
@@ -106,19 +106,19 @@ namespace NineteenSevenFour.Testing.Core.Extension
     }
 
     /// <summary>
-    /// Ases the member expression.
+    /// As the member expression.
     /// </summary>
     /// <param name="expression">The expression.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException">
     /// $"Your expression '{expressionString}' cant be used. Nested accessors like 'o => o.NestedObject.Foo' at " +
     ///          $"a parent level are not allowed. You should create a dedicated faker for " +
-    ///          $"NestedObject like new Faker<NestedObject>().RuleFor(o => o.Foo, ...) with its own rules " +
+    ///          $"NestedObject like new Faker[NestedObject]().RuleFor(o => o.Foo, ...) with its own rules " +
     ///          $"that define how 'Foo' is generated.
     /// or
     /// Expression was not of the form 'x => x.Property or x => x.Field'.
     /// </exception>
-    public static MemberExpression? AsMemberExpression(this Expression expression)
+    private static MemberExpression? AsMemberExpression(this Expression expression)
     {
       var expressionString = expression.ToString();
       if (expressionString.IndexOf('.') != expressionString.LastIndexOf('.'))
@@ -163,11 +163,9 @@ namespace NineteenSevenFour.Testing.Core.Extension
     {
       try
       {
-        if (propExpression.Body is MemberExpression memberSelectorExpression)
-        {
-          var property = memberSelectorExpression.Member as PropertyInfo;
-          property?.SetValue(target, value, null);
-        }
+        if (!(propExpression.Body is MemberExpression memberSelectorExpression)) return;
+        var property = memberSelectorExpression.Member as PropertyInfo;
+        property?.SetValue(target, value, null);
       }
       catch
       {

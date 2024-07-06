@@ -9,9 +9,9 @@ namespace NineteenSevenFour.Testing.Example.Domain.Faker
   [ExcludeFromCodeCoverage]
   public class AddressFaker : AutoFaker<AddressModel>
   {
-    public AddressFaker(int Id) : this()
+    public AddressFaker(int id) : this()
     {
-      RuleFor(o => o.Id, () => Id);
+      RuleFor(o => o.Id, () => id);
     }
 
     public AddressFaker() : base()

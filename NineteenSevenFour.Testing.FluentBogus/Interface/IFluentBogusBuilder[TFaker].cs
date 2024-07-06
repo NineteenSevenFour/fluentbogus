@@ -26,7 +26,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.Interface
 
     IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropEntity, TPropFaker>(
         Expression<Func<TEntity, TProperty>> property,
-        IFluentBogusBuilder<TPropFaker, TPropEntity> builder,
+        IFluentBogusBuilder<TPropFaker, TPropEntity>? builder,
         int count)
         where TPropEntity : class
         where TProperty : ICollection<TPropEntity?>?
@@ -34,7 +34,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.Interface
 
     IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropFaker>(
         Expression<Func<TEntity, TProperty?>> property,
-        IFluentBogusBuilder<TPropFaker, TProperty> builder)
+        IFluentBogusBuilder<TPropFaker, TProperty>? builder)
         where TProperty : class
         where TPropFaker : AutoFaker<TProperty>, new();
 

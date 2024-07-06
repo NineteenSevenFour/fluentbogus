@@ -5,7 +5,7 @@ using NineteenSevenFour.Testing.FluentBogus.Extension;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  public class FluentBogusBuilder_Fake
+  public class FluentBogusBuilderFake
   {
     [Fact]
     public void Should_Return_ABuilder_WhenCalled()

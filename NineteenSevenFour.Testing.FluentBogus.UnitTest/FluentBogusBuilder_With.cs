@@ -6,7 +6,7 @@ using NineteenSevenFour.Testing.FluentBogus.Extension;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  public class FluentBogusBuilder_With
+  public class FluentBogusBuilderWith
   {
     [Fact]
     public void Should_Return_ABuilder_WithCustomFaker_WhenCalled_WithoutArguments()
@@ -34,7 +34,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
-      typedBuilder.fakerArgs.Should()
+      typedBuilder.FakerArgs.Should()
                             .NotBeEmpty().And
                             .HaveCount(args.Length);
     }
