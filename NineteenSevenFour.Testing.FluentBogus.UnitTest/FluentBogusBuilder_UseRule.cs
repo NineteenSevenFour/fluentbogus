@@ -1,18 +1,22 @@
-using FluentAssertions;
-
-using NineteenSevenFour.Testing.Example.Domain.Faker;
-using NineteenSevenFour.Testing.Example.Domain.Model;
-using NineteenSevenFour.Testing.FluentBogus.Extension;
+// <copyright file="FluentBogusBuilder_UseRule.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
+  using System;
+  using FluentAssertions;
+  using NineteenSevenFour.Testing.Example.Domain.Faker;
+  using NineteenSevenFour.Testing.Example.Domain.Model;
+
   public class FluentBogusBuilderUseRule
   {
     [Fact]
     public void Should_AddRulesetToList_WhenCalled_WithSingleRuleset()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
       builder.UseRuleSet("SomeRule");
@@ -21,9 +25,9 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
       typedBuilder.RuleSets.Should()
-                           .NotBeNullOrEmpty()
-                           .And
-                           .HaveCount(1);
+        .NotBeNullOrEmpty()
+        .And
+        .HaveCount(1);
     }
 
     [Fact]
@@ -31,7 +35,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
     {
       // Arrange
       var ruleSet = "SomeRule";
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
       builder.UseRuleSet(ruleSet);
 
       // Act
@@ -49,8 +53,8 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
     public void Should_ThrowArgumentOutOfRangeException__WhenCalled_WithEmptySingleRuleset()
     {
       // Arrange
-      var ruleSet = "";
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var ruleSet = string.Empty;
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
 #pragma warning disable IDE0039 // Use local function
@@ -67,7 +71,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
     public void Should_AddPropertiesToSkipList_WhenCalled_WithMultipleRuleset()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
       builder.UseRuleSet("rule1", "rule2");
@@ -76,9 +80,9 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
       typedBuilder.RuleSets.Should()
-                           .NotBeNullOrEmpty()
-                           .And
-                           .HaveCount(2);
+        .NotBeNullOrEmpty()
+        .And
+        .HaveCount(2);
     }
 
     [Fact]
@@ -89,7 +93,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       string rule1 = null;
       string rule2 = null;
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
 #pragma warning disable CS8604 // Possible null reference argument.
@@ -101,9 +105,9 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       var exception = Assert.Throws<ArgumentOutOfRangeException>(result);
       exception.Should()
-               .NotBeNull();
+        .NotBeNull();
       exception.Message.Should()
-                       .Be($"A List of ruleset must be provided. (Parameter 'rulesets')");
+        .Be($"A List of ruleset must be provided. (Parameter 'rulesets')");
     }
 
     [Fact]
@@ -113,7 +117,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
       string[] rules = null;
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
 #pragma warning disable CS8604 // Possible null reference argument.
@@ -126,7 +130,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       var exception = Assert.Throws<ArgumentOutOfRangeException>(result);
       exception.Should().NotBeNull();
       exception.Message.Should()
-                       .Be($"A List of ruleset must be provided. (Parameter 'rulesets')");
+        .Be($"A List of ruleset must be provided. (Parameter 'rulesets')");
     }
   }
 }

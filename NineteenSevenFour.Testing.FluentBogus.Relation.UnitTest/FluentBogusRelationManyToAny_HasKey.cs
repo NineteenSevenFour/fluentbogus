@@ -1,14 +1,16 @@
-using FluentAssertions;
-
-using NineteenSevenFour.Testing.Example.Domain.Model;
-using NineteenSevenFour.Testing.FluentBogus.Relation.Extension;
-
-using System.Collections.ObjectModel;
-
-using Xunit;
+// <copyright file="FluentBogusRelationManyToAny_HasKey.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
 {
+  using System;
+  using System.Collections.ObjectModel;
+  using FluentAssertions;
+  using NineteenSevenFour.Testing.Example.Domain.Model;
+  using Xunit;
+
   public class FluentBogusRelationManyToAnyHasKey
   {
     [Fact]
@@ -21,8 +23,8 @@ namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
 #pragma warning disable IDE0039 // Use local function
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
       var result = () =>
-          person.HasMany(p => p.Addresses)
-                .HasKey<int>(null);
+        person.HasMany(p => p.Addresses)
+          .HasKey<int>(null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 #pragma warning restore IDE0039 // Use local function
 

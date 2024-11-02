@@ -1,30 +1,34 @@
-using AutoBogus;
-
-using NineteenSevenFour.Testing.Example.Domain.Model;
-
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+// <copyright file="PersonFaker.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
 
 namespace NineteenSevenFour.Testing.Example.Domain.Faker
 {
+  using System.Diagnostics.CodeAnalysis;
+  using AutoBogus;
+  using NineteenSevenFour.Testing.Example.Domain.Model;
+
   [ExcludeFromCodeCoverage]
   public class PersonFaker : AutoFaker<PersonModel>
   {
-    public PersonFaker(int id) : this()
+    public PersonFaker(int id)
+      : this()
     {
-      RuleFor(o => o.Id, () => id);
+      this.RuleFor(o => o.Id, () => id);
     }
 
-    public PersonFaker() : base()
+    public PersonFaker()
+      : base()
     {
-      StrictMode(true);
+      this.StrictMode(true);
 
-      RuleFor(o => o.Id, f => f.Random.Int(1));
-      RuleFor(o => o.Name, f => f.Person.FirstName);
-      RuleFor(o => o.Surname, f => f.Name.LastName().ToUpper());
-      RuleFor(o => o.Age, f => f.Random.Int(0, 99));
-      RuleFor(o => o.Birthday, f => f.Person.DateOfBirth);
-      RuleFor(o => o.Type, (f, o) =>
+      this.RuleFor(o => o.Id, f => f.Random.Int(1));
+      this.RuleFor(o => o.Name, f => f.Person.FirstName);
+      this.RuleFor(o => o.Surname, f => f.Name.LastName().ToUpperInvariant());
+      this.RuleFor(o => o.Age, f => f.Random.Int(0, 99));
+      this.RuleFor(o => o.Birthday, f => f.Person.DateOfBirth);
+      this.RuleFor(o => o.Type, (f, o) =>
       {
         return o.Age switch
         {
@@ -33,17 +37,17 @@ namespace NineteenSevenFour.Testing.Example.Domain.Faker
           _ => PersonType.Adult,
         };
       });
-      RuleFor(o => o.Addresses, _ => new List<AddressModel>());
-      RuleFor(o => o.Relatives, _ => new List<PersonRelativeModel>());
+      this.RuleFor(o => o.Addresses, _ => []);
+      this.RuleFor(o => o.Relatives, _ => []);
 
-      //FinishWith((f, e) =>
-      //{
+      // FinishWith((f, e) =>
+      // {
       //  e.HasMany(p => p.Addresses)
       //    .HasKey(p => p.Id)
       //    .WithOne(a => a.Person)
       //    .WithForeignKey(a => a.PersonId)
       //    .Apply();
-      //});
-    }    
+      // });
+    }
   }
 }

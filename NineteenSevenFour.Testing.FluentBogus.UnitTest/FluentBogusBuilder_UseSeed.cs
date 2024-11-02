@@ -1,11 +1,14 @@
-using FluentAssertions;
-
-using NineteenSevenFour.Testing.Example.Domain.Faker;
-using NineteenSevenFour.Testing.Example.Domain.Model;
-using NineteenSevenFour.Testing.FluentBogus.Extension;
+// <copyright file="FluentBogusBuilder_UseSeed.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
+  using FluentAssertions;
+  using NineteenSevenFour.Testing.Example.Domain.Faker;
+  using NineteenSevenFour.Testing.Example.Domain.Model;
+
   public class FluentBogusBuilderUseSeed
   {
     [Fact]
@@ -13,7 +16,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
     {
       // Arrange
       var seed = 456;
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
       builder.UseSeed(seed);
@@ -22,7 +25,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
       typedBuilder.Seed.Should()
-                       .Be(seed);
+        .Be(seed);
     }
   }
 }

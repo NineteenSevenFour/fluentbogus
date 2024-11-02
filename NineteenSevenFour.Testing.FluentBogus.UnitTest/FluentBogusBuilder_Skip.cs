@@ -1,20 +1,23 @@
-using FluentAssertions;
-
-using NineteenSevenFour.Testing.Example.Domain.Faker;
-using NineteenSevenFour.Testing.Example.Domain.Model;
-using NineteenSevenFour.Testing.FluentBogus.Extension;
-
-using System.Linq.Expressions;
+// <copyright file="FluentBogusBuilder_Skip.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
+  using System;
+  using System.Linq.Expressions;
+  using FluentAssertions;
+  using NineteenSevenFour.Testing.Example.Domain.Faker;
+  using NineteenSevenFour.Testing.Example.Domain.Model;
+
   public class FluentBogusBuilderSkip
   {
     [Fact]
     public void Should_AddPropertyToSkipList_WhenCalled_WithSinglePropertyLambdaExpression()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
       builder.Skip(e => e.Addresses);
@@ -23,16 +26,16 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
       typedBuilder.SkipProperties.Should()
-                                 .NotBeNullOrEmpty()
-                                 .And
-                                 .HaveCount(1);
+        .NotBeNullOrEmpty()
+        .And
+        .HaveCount(1);
     }
 
     [Fact]
     public void Should_ThrowInvalidOperationException__WhenCalled_WithDuplicateSinglePropertyLambdaExpression()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
       builder.Skip(e => e.Addresses);
 
       // Act
@@ -50,7 +53,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
     public void Should_AddPropertiesToSkipList_WhenCalled_WithMultiplePropertyLambdaExpression()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
       builder.Skip(e => e.Addresses, equals => equals.Relatives);
@@ -59,9 +62,9 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
       typedBuilder.SkipProperties.Should()
-                                 .NotBeNullOrEmpty()
-                                 .And
-                                 .HaveCount(2);
+        .NotBeNullOrEmpty()
+        .And
+        .HaveCount(2);
     }
 
     [Fact]
@@ -72,7 +75,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       Expression<Func<PersonModel, object?>> property1 = null;
       Expression<Func<PersonModel, object?>> property2 = null;
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
 #pragma warning disable CS8604 // Possible null reference argument.
@@ -84,9 +87,9 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       var exception = Assert.Throws<ArgumentOutOfRangeException>(result);
       exception.Should()
-               .NotBeNull();
+        .NotBeNull();
       exception.Message.Should()
-                       .Be($"A List of properties must be provided. (Parameter 'properties')");
+        .Be($"A List of properties must be provided. (Parameter 'properties')");
     }
 
     [Fact]
@@ -96,7 +99,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
       Expression<Func<PersonModel, object?>>[] properties = null;
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
 #pragma warning disable CS8604 // Possible null reference argument.
@@ -109,7 +112,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       var exception = Assert.Throws<ArgumentOutOfRangeException>(result);
       exception.Should().NotBeNull();
       exception.Message.Should()
-                       .Be($"A List of properties must be provided. (Parameter 'properties')");
+        .Be($"A List of properties must be provided. (Parameter 'properties')");
     }
   }
 }

@@ -1,16 +1,70 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <Title>NineteenSevenFour Testing Core</Title>
+    <Description>NineteenSevenFour FluentBogus is a fluent API sitting on top of AutoBogus aiming at simplifying the setup and use of reusable custom Faker</Description>
+
+    <TargetFramework>net8.0</TargetFramework>
+    <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
+
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <IncludeSymbols>True</IncludeSymbols>
+
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+
+    <NoWarn>1701;1702,NU1803</NoWarn>
+    <WarningLevel>7</WarningLevel>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <CodeAnalysisRuleSet>..\StyleCopAnalyzersDefault.ruleset</CodeAnalysisRuleSet>
+
     <SignAssembly>True</SignAssembly>
     <DelaySign>True</DelaySign>
     <AssemblyOriginatorKeyFile>..\nineteensevenfour-public.snk</AssemblyOriginatorKeyFile>
+
     <ApplicationIcon>..\NineteenFourSeven_logo.ico</ApplicationIcon>
+
+    <Authors>$(Authors)</Authors>
+    <Copyright>nineteensevenfour @2024</Copyright>
+    <RepositoryUrl>https://github.com/NineteenSevenFour/fluentbogus</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
+    <PackageProjectUrl>https://github.com/NineteenSevenFour/fluentbogus</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="..\NineteenFourSeven_logo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitVersion.MsBuild" Version="6.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

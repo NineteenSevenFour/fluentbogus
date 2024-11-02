@@ -1,12 +1,15 @@
-﻿using FluentAssertions;
-
-using NineteenSevenFour.Testing.Example.Domain.Model;
-using NineteenSevenFour.Testing.FluentBogus.Relation.Extension;
-
-using Xunit;
+// <copyright file="FluentBogusRelation_HasOne.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
 {
+  using System;
+  using FluentAssertions;
+  using NineteenSevenFour.Testing.Example.Domain.Model;
+  using Xunit;
+
   public class FluentBogusRelationHasOne
   {
     [Fact]
@@ -41,7 +44,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
       // Act
 #pragma warning disable IDE0039 // Use local function
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-      var result = () => address.HasOne<AddressModel, PersonModel> (null);
+      var result = () => address.HasOne<AddressModel, PersonModel>(null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 #pragma warning restore IDE0039 // Use local function
 
@@ -80,7 +83,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
 
       // Assert
       hasOneRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationOneToAny<AddressModel, PersonModel>>();
-      hasOneRelation.Dependency.Should().BeOfType<PersonModel> ();
+      hasOneRelation.Dependency.Should().BeOfType<PersonModel>();
 
       var relation = hasOneRelation as FluentBogusRelation<AddressModel>;
       Assert.NotNull(relation);

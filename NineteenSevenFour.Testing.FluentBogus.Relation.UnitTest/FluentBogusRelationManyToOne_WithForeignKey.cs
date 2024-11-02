@@ -1,14 +1,16 @@
-using FluentAssertions;
-
-using NineteenSevenFour.Testing.Example.Domain.Model;
-using NineteenSevenFour.Testing.FluentBogus.Relation.Extension;
-
-using System.Collections.ObjectModel;
-
-using Xunit;
+// <copyright file="FluentBogusRelationManyToOne_WithForeignKey.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
 {
+  using System;
+  using System.Collections.ObjectModel;
+  using FluentAssertions;
+  using NineteenSevenFour.Testing.Example.Domain.Model;
+  using Xunit;
+
   public class FluentBogusRelationManyToOneWithForeignKey
   {
     [Fact]
@@ -21,10 +23,10 @@ namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
 #pragma warning disable IDE0039 // Use local function
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
       var result = () =>
-          person.HasMany(p => p.Addresses)
-                .HasKey(p => p.Id)
-                .WithOne(a => a.Person)
-                .WithForeignKey(null);
+        person.HasMany(p => p.Addresses)
+          .HasKey(p => p.Id)
+          .WithOne(a => a.Person)
+          .WithForeignKey(null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 #pragma warning restore IDE0039 // Use local function
 
@@ -42,10 +44,10 @@ namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
 
       // Act
       var hasManyWithOneRelation =
-          person.HasMany(p => p.Addresses)
-                .HasKey(p => p.Id)
-                .WithOne(a => a.Person)
-                .WithForeignKey(a => a.PersonId);
+        person.HasMany(p => p.Addresses)
+          .HasKey(p => p.Id)
+          .WithOne(a => a.Person)
+          .WithForeignKey(a => a.PersonId);
 
       // Assert
       hasManyWithOneRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToOne<PersonModel, AddressModel, int?>?>();

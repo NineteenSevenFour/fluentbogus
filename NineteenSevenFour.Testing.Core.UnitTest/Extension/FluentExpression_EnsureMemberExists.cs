@@ -1,14 +1,16 @@
-using FluentAssertions;
-
-using NineteenSevenFour.Testing.Core.Extension;
-using NineteenSevenFour.Testing.Example.Domain.Model;
-
-using System.Linq.Expressions;
-
-using Xunit;
+// <copyright file="FluentExpression_EnsureMemberExists.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
 
 namespace NineteenSevenFour.Testing.Core.UnitTest.Extension
 {
+  using System;
+  using System.Linq.Expressions;
+  using FluentAssertions;
+  using NineteenSevenFour.Testing.Example.Domain.Model;
+  using Xunit;
+
   public class FluentExpressionTestEnsureMemberExists
   {
     [Fact]
@@ -29,12 +31,12 @@ namespace NineteenSevenFour.Testing.Core.UnitTest.Extension
       // Assert
       var exception = Assert.Throws<ArgumentException>(result);
       exception.Should()
-               .NotBeNull();
+        .NotBeNull();
       exception.Message.Should()
-                       .Be($"The property or field {wrongPropName} was not found on {fqdn}. " +
-                       $"Can't create a rule for {fqdn}.SomeProp when " +
-                       $"SomeProp cannot be found. Try creating a custom IBinder for Faker<T> with the appropriate " +
-                       $"System.Reflection.BindingFlags that allows deeper reflection into {fqdn}.");
+        .Be($"The property or field {wrongPropName} was not found on {fqdn}. " +
+            $"Can't create a rule for {fqdn}.SomeProp when " +
+            $"SomeProp cannot be found. Try creating a custom IBinder for Faker<T> with the appropriate " +
+            $"System.Reflection.BindingFlags that allows deeper reflection into {fqdn}.");
     }
   }
 }

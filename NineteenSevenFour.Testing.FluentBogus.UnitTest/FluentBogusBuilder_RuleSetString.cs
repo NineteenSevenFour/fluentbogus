@@ -1,18 +1,21 @@
-using FluentAssertions;
-
-using NineteenSevenFour.Testing.Example.Domain.Faker;
-using NineteenSevenFour.Testing.Example.Domain.Model;
-using NineteenSevenFour.Testing.FluentBogus.Extension;
+// <copyright file="FluentBogusBuilder_RuleSetString.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
+  using FluentAssertions;
+  using NineteenSevenFour.Testing.Example.Domain.Faker;
+  using NineteenSevenFour.Testing.Example.Domain.Model;
+
   public class FluentBogusBuilderRuleSetString
   {
     [Fact]
     public void Should_ReturnJoinedList_WhenCalled_WithRuleset()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
       builder.UseRuleSet("rule1", "rule2");
@@ -21,16 +24,16 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
       typedBuilder.RuleSetString.Should()
-                                .NotBeNullOrEmpty()
-                                .And
-                                .Be("rule1,rule2");
+        .NotBeNullOrEmpty()
+        .And
+        .Be("rule1,rule2");
     }
 
     [Fact]
     public void Should_ReturnEmptyString_WhenCalled_WithoutRuleset()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
 
       // Act
 
@@ -38,7 +41,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
       typedBuilder.RuleSetString.Should()
-                                .BeNullOrEmpty();
+        .BeNullOrEmpty();
     }
   }
 }

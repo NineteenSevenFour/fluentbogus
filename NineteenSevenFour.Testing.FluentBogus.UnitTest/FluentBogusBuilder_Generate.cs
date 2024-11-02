@@ -1,18 +1,21 @@
-using FluentAssertions;
-
-using NineteenSevenFour.Testing.Example.Domain.Faker;
-using NineteenSevenFour.Testing.Example.Domain.Model;
-using NineteenSevenFour.Testing.FluentBogus.Extension;
+// <copyright file="FluentBogusBuilder_Generate.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
+  using FluentAssertions;
+  using NineteenSevenFour.Testing.Example.Domain.Faker;
+  using NineteenSevenFour.Testing.Example.Domain.Model;
+
   public class FluentBogusBuilderGenerate
   {
     [Fact]
     public void Should_ReturnAnInstanceOfEntity_WhenCalled_WithoutSkipOrConfigOrSeed()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
 
       // Act
@@ -29,7 +32,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
     public void Should_ReturnAnInstanceOfEntity_WhenCalled_WithSkip()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
 
       // Act
@@ -46,7 +49,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
     public void Should_ReturnAnInstanceOfEntity_WhenCalled_WithConfig()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
 
       // Act
@@ -64,7 +67,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
     public void Should_ReturnAnArrayOfInstanceOfEntity_WhenCalled_WithoutSkipOrConfigOrSeed()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
 
       // Act
@@ -81,7 +84,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
     public void Should_ReturnAnArrayOfInstanceOfEntity_WhenCalled_WithSkip()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
 
       // Act
@@ -98,7 +101,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
     public void Should_ReturnAnArrayOfInstanceOfEntity_WhenCalled_WithConfig()
     {
       // Arrange
-      var builder = FluentBogusBuilder.Fake<PersonModel>().With<PersonFaker>();
+      var builder = FluentBogusBuilderExtension.Fake<PersonModel>().UseFaker<PersonFaker>();
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
 
       // Act
