@@ -23,7 +23,7 @@ public class FluentBogusRelationManyToAnyWithOne
 #pragma warning disable IDE0039 // Use local function
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
     var result = () =>
-      person.HasMany(p => p.Addresses)
+      person.HasMany(p => p.Relatives)
         .HasKey(p => p.Id)
         .WithOne(null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -39,18 +39,18 @@ public class FluentBogusRelationManyToAnyWithOne
   public void ShouldSetSourceRefExpressionWhenCalledWithSourceExpression()
   {
     // Arrange
-    var person = new PersonModel() { Addresses = new Collection<AddressModel>() };
+    var person = new PersonModel() { Relatives = new Collection<PersonRelativeModel>() };
 
     // Act
     var hasManyWithOneRelation =
-      person.HasMany(p => p.Addresses)
+      (FluentBogusRelationManyToOne<PersonModel, PersonRelativeModel, int?>)person.HasMany(p => p.Relatives)
         .HasKey(p => p.Id)
-        .WithOne(a => a.Person);
+        .WithOne(a => a.Relative);
 
     // Assert
-    hasManyWithOneRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToOne<PersonModel, AddressModel, int?>?>();
+    hasManyWithOneRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToOne<PersonModel, PersonRelativeModel, int?>?>();
     hasManyWithOneRelation.SourceRefExpression.Should().NotBeNull();
     var sourceRefExpression = hasManyWithOneRelation.SourceRefExpression?.Compile();
-    sourceRefExpression.Should().NotBeNull().And.BeOfType<Func<AddressModel, PersonModel>>();
+    sourceRefExpression.Should().NotBeNull().And.BeOfType<Func<PersonRelativeModel, PersonModel>>();
   }
 }

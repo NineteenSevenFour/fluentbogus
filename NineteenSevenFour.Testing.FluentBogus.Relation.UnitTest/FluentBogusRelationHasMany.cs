@@ -63,32 +63,26 @@ public class FluentBogusRelationHasMany
     var person = new PersonModel(); // Addresses collection is not set in PersonModel
 
     // Act
-    var hasManyRelation = person.HasMany(p => p.Addresses);
+    var hasManyRelation = (FluentBogusRelationManyToAny<PersonModel, PersonRelativeModel>)person.HasMany(p => p.Relatives);
 
     // Assert
-    hasManyRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToAny<PersonModel, AddressModel>>();
+    hasManyRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToAny<PersonModel, PersonRelativeModel>>();
     hasManyRelation.Dependency.Should().BeNullOrEmpty();
-
-    var relation = hasManyRelation as FluentBogusRelation<PersonModel>;
-    Assert.NotNull(relation);
-    relation.Source.Should().Be(person);
+    hasManyRelation.Source.Should().Be(person);
   }
 
   [Fact]
   public void ShouldSetDependencyWhenCalledWithInitializedDependency()
   {
     // Arrange
-    var person = new PersonModel() { Addresses = new Collection<AddressModel>() };
+    var person = new PersonModel() { Relatives = new Collection<PersonRelativeModel>() };
 
     // Act
-    var hasManyRelation = person.HasMany(p => p.Addresses);
+    var hasManyRelation = (FluentBogusRelationManyToAny<PersonModel, PersonRelativeModel>)person.HasMany(p => p.Relatives);
 
     // Assert
-    hasManyRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToAny<PersonModel, AddressModel>>();
-    hasManyRelation.Dependency.Should().BeOfType<Collection<AddressModel>>();
-
-    var relation = hasManyRelation as FluentBogusRelation<PersonModel>;
-    Assert.NotNull(relation);
-    relation.Source.Should().Be(person);
+    hasManyRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToAny<PersonModel, PersonRelativeModel>>();
+    hasManyRelation.Dependency.Should().BeOfType<Collection<PersonRelativeModel>>();
+    hasManyRelation.Source.Should().Be(person);
   }
 }

@@ -6,6 +6,7 @@
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest;
 
 using FluentAssertions;
+
 using NineteenSevenFour.Testing.Example.Domain.Faker;
 using NineteenSevenFour.Testing.Example.Domain.Model;
 
@@ -36,7 +37,7 @@ public class FluentBogusBuilderGenerate
     var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
 
     // Act
-    var person = builder.Skip(p => p.Addresses).Generate();
+    var person = builder.Skip(p => p.Relatives).Generate();
 
     // Assert
     person.Should().NotBeNull();
@@ -88,7 +89,7 @@ public class FluentBogusBuilderGenerate
     var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
 
     // Act
-    var persons = builder.Skip(p => p.Addresses).Generate(2);
+    var persons = builder.Skip(p => p.Relatives).Generate(2);
 
     // Assert
     persons.Should().NotBeNullOrEmpty().And.HaveCount(2);

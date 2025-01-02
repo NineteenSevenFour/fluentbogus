@@ -17,15 +17,15 @@ public class FluentBogusRelationManyToOneWithForeignKey
   public void ShouldThrowArgumentNullExceptionDependencyForeignKeyExpressionWhenCalledWithNullExpression()
   {
     // Arrange
-    var person = new PersonModel() { Addresses = new Collection<AddressModel>() };
+    var person = new PersonModel() { Relatives = new Collection<PersonRelativeModel>() };
 
     // Act
 #pragma warning disable IDE0039 // Use local function
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
     var result = () =>
-      person.HasMany(p => p.Addresses)
+      person.HasMany(p => p.Relatives)
         .HasKey(p => p.Id)
-        .WithOne(a => a.Person)
+        .WithOne(a => a.Relative)
         .WithForeignKey(null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 #pragma warning restore IDE0039 // Use local function
@@ -40,19 +40,19 @@ public class FluentBogusRelationManyToOneWithForeignKey
   public void ShouldSetDependencyForeignKeyExpressionWhenCalledWithForeignKeyExpression()
   {
     // Arrange
-    var person = new PersonModel() { Addresses = new Collection<AddressModel>() };
+    var person = new PersonModel() { Relatives = new Collection<PersonRelativeModel>() };
 
     // Act
     var hasManyWithOneRelation =
-      person.HasMany(p => p.Addresses)
+      (FluentBogusRelationManyToOne<PersonModel, PersonRelativeModel, int?>)person.HasMany(p => p.Relatives)
         .HasKey(p => p.Id)
-        .WithOne(a => a.Person)
-        .WithForeignKey(a => a.PersonId);
+        .WithOne(a => a.Relative)
+        .WithForeignKey(a => a.RelativeId);
 
     // Assert
-    hasManyWithOneRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToOne<PersonModel, AddressModel, int?>?>();
+    hasManyWithOneRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToOne<PersonModel, PersonRelativeModel, int?>?>();
     hasManyWithOneRelation.DependencyForeignKeyExpression.Should().NotBeNull();
     var dependencyForeignKeyExpression = hasManyWithOneRelation.DependencyForeignKeyExpression?.Compile();
-    dependencyForeignKeyExpression.Should().NotBeNull().And.BeOfType<Func<AddressModel, int?>>();
+    dependencyForeignKeyExpression.Should().NotBeNull().And.BeOfType<Func<PersonRelativeModel, int?>>();
   }
 }

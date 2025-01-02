@@ -61,15 +61,12 @@ public class FluentBogusRelationHasOne
     var address = new AddressModel(); // Addresses collection is not set in PersonModel
 
     // Act
-    var hasOneRelation = address.HasOne(a => a.Owner);
+    var hasOneRelation = (FluentBogusRelationOneToAny<AddressModel, PersonModel>)address.HasOne(a => a.Owner);
 
     // Assert
     hasOneRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationOneToAny<AddressModel, PersonModel>>();
     hasOneRelation.Dependency.Should().BeNull();
-
-    var relation = hasOneRelation as FluentBogusRelation<AddressModel>;
-    Assert.NotNull(relation);
-    relation.Source.Should().Be(address);
+    hasOneRelation.Source.Should().Be(address);
   }
 
   [Fact]
@@ -79,14 +76,11 @@ public class FluentBogusRelationHasOne
     var address = new AddressModel() { Owner = new PersonModel() };
 
     // Act
-    var hasOneRelation = address.HasOne(p => p.Owner);
+    var hasOneRelation = (FluentBogusRelationOneToAny<AddressModel, PersonModel>)address.HasOne(p => p.Owner);
 
     // Assert
     hasOneRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationOneToAny<AddressModel, PersonModel>>();
     hasOneRelation.Dependency.Should().BeOfType<PersonModel>();
-
-    var relation = hasOneRelation as FluentBogusRelation<AddressModel>;
-    Assert.NotNull(relation);
-    relation.Source.Should().Be(address);
+    hasOneRelation.Source.Should().Be(address);
   }
 }

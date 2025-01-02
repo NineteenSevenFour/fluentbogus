@@ -7,7 +7,9 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest;
 
 using System;
 using System.Linq.Expressions;
+
 using FluentAssertions;
+
 using NineteenSevenFour.Testing.Example.Domain.Faker;
 using NineteenSevenFour.Testing.Example.Domain.Model;
 
@@ -20,7 +22,7 @@ public class FluentBogusBuilderSkip
     var builder = FluentBogusBuilder.Fake<PersonModel>().UseFaker<PersonFaker>();
 
     // Act
-    builder.Skip(e => e.Addresses);
+    builder.Skip(e => e.Relatives);
 
     // Assert
     var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
@@ -36,17 +38,17 @@ public class FluentBogusBuilderSkip
   {
     // Arrange
     var builder = FluentBogusBuilder.Fake<PersonModel>().UseFaker<PersonFaker>();
-    builder.Skip(e => e.Addresses);
+    builder.Skip(e => e.Relatives);
 
     // Act
 #pragma warning disable IDE0039 // Use local function
-    var result = () => builder.Skip(e => e.Addresses);
+    var result = () => builder.Skip(e => e.Relatives);
 #pragma warning restore IDE0039 // Use local function
 
     // Assert
     var exception = Assert.Throws<InvalidOperationException>(result);
     exception.Should().NotBeNull();
-    exception.Message.Should().Be($"The property Addresses for type PersonModel is already set to be skipped.");
+    exception.Message.Should().Be($"The property Relatives for type PersonModel is already set to be skipped.");
   }
 
   [Fact]
@@ -56,7 +58,7 @@ public class FluentBogusBuilderSkip
     var builder = FluentBogusBuilder.Fake<PersonModel>().UseFaker<PersonFaker>();
 
     // Act
-    builder.Skip(e => e.Addresses, equals => equals.Relatives);
+    builder.Skip(e => e.Address, e => e.Relatives);
 
     // Assert
     var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;

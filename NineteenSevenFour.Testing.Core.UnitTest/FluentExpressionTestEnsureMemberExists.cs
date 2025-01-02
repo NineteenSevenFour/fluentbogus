@@ -23,7 +23,7 @@ public class FluentExpressionTestEnsureMemberExists
     const string fqdn = "NineteenSevenFour.Testing.Example.Domain.Model.PersonModel";
     var wrongPropName = "SomeProp";
 #pragma warning disable CS8602
-    Expression<Func<PersonModel, object>> expression = (p) => p.Addresses.Count;
+    Expression<Func<PersonModel, object>> expression = (p) => p.Relatives.Count;
 #pragma warning restore CS8602
 
     // Act

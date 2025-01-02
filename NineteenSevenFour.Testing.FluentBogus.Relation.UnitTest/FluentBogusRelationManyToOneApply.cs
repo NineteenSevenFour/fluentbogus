@@ -3,6 +3,8 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 // </copyright>
 
+using System.Collections.Generic;
+
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest;
 
 using System;
@@ -19,36 +21,40 @@ public class FluentBogusRelationManyToOneApply
   public void ShouldSkipWhenCalledWithNullDependency()
   {
     // Arrange
-    var person = new PersonModel() { Addresses = null };
+    var person = new PersonModel() { Relatives = null };
 
     // Act
-    person.HasMany(p => p.Addresses)
+    person.HasMany(p => p.Relatives)
       .HasKey(p => p.Id)
-      .WithOne(a => a.Person)
-      .WithForeignKey(a => a.PersonId)
+      .WithOne(a => a.Relative)
+      .WithForeignKey(a => a.RelativeId)
       .Apply();
 
     // Assert
     person.Should().NotBeNull();
-    person.Addresses.Should().BeNull();
+    person.Relatives.Should().BeNull();
   }
 
   [Fact]
   public void ShouldSkipWhenCalledWithNoDependency()
   {
     // Arrange
-    var person = new PersonModel() { Addresses = [] };
+#if NET8_0_OR_GREATER
+    var person = new PersonModel() { Relatives = [] };
+#else
+    var person = new PersonModel() { Relatives = new List<PersonRelativeModel>() };
+#endif
 
     // Act
-    person.HasMany(p => p.Addresses)
+    person.HasMany(p => p.Relatives)
       .HasKey(p => p.Id)
-      .WithOne(a => a.Person)
-      .WithForeignKey(a => a.PersonId)
+      .WithOne(a => a.Relative)
+      .WithForeignKey(a => a.RelativeId)
       .Apply();
 
     // Assert
     person.Should().NotBeNull();
-    person.Addresses.Should().NotBeNull().And.HaveCount(0);
+    person.Relatives.Should().NotBeNull().And.HaveCount(0);
   }
 
   [Fact]
@@ -56,17 +62,23 @@ public class FluentBogusRelationManyToOneApply
   {
     // Arrange
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-    AddressModel address = null;
+    PersonRelativeModel relative = null;
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning disable CS8601 // Possible null reference assignment.
-    var person = new PersonModel() { Addresses = [address] };
+#pragma warning disable CS8604 // Possible null reference argument.
+#if NET8_0_OR_GREATER
+    var person = new PersonModel() { Relatives = [relative] };
+#else
+    var person = new PersonModel() { Relatives = new List<PersonRelativeModel>() { relative } };
+#endif
+#pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.
 
     // Act
-    var result = () => person.HasMany(p => p.Addresses)
+    var result = () => person.HasMany(p => p.Relatives)
       .HasKey(p => p.Id)
-      .WithOne(a => a.Person)
-      .WithForeignKey(a => a.PersonId)
+      .WithOne(a => a.Relative)
+      .WithForeignKey(a => a.RelativeId)
       .Apply();
 
     // Assert
@@ -79,22 +91,22 @@ public class FluentBogusRelationManyToOneApply
   public void ShouldUpdateDependencyWhenCalledWithDependencyWithObject()
   {
     // Arrange
-    var addresses = new AddressFaker().Generate(1);
+    var relatives = new PersonRelativeFaker().Generate(1);
     var person = new PersonFaker().Generate(1).First();
-    person.Addresses = addresses;
+    person.Relatives = relatives;
 
     // Act
-    person.HasMany(p => p.Addresses)
+    person.HasMany(p => p.Relatives)
       .HasKey(p => p.Id)
-      .WithOne(a => a.Person)
-      .WithForeignKey(a => a.PersonId)
+      .WithOne(a => a.Relative)
+      .WithForeignKey(a => a.RelativeId)
       .Apply();
 
     // Assert
     person.Should().NotBeNull();
-    person.Addresses.Should().NotBeNull().And.HaveCount(1);
+    person.Relatives.Should().NotBeNull().And.HaveCount(1);
 
-    var personAddress = person.Addresses.First();
-    personAddress.PersonId.Should().Be(person.Id);
+    var personAddress = person.Relatives.First();
+    personAddress.RelativeId.Should().Be(person.Id);
   }
 }

@@ -7,8 +7,11 @@ namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest;
 
 using System;
 using System.Collections.ObjectModel;
+
 using FluentAssertions;
+
 using NineteenSevenFour.Testing.Example.Domain.Model;
+
 using Xunit;
 
 public class FluentBogusRelationManyToAnyHasKey
@@ -44,7 +47,7 @@ public class FluentBogusRelationManyToAnyHasKey
     var hasManyWithKeyRelation = person.HasMany(p => p.Relatives).HasKey(p => p.Id);
 
     // Assert
-    hasManyWithKeyRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToAny<PersonModel, AddressModel, int?>?>();
-    ((FluentBogusRelationManyToAny<PersonModel, AddressModel, int?>)hasManyWithKeyRelation).SourceKeyExpression.Should().NotBeNull();
+    hasManyWithKeyRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToAny<PersonModel, PersonRelativeModel, int?>?>();
+    ((FluentBogusRelationManyToAny<PersonModel, PersonRelativeModel, int?>)hasManyWithKeyRelation).SourceKeyExpression.Should().NotBeNull();
   }
 }

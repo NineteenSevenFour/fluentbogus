@@ -36,7 +36,6 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
   internal Action<IAutoGenerateConfigBuilder>? FakerConfigBuilder;
   internal object?[]? FakerArgs;
   internal int Seed;
-
   internal AutoFaker<TEntity>? Faker;
 #pragma warning restore SA1600
 #pragma warning restore SA1401
@@ -96,7 +95,7 @@ public class FluentBogusBuilder<TFaker, TEntity> : FluentBogusBuilder<TEntity>, 
   /// <inheritdoc/>>
   public IFluentBogusBuilder<TFaker, TEntity> Skip(params Expression<Func<TEntity, object?>>[] properties)
   {
-    if (properties?.All(expr => expr == null) ?? true)
+    if (properties is not { Length: > 0 } || properties.All(expr => expr == null))
     {
       throw new ArgumentOutOfRangeException(nameof(properties), $"A List of properties must be provided.");
     }

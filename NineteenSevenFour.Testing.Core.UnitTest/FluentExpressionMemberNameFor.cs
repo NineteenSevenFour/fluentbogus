@@ -37,7 +37,7 @@ public class FluentExpressionMemberNameFor
   {
     // Arrange
 #pragma warning disable CS8602
-    Expression<Func<PersonModel, object>> expression = (p) => p.Addresses.Count;
+    Expression<Func<PersonModel, object>> expression = (p) => p.Relatives.Count;
 #pragma warning restore CS8602
 
     // Act
@@ -51,7 +51,7 @@ public class FluentExpressionMemberNameFor
       .NotBeNull();
     exception.Message
       .Should()
-      .Be($"Your expression 'Convert(p.Addresses.Count, Object)' cant be used. Nested accessors like 'o => o.NestedObject.Foo' at a parent level are not allowed. You should create a dedicated faker for NestedObject like new Faker<NestedObject>().RuleFor(o => o.Foo, ...) with its own rules that define how 'Foo' is generated.");
+      .Be($"Your expression 'Convert(p.Relatives.Count, Object)' cant be used. Nested accessors like 'o => o.NestedObject.Foo' at a parent level are not allowed. You should create a dedicated faker for NestedObject like new Faker<NestedObject>().RuleFor(o => o.Foo, ...) with its own rules that define how 'Foo' is generated.");
   }
 
   [Fact]

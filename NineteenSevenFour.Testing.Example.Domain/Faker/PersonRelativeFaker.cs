@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 // </copyright>
 
-namespace NineteenSevenFour.Testing.Example.Domain.Faker.Simple;
+namespace NineteenSevenFour.Testing.Example.Domain.Faker;
 
 using System.Diagnostics.CodeAnalysis;
 
@@ -24,16 +24,16 @@ public class PersonRelativeFaker : AutoFaker<PersonRelativeModel>
   /// <param name="id">The ID of the <see cref="PersonRelativeModel"/>.</param>
   public PersonRelativeFaker(int? id)
   {
-    this.StrictMode(true);
+    StrictMode(true);
 
-    this.RuleFor(o => o.Id, f => id ?? f.Random.Int(1));
-    this.RuleFor(o => o.Relation, f => f.Random.Enum<PersonRelationType>());
+    RuleFor(o => o.Id, f => id ?? f.Random.Int(1));
+    RuleFor(o => o.Relation, f => f.Random.Enum<PersonRelationType>());
 
     // Foreign Key
-    this.RuleFor(o => o.RelativeId, f => null);
+    RuleFor(o => o.RelativeId, f => null);
 
     // Navigation property to One-to-One relation
-    this.RuleFor(o => o.Relative, f => null);
+    RuleFor(o => o.Relative, f => null);
   }
 
   /// <summary>

@@ -7,7 +7,6 @@ namespace NineteenSevenFour.Testing.Example.Domain.Faker;
 
 using System.Diagnostics.CodeAnalysis;
 
-using NineteenSevenFour.Testing.Example.Domain.Faker.Simple;
 using NineteenSevenFour.Testing.Example.Domain.Model;
 using NineteenSevenFour.Testing.FluentBogus.Relation;
 
