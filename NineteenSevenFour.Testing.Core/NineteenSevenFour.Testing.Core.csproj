@@ -5,14 +5,12 @@
     <Title>NineteenSevenFour Testing Core</Title>
     <Description>NineteenSevenFour FluentBogus is a fluent API sitting on top of AutoBogus aiming at simplifying the setup and use of reusable custom Faker</Description>
 
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
 
     <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <IncludeSymbols>True</IncludeSymbols>
-
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Nullable>enable</Nullable>
 
     <NoWarn>1701;1702,NU1803</NoWarn>
     <WarningLevel>7</WarningLevel>
@@ -27,15 +25,18 @@
     <ApplicationIcon>..\NineteenFourSeven_logo.ico</ApplicationIcon>
 
     <Authors>$(Authors)</Authors>
-    <Copyright>nineteensevenfour @2024</Copyright>
+    <Copyright>NineteenFourSeven @2024</Copyright>
     <RepositoryUrl>https://github.com/NineteenSevenFour/fluentbogus</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/NineteenSevenFour/fluentbogus</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -58,7 +59,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersion.MsBuild" Version="6.0.3">
+    <PackageReference Include="GitVersion.MsBuild" Version="6.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

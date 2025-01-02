@@ -3,12 +3,25 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 // </copyright>
 
-namespace NineteenSevenFour.Testing.Example.Domain.Model
+namespace NineteenSevenFour.Testing.Example.Domain.Model;
+
+/// <summary>
+/// Defines the type of Address.
+/// </summary>
+public enum AddressType
 {
-  public enum AddressType
-  {
-    Personal,
-    Business,
-    Other,
-  }
+  /// <summary>
+  /// Personal address.
+  /// </summary>
+  Personal,
+
+  /// <summary>
+  /// Business address.
+  /// </summary>
+  Business,
+
+  /// <summary>
+  /// Any other type of address.
+  /// </summary>
+  Other,
 }

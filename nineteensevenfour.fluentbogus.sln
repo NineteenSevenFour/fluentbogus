@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 		NineteenFourSeven_logo.ico = NineteenFourSeven_logo.ico
 		nineteensevenfour-public.snk = nineteensevenfour-public.snk
-		NuGet.Config = NuGet.Config
+		..\..\NuGet_Secured.Config = ..\..\NuGet_Secured.Config
 		README.md = README.md
 		SECURITY.md = SECURITY.md
 		stylecop.json = stylecop.json
@@ -45,8 +45,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{6720
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{695DA14E-36EB-4E0B-B67D-5A5C91E7A2E0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{15DDEF36-D4E1-4E3D-8EFC-301487B01B06}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{BA8E8737-F401-4D11-B1D6-954C2DD780C8}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\cd.yaml = .github\workflows\cd.yaml
@@ -57,11 +55,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEM
 	ProjectSection(SolutionItems) = preProject
 		.github\ISSUE_TEMPLATE\bug_report.md = .github\ISSUE_TEMPLATE\bug_report.md
 		.github\ISSUE_TEMPLATE\feature_request.md = .github\ISSUE_TEMPLATE\feature_request.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "release", "release", "{9282C26A-AF45-49E1-BE11-5F2880933402}"
-	ProjectSection(SolutionItems) = preProject
-		.github\actions\release\action.yml = .github\actions\release\action.yml
 	EndProjectSection
 EndProject
 Global
@@ -121,10 +114,8 @@ Global
 		{B6725983-8A75-47A0-9E3C-6384462D71B9} = {4A8C8D19-7F71-4DAB-98A7-240677806E2F}
 		{3F210157-DEAB-49A6-9802-95D28C00BAE4} = {67204806-B010-462A-9D7D-93F30EECFF05}
 		{695DA14E-36EB-4E0B-B67D-5A5C91E7A2E0} = {52E6E30B-1652-41D5-AAC7-46B25E2BAD29}
-		{15DDEF36-D4E1-4E3D-8EFC-301487B01B06} = {695DA14E-36EB-4E0B-B67D-5A5C91E7A2E0}
 		{BA8E8737-F401-4D11-B1D6-954C2DD780C8} = {695DA14E-36EB-4E0B-B67D-5A5C91E7A2E0}
 		{E0C99DA3-53D8-417A-933B-D7C50ECFB9EE} = {695DA14E-36EB-4E0B-B67D-5A5C91E7A2E0}
-		{9282C26A-AF45-49E1-BE11-5F2880933402} = {15DDEF36-D4E1-4E3D-8EFC-301487B01B06}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AC5B6A3-E16F-4A48-92BF-4F5B7B19A033}

@@ -14,7 +14,7 @@ tmp
 TestResults
 
 # dependencies
-node_modules
+nodemodules
 
 # IDEs and editors
 /.idea
@@ -44,7 +44,7 @@ testem.log
 /typings
 
 # System Files
-.DS_Store
+.DSStore
 Thumbs.db
 
 

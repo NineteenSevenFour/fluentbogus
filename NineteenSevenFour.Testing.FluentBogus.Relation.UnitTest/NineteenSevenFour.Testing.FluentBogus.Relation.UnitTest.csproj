@@ -25,9 +25,11 @@
     <ApplicationIcon>..\NineteenFourSeven_logo.ico</ApplicationIcon>
 
     <Authors>$(Authors)</Authors>
-    <Copyright>nineteensevenfour @2024</Copyright>
+    <Copyright>NineteenFourSeven @2024</Copyright>
     <RepositoryUrl>https://github.com/NineteenSevenFour/fluentbogus</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
