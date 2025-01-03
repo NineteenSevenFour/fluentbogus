@@ -24,22 +24,22 @@ public class AddressFaker : AutoFaker<AddressModel>
   /// <param name="id">The ID of the <see cref="AddressModel"/>.</param>
   public AddressFaker(int? id)
   {
-    StrictMode(true);
+    this.StrictMode(true);
 
-    RuleFor(o => o.Id, f => id ?? f.Random.Int(1));
-    RuleFor(o => o.Number, f => f.Random.Int(1));
-    RuleFor(o => o.Type, f => f.Random.Enum<AddressType>());
-    RuleFor(o => o.Street, f => f.Address.StreetAddress());
-    RuleFor(o => o.City, f => f.Address.City());
-    RuleFor(o => o.State, f => f.Address.StateAbbr());
-    RuleFor(o => o.PostalCode, f => f.Address.ZipCode());
-    RuleFor(o => o.Country, f => f.Address.Country());
+    this.RuleFor(o => o.Id, f => id ?? f.Random.Int(1));
+    this.RuleFor(o => o.Number, f => f.Random.Int(1));
+    this.RuleFor(o => o.Type, f => f.Random.Enum<AddressType>());
+    this.RuleFor(o => o.Street, f => f.Address.StreetAddress());
+    this.RuleFor(o => o.City, f => f.Address.City());
+    this.RuleFor(o => o.State, f => f.Address.StateAbbr());
+    this.RuleFor(o => o.PostalCode, f => f.Address.ZipCode());
+    this.RuleFor(o => o.Country, f => f.Address.Country());
 
     // Foreign Key
-    RuleFor(o => o.OwnerId, f => null);
+    this.RuleFor(o => o.OwnerId, f => null);
 
     // Navigation property to One-to-One relation
-    RuleFor(o => o.Owner, f => null);
+    this.RuleFor(o => o.Owner, f => null);
   }
 
   /// <summary>

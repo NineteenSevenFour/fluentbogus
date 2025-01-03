@@ -4,10 +4,11 @@
 // </copyright>
 
 #pragma warning disable SA1649
-using System;
-using System.Linq.Expressions;
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation;
+
+using System;
+using System.Linq.Expressions;
 
 /// <summary>
 /// Defines a Many-to-One relation.

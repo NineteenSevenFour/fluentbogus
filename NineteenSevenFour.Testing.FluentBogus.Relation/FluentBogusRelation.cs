@@ -20,13 +20,13 @@ public static class FluentBogusRelation
   /// <typeparam name="TSource">The type of the source entity of the relation.</typeparam>
   /// <typeparam name="TDep">The type of the dependency of the relation.</typeparam>
   /// <param name="entity">The instance of the source of the relation.</param>
-  /// <param name="expression">The expression describing the child property of the relation.</param>
+  /// <param name="depExpr">The expression describing the child property of the relation.</param>
   /// <returns>A <see cref="IFluentBogusRelationManyToAny{TSource,TDep}"/>.</returns>
   public static IFluentBogusRelationManyToAny<TSource, TDep> HasMany<TSource, TDep>(
     this TSource entity,
-    Expression<Func<TSource, ICollection<TDep>?>> expression)
+    Expression<Func<TSource, ICollection<TDep>?>> depExpr)
     where TSource : class
-    where TDep : class => new FluentBogusRelation<TSource>(entity).HasMany(expression);
+    where TDep : class => new FluentBogusRelation<TSource>(entity).HasMany(depExpr);
 
   /// <summary>
   /// Defines the entry point of the One-to-Many relation.
@@ -34,11 +34,11 @@ public static class FluentBogusRelation
   /// <typeparam name="TSource">The type of the source entity of the relation.</typeparam>
   /// <typeparam name="TDep">The type of the dependency of the relation.</typeparam>
   /// <param name="entity">The instance of the source of the relation.</param>
-  /// <param name="expression">The expression describing the child property of the relation.</param>
+  /// <param name="depExpr">The expression describing the child property of the relation.</param>
   /// <returns>A <see cref="IFluentBogusRelationOneToAny{TSource,TDep}"/>.</returns>
   public static IFluentBogusRelationOneToAny<TSource, TDep> HasOne<TSource, TDep>(
     this TSource entity,
-    Expression<Func<TSource, TDep?>> expression)
+    Expression<Func<TSource, TDep?>> depExpr)
     where TSource : class
-    where TDep : class => new FluentBogusRelation<TSource>(entity).HasOne(expression);
+    where TDep : class => new FluentBogusRelation<TSource>(entity).HasOne(depExpr);
 }

@@ -22,7 +22,7 @@ public interface IFluentBogusRelationManyToAny<TSource, TDep>
   /// Allows to define the primary key of the Many-To-Any relation.
   /// </summary>
   /// <typeparam name="TKeyProp">The type of the property used as primary key of the relation.</typeparam>
-  /// <param name="expression">The expression that defines the property to use as the primary key of the relation.</param>
+  /// <param name="keyExpr">The expression that defines the property to use as the primary key of the relation.</param>
   /// <returns>A <see cref="IFluentBogusRelationManyToAny{TSource,TDep,TKeyProp}"/>.</returns>
-  IFluentBogusRelationManyToAny<TSource, TDep, TKeyProp> HasKey<TKeyProp>(Expression<Func<TSource, TKeyProp>> expression);
+  IFluentBogusRelationManyToAny<TSource, TDep, TKeyProp> HasKey<TKeyProp>(Expression<Func<TSource, TKeyProp>> keyExpr);
 }

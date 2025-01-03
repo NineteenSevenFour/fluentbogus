@@ -25,13 +25,13 @@ public class PersonFaker : AutoFaker<PersonModel>
   /// <param name="id">The ID of the <see cref="PersonModel"/>.</param>
   public PersonFaker(int? id)
   {
-    StrictMode(true);
+    this.StrictMode(true);
 
-    RuleFor(o => o.Id, f => id ?? f.Random.Int(1));
-    RuleFor(o => o.Name, f => f.Person.FirstName);
-    RuleFor(o => o.Surname, f => f.Name.LastName().ToUpperInvariant());
-    RuleFor(o => o.Age, f => f.Random.Int(0, 99));
-    RuleFor(o => o.Type, (f, o) =>
+    this.RuleFor(o => o.Id, f => id ?? f.Random.Int(1));
+    this.RuleFor(o => o.Name, f => f.Person.FirstName);
+    this.RuleFor(o => o.Surname, f => f.Name.LastName().ToUpperInvariant());
+    this.RuleFor(o => o.Age, f => f.Random.Int(0, 99));
+    this.RuleFor(o => o.Type, (f, o) =>
     {
       return o.Age switch
       {
@@ -40,13 +40,13 @@ public class PersonFaker : AutoFaker<PersonModel>
         _ => PersonType.Adult,
       };
     });
-    RuleFor(o => o.Birthday, (f, o) => DateTime.UtcNow.AddYears(-o.Age));
+    this.RuleFor(o => o.Birthday, (f, o) => DateTime.UtcNow.AddYears(-o.Age));
 
     // Navigation property to One-to-Many relation.
-    RuleFor(o => o.Relatives, _ => null);
+    this.RuleFor(o => o.Relatives, _ => null);
 
     // Navigation property to One-to-One relation.
-    RuleFor(o => o.Address, _ => null);
+    this.RuleFor(o => o.Address, _ => null);
   }
 
   /// <summary>

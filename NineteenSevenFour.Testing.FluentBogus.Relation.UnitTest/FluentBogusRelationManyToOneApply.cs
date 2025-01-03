@@ -3,16 +3,17 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 // </copyright>
 
-using System.Collections.Generic;
-
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest;
 
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Linq;
+
 using FluentAssertions;
+
 using NineteenSevenFour.Testing.Example.Domain.Faker;
 using NineteenSevenFour.Testing.Example.Domain.Model;
+
 using Xunit;
 
 public class FluentBogusRelationManyToOneApply

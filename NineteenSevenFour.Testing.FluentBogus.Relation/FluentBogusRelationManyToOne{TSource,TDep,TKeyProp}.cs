@@ -3,6 +3,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 // </copyright>
 
+#pragma warning disable SA1649
 namespace NineteenSevenFour.Testing.FluentBogus.Relation;
 
 using System;
@@ -31,14 +32,14 @@ public class FluentBogusRelationManyToOne<TSource, TDep, TKeyProp>
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationManyToOne{TSource, TDep, TKeyProp}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="dependency"></param>
-  /// <param name="sourceKeyExpression"></param>
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="dependency">The instance of the dependency of the relation.</param>
+  /// <param name="keyExpression">The expression that defines the primary key of the relation.</param>
   public FluentBogusRelationManyToOne(
     TSource source,
     ICollection<TDep>? dependency,
-    Expression<Func<TSource, TKeyProp>>? sourceKeyExpression)
-    : base(source, dependency, sourceKeyExpression)
+    Expression<Func<TSource, TKeyProp>>? keyExpression)
+    : base(source, dependency, keyExpression)
   {
   }
 #endif
@@ -46,23 +47,23 @@ public class FluentBogusRelationManyToOne<TSource, TDep, TKeyProp>
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationManyToOne{TSource, TDep, TKeyProp}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="dependency"></param>
-  /// <param name="sourceKeyExpression"></param>
-  /// <param name="withOneExpression"></param>
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="dependency">The instance of the dependency of the relation.</param>
+  /// <param name="keyExpr">The expression that defines the primary key of the relation.</param>
+  /// <param name="withOneExpr">The expression that defines the One dependency property of the relation.</param>
   public FluentBogusRelationManyToOne(
     TSource source,
     ICollection<TDep>? dependency,
-    Expression<Func<TSource, TKeyProp>>? sourceKeyExpression,
-    Expression<Func<TDep, TSource?>>? withOneExpression)
-    : this(source, dependency, sourceKeyExpression)
+    Expression<Func<TSource, TKeyProp>>? keyExpr,
+    Expression<Func<TDep, TSource?>>? withOneExpr)
+    : this(source, dependency, keyExpr)
   {
-    ArgumentNullException.ThrowIfNull(withOneExpression, nameof(withOneExpression));
-    FluentExpression.EnsureMemberExists<TDep>(FluentExpression.MemberNameFor(withOneExpression));
-    this.SourceRefExpression = withOneExpression;
+    ArgumentNullException.ThrowIfNull(withOneExpr, nameof(withOneExpr));
+    FluentExpression.EnsureMemberExists<TDep>(FluentExpression.MemberNameFor(withOneExpr));
+    this.SourceRefExpression = withOneExpr;
   }
 
-  internal Expression<Func<TDep, TKeyProp>>? DependencyForeignKeyExpression { get; private set; }
+  internal Expression<Func<TDep, TKeyProp>>? ForeignKeyExpression { get; private set; }
 
   internal Expression<Func<TDep, TSource?>>? SourceRefExpression { get; private set; }
 
@@ -71,19 +72,19 @@ public class FluentBogusRelationManyToOne<TSource, TDep, TKeyProp>
   {
     ArgumentNullException.ThrowIfNull(expression, nameof(expression));
     FluentExpression.EnsureMemberExists<TDep>(FluentExpression.MemberNameFor(expression));
-    this.DependencyForeignKeyExpression = expression;
+    this.ForeignKeyExpression = expression;
     return this;
   }
 
   /// <inheritdoc/>>
   public void Apply()
   {
-    if (this.SourceKeyExpression == null)
+    if (this.KeyExpression == null)
     {
       throw new InvalidOperationException("The Many to One relation is not setup properly. The Source Key must be defined using HasKey().");
     }
 
-    if (this.DependencyForeignKeyExpression == null)
+    if (this.ForeignKeyExpression == null)
     {
       throw new InvalidOperationException("The Many to One relation is not setup properly. The dependency foreign key must be defined using WithForeignKey().");
     }
@@ -99,7 +100,7 @@ public class FluentBogusRelationManyToOne<TSource, TDep, TKeyProp>
       {
         // Set Source reference on Dependency's item, beware that item could be null.
         // var sourceRef = this.SourceRefExpression.Compile().Invoke(item);
-        var sourceKey = this.SourceKeyExpression.Compile().Invoke(this.Source);
+        var sourceKey = this.KeyExpression.Compile().Invoke(this.Source);
 
         // TODO: Review why commented out, use case ??
         // var dependencyForeignKey = DependencyForeignKeyExpression.Compile().Invoke(item);
@@ -109,7 +110,7 @@ public class FluentBogusRelationManyToOne<TSource, TDep, TKeyProp>
         {
           // (sourceKey != null && dependencyForeignKey != null)
           FluentExpression.SetField(item, this.SourceRefExpression, this.Source);
-          FluentExpression.SetField(item, this.DependencyForeignKeyExpression, sourceKey);
+          FluentExpression.SetField(item, this.ForeignKeyExpression, sourceKey);
         }
         else
         {

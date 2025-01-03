@@ -21,17 +21,17 @@ public interface IFluentBogusRelation<TSource>
   /// Allow to define a Many-to-Any relation.
   /// </summary>
   /// <typeparam name="TDep">The type of the dependency of the relation.</typeparam>
-  /// <param name="expression">The fluent expression describing the navigation property to the dependency.</param>
+  /// <param name="depExpr">The fluent expression describing the navigation property to the dependency.</param>
   /// <returns>A <see cref="IFluentBogusRelationManyToAny{TSource,TDep}"/> providing a Many-to-Any relation.</returns>
-  IFluentBogusRelationManyToAny<TSource, TDep> HasMany<TDep>(Expression<Func<TSource, ICollection<TDep>?>> expression)
+  IFluentBogusRelationManyToAny<TSource, TDep> HasMany<TDep>(Expression<Func<TSource, ICollection<TDep>?>> depExpr)
     where TDep : class;
 
   /// <summary>
   /// Allow to define a One-to-Any relation.
   /// </summary>
   /// <typeparam name="TDep">The type of the dependency of the relation.</typeparam>
-  /// <param name="expression">The fluent expression describing the navigation property to the dependency.</param>
+  /// <param name="depExpr">The fluent expression describing the navigation property to the dependency.</param>
   /// <returns>A <see cref="IFluentBogusRelationOneToAny{TSource,TDep}"/> providing a One-to-Any relation.</returns>
-  IFluentBogusRelationOneToAny<TSource, TDep> HasOne<TDep>(Expression<Func<TSource, TDep?>> expression)
+  IFluentBogusRelationOneToAny<TSource, TDep> HasOne<TDep>(Expression<Func<TSource, TDep?>> depExpr)
     where TDep : class;
 }

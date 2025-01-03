@@ -3,6 +3,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 // </copyright>
 
+#pragma warning disable SA1649
 namespace NineteenSevenFour.Testing.FluentBogus.Relation;
 
 using System;
@@ -27,8 +28,8 @@ public class FluentBogusRelationManyToAny<TSource, TDep, TKeyProp>
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationManyToAny{TSource, TDep, TKeyProp}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="dependency"></param>
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="dependency">The instance of the dependency of the relation.</param>
   public FluentBogusRelationManyToAny(TSource source, ICollection<TDep>? dependency)
     : base(source, dependency)
   {
@@ -38,19 +39,22 @@ public class FluentBogusRelationManyToAny<TSource, TDep, TKeyProp>
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationManyToAny{TSource, TDep, TKeyProp}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="dependency"></param>
-  /// <param name="sourceKeyExpression"></param>
-  public FluentBogusRelationManyToAny(TSource source, ICollection<TDep>? dependency, Expression<Func<TSource, TKeyProp>>? sourceKeyExpression)
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="dependency">The instance of the dependency of the relation.</param>
+  /// <param name="keyExpr">The expression that defines the primary key of the relation.</param>
+  public FluentBogusRelationManyToAny(TSource source, ICollection<TDep>? dependency, Expression<Func<TSource, TKeyProp>>?keyExpr)
     : this(source, dependency)
   {
-    ArgumentNullException.ThrowIfNull(sourceKeyExpression, nameof(sourceKeyExpression));
-    FluentExpression.EnsureMemberExists<TSource>(FluentExpression.MemberNameFor(sourceKeyExpression));
-    this.SourceKeyExpression = sourceKeyExpression;
+    ArgumentNullException.ThrowIfNull(keyExpr, nameof(keyExpr));
+    FluentExpression.EnsureMemberExists<TSource>(FluentExpression.MemberNameFor(keyExpr));
+    this.KeyExpression = keyExpr;
   }
 
-  internal Expression<Func<TSource, TKeyProp>>? SourceKeyExpression { get; private set; }
+  /// <summary>
+  /// The expression that defines the primary key of the relation.
+  /// </summary>
+  internal Expression<Func<TSource, TKeyProp>>? KeyExpression { get; private set; }
 
   /// <inheritdoc/>>
-  public IFluentBogusRelationManyToOne<TSource, TDep, TKeyProp> WithOne(Expression<Func<TDep, TSource?>> expression) => new FluentBogusRelationManyToOne<TSource, TDep, TKeyProp>(this.Source, this.Dependency, this.SourceKeyExpression, expression);
+  public IFluentBogusRelationManyToOne<TSource, TDep, TKeyProp> WithOne(Expression<Func<TDep, TSource?>> expression) => new FluentBogusRelationManyToOne<TSource, TDep, TKeyProp>(this.Source, this.Dependency, this.KeyExpression, expression);
 }

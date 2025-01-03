@@ -17,8 +17,8 @@ public class FluentBogusRelationOneToAny<TSource, TDep, TKeyProp> : FluentBogusR
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationOneToAny{TSource, TDep, TKeyProp}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="dependency"></param>
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="dependency">The instance of the dependency of the relation.</param>
   public FluentBogusRelationOneToAny(TSource source, TDep? dependency)
     : base(source, dependency)
   {
@@ -27,37 +27,43 @@ public class FluentBogusRelationOneToAny<TSource, TDep, TKeyProp> : FluentBogusR
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationOneToAny{TSource, TDep, TKeyProp}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="dependency"></param>
-  /// <param name="sourceKeyExpression"></param>
-  /// <param name="sourceForeignKeyExpression"></param>
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="dependency">The instance of the dependency of the relation.</param>
+  /// <param name="keyExpression">The expression that defines the primary key.</param>
+  /// <param name="foreignKeyExpression">The expression that defines the foreign key.</param>
   public FluentBogusRelationOneToAny(
     TSource source,
     TDep? dependency,
-    Expression<Func<TSource, TKeyProp>>? sourceKeyExpression,
-    Expression<Func<TSource, TKeyProp>>? sourceForeignKeyExpression)
+    Expression<Func<TSource, TKeyProp>>? keyExpression,
+    Expression<Func<TSource, TKeyProp>>? foreignKeyExpression)
     : this(source, dependency)
   {
-    if (sourceKeyExpression != null)
+    if (keyExpression != null)
     {
-      FluentExpression.EnsureMemberExists<TSource>(FluentExpression.MemberNameFor(sourceKeyExpression));
-      this.SourceKeyExpression = sourceKeyExpression;
+      FluentExpression.EnsureMemberExists<TSource>(FluentExpression.MemberNameFor(keyExpression));
+      this.KeyExpression = keyExpression;
     }
 
-    if (sourceForeignKeyExpression != null)
+    if (foreignKeyExpression != null)
     {
-      FluentExpression.EnsureMemberExists<TSource>(FluentExpression.MemberNameFor(sourceForeignKeyExpression));
-      this.SourceForeignKeyExpression = sourceForeignKeyExpression;
+      FluentExpression.EnsureMemberExists<TSource>(FluentExpression.MemberNameFor(foreignKeyExpression));
+      this.ForeignKeyExpression = foreignKeyExpression;
     }
   }
 
-  internal Expression<Func<TSource, TKeyProp>>? SourceKeyExpression { get; private set; }
+  /// <summary>
+  /// Gets the expression that defines the primary key.
+  /// </summary>
+  internal Expression<Func<TSource, TKeyProp>> KeyExpression { get; private set; }
 
-  internal Expression<Func<TSource, TKeyProp>>? SourceForeignKeyExpression { get; private set; }
+  /// <summary>
+  /// Gets the expression that defines the foreign key.
+  /// </summary>
+  internal Expression<Func<TSource, TKeyProp>> ForeignKeyExpression { get; private set; }
 
   /// <inheritdoc/>>
-  public IFluentBogusRelationOneToMany<TSource, TDep, TKeyProp> WithMany(Expression<Func<TDep, ICollection<TSource>?>> expression) => new FluentBogusRelationOneToMany<TSource, TDep, TKeyProp>(this.Source, this.Dependency, this.SourceKeyExpression, this.SourceForeignKeyExpression, expression);
+  public IFluentBogusRelationOneToMany<TSource, TDep, TKeyProp> WithMany(Expression<Func<TDep, ICollection<TSource>?>?> expression) => new FluentBogusRelationOneToMany<TSource, TDep, TKeyProp>(this.Source, this.Dependency, this.KeyExpression, this.ForeignKeyExpression, expression);
 
   /// <inheritdoc/>>
-  public IFluentBogusRelationOneToOne<TSource, TDep, TKeyProp> WithOne(Expression<Func<TDep, TSource?>> expression) => new FluentBogusRelationOneToOne<TSource, TDep, TKeyProp>(this.Source, this.Dependency, this.SourceKeyExpression, this.SourceForeignKeyExpression, expression);
+  public IFluentBogusRelationOneToOne<TSource, TDep, TKeyProp> WithOne(Expression<Func<TDep, TSource?>> expression) => new FluentBogusRelationOneToOne<TSource, TDep, TKeyProp>(this.Source, this.Dependency, this.KeyExpression, this.ForeignKeyExpression, expression);
 }

@@ -3,6 +3,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 // </copyright>
 
+#pragma warning disable SA1649
 namespace NineteenSevenFour.Testing.FluentBogus.Relation;
 
 using System;
@@ -16,18 +17,18 @@ public class FluentBogusRelationOneToOne<TSource, TDep, TKeyProp> : FluentBogusR
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationOneToOne{TSource, TDep, TKeyProp}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="dependency"></param>
-  /// <param name="sourceKeyExpression"></param>
-  /// <param name="sourceForeignKeyExpression"></param>
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="dependency">The instance of the dependency of the relation.</param>
+  /// <param name="keyExpression"></param>
+  /// <param name="foreignKeyExpression"></param>
   /// <param name="expression"></param>
   public FluentBogusRelationOneToOne(
     TSource source,
     TDep? dependency,
-    Expression<Func<TSource, TKeyProp>>? sourceKeyExpression,
-    Expression<Func<TSource, TKeyProp>>? sourceForeignKeyExpression,
+    Expression<Func<TSource, TKeyProp>>? keyExpression,
+    Expression<Func<TSource, TKeyProp>>? foreignKeyExpression,
     Expression<Func<TDep, TSource?>> expression)
-    : base(source, dependency, sourceKeyExpression, sourceForeignKeyExpression)
+    : base(source, dependency, keyExpression, foreignKeyExpression)
   {
     ArgumentNullException.ThrowIfNull(expression, nameof(expression));
     FluentExpression.EnsureMemberExists<TDep>(FluentExpression.MemberNameFor(expression));
@@ -73,9 +74,9 @@ public class FluentBogusRelationOneToOne<TSource, TDep, TKeyProp> : FluentBogusR
       return;
     }
 
-    if (this.SourceKeyExpression != null && this.WithForeignKeyExpression != null)
+    if (this.KeyExpression != null && this.WithForeignKeyExpression != null)
     {
-      var sourceKey = this.SourceKeyExpression.Compile().Invoke(this.Source);
+      var sourceKey = this.KeyExpression.Compile().Invoke(this.Source);
       var withForeignKey = this.WithForeignKeyExpression.Compile().Invoke(this.Dependency);
 
       if (sourceKey == null || withForeignKey == null)
@@ -86,9 +87,9 @@ public class FluentBogusRelationOneToOne<TSource, TDep, TKeyProp> : FluentBogusR
       FluentExpression.SetField(this.Dependency, this.SourceRefExpression, this.Source);
       FluentExpression.SetField(this.Dependency, this.WithForeignKeyExpression, sourceKey);
     }
-    else if (this.SourceForeignKeyExpression != null && this.WithKeyExpression != null)
+    else if (this.ForeignKeyExpression != null && this.WithKeyExpression != null)
     {
-      var sourceForeignKey = this.SourceForeignKeyExpression.Compile().Invoke(this.Source);
+      var sourceForeignKey = this.ForeignKeyExpression.Compile().Invoke(this.Source);
       var withKey = this.WithKeyExpression.Compile().Invoke(this.Dependency);
 
       if (sourceForeignKey == null || withKey == null)
@@ -97,15 +98,15 @@ public class FluentBogusRelationOneToOne<TSource, TDep, TKeyProp> : FluentBogusR
       }
 
       FluentExpression.SetField(this.Dependency, this.SourceRefExpression, this.Source);
-      FluentExpression.SetField(this.Source, this.SourceForeignKeyExpression, withKey);
+      FluentExpression.SetField(this.Source, this.ForeignKeyExpression, withKey);
     }
     else
     {
-      if (this.SourceKeyExpression != null && this.WithForeignKeyExpression != null)
+      if (this.KeyExpression != null && this.WithForeignKeyExpression != null)
       {
-        if (this.SourceKeyExpression != null)
+        if (this.KeyExpression != null)
         {
-          throw new ArgumentNullException(nameof(this.SourceKeyExpression), "The Source Key must be defined using HasKey().");
+          throw new ArgumentNullException(nameof(this.KeyExpression), "The Source Key must be defined using HasKey().");
         }
 
         if (this.WithForeignKeyExpression != null)
@@ -113,11 +114,11 @@ public class FluentBogusRelationOneToOne<TSource, TDep, TKeyProp> : FluentBogusR
           throw new ArgumentNullException(nameof(this.WithForeignKeyExpression), "The dependency key must be defined using WithForeignKey().");
         }
       }
-      else if (this.SourceForeignKeyExpression != null && this.WithKeyExpression != null)
+      else if (this.ForeignKeyExpression != null && this.WithKeyExpression != null)
       {
-        if (this.SourceForeignKeyExpression != null)
+        if (this.ForeignKeyExpression != null)
         {
-          throw new ArgumentNullException(nameof(this.SourceForeignKeyExpression), "The Source Foreign Key must be defined using HasForeignKey().");
+          throw new ArgumentNullException(nameof(this.ForeignKeyExpression), "The Source Foreign Key must be defined using HasForeignKey().");
         }
 
         if (this.WithKeyExpression != null)

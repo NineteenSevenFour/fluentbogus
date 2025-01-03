@@ -22,14 +22,14 @@ public interface IFluentBogusRelationOneToOne<TSource, TDep, TKeyProp> : IFluent
   /// <summary>
   /// Allow to configure the key used to link the parent to the child.
   /// </summary>
-  /// <param name="expression">The fluent expression describing the parent key.</param>
+  /// <param name="keyExpr">The fluent expression describing the parent key.</param>
   /// <returns>A <see cref="IFluentBogusRelationOneToOne{TSource,TDep,TKeyProp}"/>.</returns>
-  IFluentBogusRelationOneToOne<TSource, TDep, TKeyProp> WithKey(Expression<Func<TDep, TKeyProp>> expression);
+  IFluentBogusRelationOneToOne<TSource, TDep, TKeyProp> WithKey(Expression<Func<TDep, TKeyProp>> keyExpr);
 
   /// <summary>
   /// Allow to configure the foreign key in the child to link to the parent.
   /// </summary>
-  /// <param name="expression">The fluent expression describing the foreign key in the child entity.</param>
+  /// <param name="foreignKeyExpr">The fluent expression describing the foreign key in the child entity.</param>
   /// <returns>A <see cref="IFluentBogusRelationOneToOne{TSource,TDep,TKeyProp}"/>.</returns>
-  IFluentBogusRelationOneToOne<TSource, TDep, TKeyProp> WithForeignKey(Expression<Func<TDep, TKeyProp>> expression);
+  IFluentBogusRelationOneToOne<TSource, TDep, TKeyProp> WithForeignKey(Expression<Func<TDep, TKeyProp>> foreignKeyExpr);
 }

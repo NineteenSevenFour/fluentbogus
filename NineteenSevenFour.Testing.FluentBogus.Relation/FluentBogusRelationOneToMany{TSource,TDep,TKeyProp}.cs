@@ -17,8 +17,8 @@ public class FluentBogusRelationOneToMany<TSource, TDep, TKeyProp> : FluentBogus
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationOneToMany{TSource, TDep, TKeyProp}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="dependency"></param>
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="dependency">The instance of the dependency of the relation.</param>
   /// <param name="sourceKeyExpression"></param>
   /// <param name="sourceForeignKeyExpression"></param>
   /// <param name="sourceRefExpression"></param>
@@ -64,9 +64,9 @@ public class FluentBogusRelationOneToMany<TSource, TDep, TKeyProp> : FluentBogus
       return;
     }
 
-    if (this.SourceForeignKeyExpression != null && this.WithKeyExpression != null)
+    if (this.ForeignKeyExpression != null && this.WithKeyExpression != null)
     {
-      var sourceForeignKey = this.SourceForeignKeyExpression.Compile().Invoke(this.Source);
+      var sourceForeignKey = this.ForeignKeyExpression.Compile().Invoke(this.Source);
       var withKey = this.WithKeyExpression.Compile().Invoke(this.Dependency);
 
       if (sourceForeignKey == null || withKey == null)
@@ -77,13 +77,13 @@ public class FluentBogusRelationOneToMany<TSource, TDep, TKeyProp> : FluentBogus
       sourceRef.Add(this.Source);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
       FluentExpression.SetField(this.Dependency, this.SourceRefExpression, sourceRef);
-      FluentExpression.SetField(this.Source, this.SourceForeignKeyExpression, withKey);
+      FluentExpression.SetField(this.Source, this.ForeignKeyExpression, withKey);
     }
     else
     {
-      if (this.SourceForeignKeyExpression != null)
+      if (this.ForeignKeyExpression != null)
       {
-        throw new ArgumentNullException(nameof(this.SourceForeignKeyExpression), "The Source Foreign Key must be defined using HasForeignKey().");
+        throw new ArgumentNullException(nameof(this.ForeignKeyExpression), "The Source Foreign Key must be defined using HasForeignKey().");
       }
 
       if (this.WithKeyExpression != null)

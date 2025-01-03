@@ -51,8 +51,8 @@ public class FluentBogusRelationManyToOneWithForeignKey
 
     // Assert
     hasManyWithOneRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToOne<PersonModel, PersonRelativeModel, int?>?>();
-    hasManyWithOneRelation.DependencyForeignKeyExpression.Should().NotBeNull();
-    var dependencyForeignKeyExpression = hasManyWithOneRelation.DependencyForeignKeyExpression?.Compile();
+    hasManyWithOneRelation.ForeignKeyExpression.Should().NotBeNull();
+    var dependencyForeignKeyExpression = hasManyWithOneRelation.ForeignKeyExpression?.Compile();
     dependencyForeignKeyExpression.Should().NotBeNull().And.BeOfType<Func<PersonRelativeModel, int?>>();
   }
 }

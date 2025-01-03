@@ -16,7 +16,7 @@ public class FluentBogusRelationOneToAny<TSource, TDep> : FluentBogusRelation<TS
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationOneToAny{TSource, TDep}"/> class.
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="source">The instance of the source of the relation.</param>
   public FluentBogusRelationOneToAny(TSource source)
     : base(source)
   {
@@ -25,8 +25,8 @@ public class FluentBogusRelationOneToAny<TSource, TDep> : FluentBogusRelation<TS
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationOneToAny{TSource, TDep}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="dependency"></param>
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="dependency">The instance of the dependency of the relation.</param>
   public FluentBogusRelationOneToAny(TSource source, TDep? dependency)
     : this(source)
   {
@@ -36,17 +36,22 @@ public class FluentBogusRelationOneToAny<TSource, TDep> : FluentBogusRelation<TS
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationOneToAny{TSource, TDep}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="expression"></param>
-  public FluentBogusRelationOneToAny(TSource source, Expression<Func<TSource, TDep?>> expression)
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="depExpr">The expression that defines the property to use as the primary key of the relation.</param>
+  public FluentBogusRelationOneToAny(TSource source, Expression<Func<TSource, TDep?>> depExpr)
     : this(source)
   {
-    ArgumentNullException.ThrowIfNull(expression, nameof(expression));
-    FluentExpression.EnsureMemberExists<TSource>(FluentExpression.MemberNameFor(expression));
-    this.Dependency = expression.Compile().Invoke(source);
+    ArgumentNullException.ThrowIfNull(depExpr, nameof(depExpr));
+    FluentExpression.EnsureMemberExists<TSource>(FluentExpression.MemberNameFor(depExpr));
+    this.Dependency = depExpr.Compile().Invoke(source);
   }
 
+  /// <summary>
+  /// Gets the instance of the dependency of the relation.
+  /// </summary>
+#pragma warning disable SA1600
   internal TDep? Dependency { get; private set; }
+#pragma warning restore SA1600
 
   /// <inheritdoc/>>
   public IFluentBogusRelationOneToAny<TSource, TDep, TKeyProp> HasForeignKey<TKeyProp>(Expression<Func<TSource, TKeyProp>> expression) => new FluentBogusRelationOneToAny<TSource, TDep, TKeyProp>(this.Source, this.Dependency, null, expression);

@@ -36,7 +36,7 @@ public class FluentBogusRelationManyToAny<TSource, TDep>
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationManyToAny{TSource, TDep}"/> class.
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="source">The instance of the source of the relation.</param>
   public FluentBogusRelationManyToAny(TSource source)
       : base(source)
   {
@@ -46,29 +46,34 @@ public class FluentBogusRelationManyToAny<TSource, TDep>
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationManyToAny{TSource, TDep}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="expression"></param>
-  public FluentBogusRelationManyToAny(TSource source, Expression<Func<TSource, ICollection<TDep>?>> expression)
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="depExpr"></param>
+  public FluentBogusRelationManyToAny(TSource source, Expression<Func<TSource, ICollection<TDep>?>> depExpr)
       : this(source)
   {
-    ArgumentNullException.ThrowIfNull(expression, nameof(expression));
-    FluentExpression.EnsureMemberExists<TSource>(FluentExpression.MemberNameFor(expression));
-    this.Dependency = expression.Compile().Invoke(source);
+    ArgumentNullException.ThrowIfNull(depExpr, nameof(depExpr));
+    FluentExpression.EnsureMemberExists<TSource>(FluentExpression.MemberNameFor(depExpr));
+    this.Dependency = depExpr.Compile().Invoke(source);
   }
 
   /// <summary>
   /// Initializes a new instance of the <see cref="FluentBogusRelationManyToAny{TSource, TDep}"/> class.
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="dependency"></param>
-  public FluentBogusRelationManyToAny(TSource source, ICollection<TDep>? dependency)
+  /// <param name="source">The instance of the source of the relation.</param>
+  /// <param name="dependency">The instance of the dependency of the relation.</param>
+  protected FluentBogusRelationManyToAny(TSource source, ICollection<TDep>? dependency)
     : this(source)
   {
     this.Dependency = dependency;
   }
 
+  /// <summary>
+  /// Gets or sets the instance of the dependency of the relation.
+  /// </summary>
+#pragma warning disable SA1624
   internal ICollection<TDep>? Dependency { get; private set; }
+#pragma warning restore SA1624
 
   /// <inheritdoc/>>
-  public IFluentBogusRelationManyToAny<TSource, TDep, TKeyProp> HasKey<TKeyProp>(Expression<Func<TSource, TKeyProp>> expression) => new FluentBogusRelationManyToAny<TSource, TDep, TKeyProp>(this.Source, this.Dependency, expression);
+  public IFluentBogusRelationManyToAny<TSource, TDep, TKeyProp> HasKey<TKeyProp>(Expression<Func<TSource, TKeyProp>> keyExpr) => new FluentBogusRelationManyToAny<TSource, TDep, TKeyProp>(this.Source, this.Dependency, keyExpr);
 }

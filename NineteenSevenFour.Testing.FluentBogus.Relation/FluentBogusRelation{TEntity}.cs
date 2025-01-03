@@ -47,10 +47,10 @@ public class FluentBogusRelation<TSource> : IFluentBogusRelation<TSource>
 #endif
 
   /// <inheritdoc/>>
-  public IFluentBogusRelationManyToAny<TSource, TDep> HasMany<TDep>(Expression<Func<TSource, ICollection<TDep>?>> expression)
-    where TDep : class => new FluentBogusRelationManyToAny<TSource, TDep>(this.Source, expression);
+  public IFluentBogusRelationManyToAny<TSource, TDep> HasMany<TDep>(Expression<Func<TSource, ICollection<TDep>?>> depExpr)
+    where TDep : class => new FluentBogusRelationManyToAny<TSource, TDep>(this.Source, depExpr);
 
   /// <inheritdoc/>>
-  public IFluentBogusRelationOneToAny<TSource, TDep> HasOne<TDep>(Expression<Func<TSource, TDep?>> expression)
-    where TDep : class => new FluentBogusRelationOneToAny<TSource, TDep>(this.Source, expression);
+  public IFluentBogusRelationOneToAny<TSource, TDep> HasOne<TDep>(Expression<Func<TSource, TDep?>> depExpr)
+    where TDep : class => new FluentBogusRelationOneToAny<TSource, TDep>(this.Source, depExpr);
 }

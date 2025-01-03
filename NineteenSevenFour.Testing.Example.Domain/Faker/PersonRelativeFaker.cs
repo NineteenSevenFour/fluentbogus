@@ -24,16 +24,16 @@ public class PersonRelativeFaker : AutoFaker<PersonRelativeModel>
   /// <param name="id">The ID of the <see cref="PersonRelativeModel"/>.</param>
   public PersonRelativeFaker(int? id)
   {
-    StrictMode(true);
+    this.StrictMode(true);
 
-    RuleFor(o => o.Id, f => id ?? f.Random.Int(1));
-    RuleFor(o => o.Relation, f => f.Random.Enum<PersonRelationType>());
+    this.RuleFor(o => o.Id, f => id ?? f.Random.Int(1));
+    this.RuleFor(o => o.Relation, f => f.Random.Enum<PersonRelationType>());
 
     // Foreign Key
-    RuleFor(o => o.RelativeId, f => null);
+    this.RuleFor(o => o.RelativeId, f => null);
 
     // Navigation property to One-to-One relation
-    RuleFor(o => o.Relative, f => null);
+    this.RuleFor(o => o.Relative, f => null);
   }
 
   /// <summary>

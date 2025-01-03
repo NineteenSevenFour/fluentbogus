@@ -48,6 +48,6 @@ public class FluentBogusRelationManyToAnyHasKey
 
     // Assert
     hasManyWithKeyRelation.Should().NotBeNull().And.BeOfType<FluentBogusRelationManyToAny<PersonModel, PersonRelativeModel, int?>?>();
-    ((FluentBogusRelationManyToAny<PersonModel, PersonRelativeModel, int?>)hasManyWithKeyRelation).SourceKeyExpression.Should().NotBeNull();
+    ((FluentBogusRelationManyToAny<PersonModel, PersonRelativeModel, int?>)hasManyWithKeyRelation).KeyExpression.Should().NotBeNull();
   }
 }
