@@ -17,4 +17,5 @@ public static class FluentBogusBuilder
   /// <returns>A <see cref="FluentBogusBuilder{TEntity}"/>.</returns>
   public static IFluentBogusBuilder<TEntity> Fake<TEntity>()
     where TEntity : class => new FluentBogusBuilder<TEntity>();
+  
 }
