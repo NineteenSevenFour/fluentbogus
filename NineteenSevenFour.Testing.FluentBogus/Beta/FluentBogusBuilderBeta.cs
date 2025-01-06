@@ -1,4 +1,7 @@
-using System.Reflection.Metadata;
+// <copyright file="FluentBogusBuilderBeta.cs" company="NineteenSevenFour">
+// Copyright (c) NineteenSevenFour. All Rights Reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+// </copyright>
 
 namespace NineteenSevenFour.Testing.FluentBogus.Beta;
 
@@ -7,67 +10,411 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 
 using AutoBogus;
+using AutoBogus.Moq;
 
-public interface IFluentBogusOptionBeta<TEntity>
+using NineteenSevenFour.Testing.Core;
+
+public interface IFluentBogusBuilderOptionBeta<TEntity>
   where TEntity : class
 {
-}
+  /// <summary>
+  /// The seed value to use in order to consistently generates data.
+  /// </summary>
+  /// <param name="seed">The seed value.</param>
+  /// <returns>The <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> instance.</returns>
+  IFluentBogusBuilderOptionBeta<TEntity> UseSeed(int seed);
 
-public class FluentBogusBuilderOptionBeta<TEntity> : IFluentBogusOptionBeta<TEntity>
-  where TEntity : class
-{
-}
+  /// <summary>
+  /// Initialize an <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> using a default <see cref="AutoFaker{TEntity}"/>.
+  /// </summary>
+  /// <param name="configBuilder">The <see cref="AutoFaker"/> builder.</param>
+  /// <param name="args">The array of argument to pass to the <see cref="AutoFaker{TEntity}"/> instance.</param>
+  /// <returns>An <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> instance.</returns>
+  IFluentBogusBuilderOptionBeta<TEntity> UseFaker(Action<IAutoGenerateConfigBuilder> configBuilder, params object?[]? args);
 
-public class FluentBogusGeneratorBeta
-{
-  public static FluentBogusBuilderBeta<TEntity> CreateBuilder<TEntity>()
-    where TEntity : class => new(new FluentBogusBuilderOptionBeta<TEntity>());
+  /// <summary>
+  /// Initialize an <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> using a default <see cref="AutoFaker{TEntity}"/>.
+  /// </summary>
+  /// <param name="args">The array of argument to pass to the <see cref="AutoFaker{TEntity}"/> instance.</param>
+  /// <returns>An <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> instance.</returns>
+  IFluentBogusBuilderOptionBeta<TEntity> UseFaker(params object?[]? args);
 
-  public static FluentBogusBuilderBeta<TEntity> CreateBuilder<TEntity>(IFluentBogusOptionBeta<TEntity> options)
-    where TEntity : class => new(options);
+  /// <summary>
+  /// Initialize an <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> using a custom <see cref="AutoFaker{TEntity}"/>.
+  /// </summary>
+  /// <typeparam name="TFaker">The custom <see cref="AutoFaker{TEntity}"/> type.</typeparam>
+  /// <param name="configBuilder">The <see cref="AutoFaker"/> builder.</param>
+  /// <param name="args">The array of argument to pass to the <see cref="AutoFaker{TEntity}"/> instance.</param>
+  /// <returns>An <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> instance.</returns>
+  IFluentBogusBuilderOptionBeta<TEntity> UseFaker<TFaker>(Action<IAutoGenerateConfigBuilder> configBuilder, params object?[]? args)
+    where TFaker : AutoFaker<TEntity>, new();
+
+  /// <summary>
+  /// Initialize an <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> using a custom <see cref="AutoFaker{TEntity}"/>.
+  /// </summary>
+  /// <typeparam name="TFaker">The custom <see cref="AutoFaker{TEntity}"/> type.</typeparam>
+  /// <param name="args">The array of argument to pass to the <see cref="AutoFaker{TEntity}"/> instance.</param>
+  /// <returns>An <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> instance.</returns>
+  IFluentBogusBuilderOptionBeta<TEntity> UseFaker<TFaker>(params object?[]? args)
+    where TFaker : AutoFaker<TEntity>, new();
+
+  /// <summary>
+  /// Register an <see cref="AutoFaker"/> ruleset.
+  /// </summary>
+  /// <param name="ruleset">The name of the ruleset.</param>
+  /// <returns>The <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> instance.</returns>
+  IFluentBogusBuilderOptionBeta<TEntity> UseRuleSet(string ruleset);
+
+  /// <summary>
+  /// Register an array of <see cref="AutoFaker"/> ruleset.
+  /// </summary>
+  /// <param name="rulesets">An array of ruleset name.</param>
+  /// <returns>The <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> instance.</returns>
+  IFluentBogusBuilderOptionBeta<TEntity> UseRuleSet(params string[] rulesets);
+
+  /// <summary>
+  /// Register an array of lambda expression to skip associated property during data generation.
+  /// </summary>
+  /// <param name="propExpressions">The lambda expressions describing the properties of the <typeparamref name="TEntity"/>.</param>
+  /// <returns>The <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> instance.</returns>
+  IFluentBogusBuilderOptionBeta<TEntity> Skip(params Expression<Func<TEntity, object?>>[] propExpressions);
+
+  /// <summary>
+  /// Register a lambda expression to skip a property during data generation.
+  /// </summary>
+  /// <typeparam name="TProperty">The type of the property belonging to the <typeparamref name="TEntity"/>.</typeparam>
+  /// <param name="propExpr">The lambda expression describing the property of the <typeparamref name="TEntity"/>.</param>
+  /// <returns>The <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> instance.</returns>
+  IFluentBogusBuilderOptionBeta<TEntity> Skip<TProperty>(Expression<Func<TEntity, TProperty?>> propExpr);
+
+  /// <summary>
+  /// Defines a rule to use to generate fake data for a specific collection member.
+  /// </summary>
+  /// <typeparam name="TProperty">The type of the property belonging to the <typeparamref name="TEntity"/>.</typeparam>
+  /// <typeparam name="TPropEntity">The type of the underlying object of the <typeparamref name="TProperty"/> property belonging to the <typeparamref name="TEntity"/>.</typeparam>
+  /// <param name="propExpr">The lambda expression describing the property of the <typeparamref name="TEntity"/>.</param>
+  /// <param name="builder">The <see cref="FluentBogusBuilderBeta{PropTEntity}"/> instance using the <see cref="AutoFaker{TPropEntity}"/>.</param>
+  /// <param name="count">The number of <typeparamref name="TPropEntity"/> to generates.</param>
+  /// <returns>The <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> instance.</returns>
+  IFluentBogusBuilderOptionBeta<TEntity> UseRuleFor<TProperty, TPropEntity>(
+    Expression<Func<TEntity, TProperty>> propExpr,
+    FluentBogusBuilderBeta<TPropEntity>? builder,
+    int count)
+    where TPropEntity : class
+    where TProperty : ICollection<TPropEntity>?;
+
+  /// <summary>
+  /// Defines a rule to generate fake data for a specific member.
+  /// </summary>
+  /// <typeparam name="TProperty">The type of the property belonging to the <typeparamref name="TEntity"/>.</typeparam>
+  /// <typeparam name="TPropEntity">The type of the underlying object of the <typeparamref name="TProperty"/> property belonging to the <typeparamref name="TEntity"/>.</typeparam>
+  /// <param name="propExpr">The lambda expression describing the property of the <typeparamref name="TEntity"/>.</param>
+  /// <param name="builder">The <see cref="FluentBogusBuilderBeta{PropTEntity}"/> instance using the <see cref="AutoFaker{TPropEntity}"/>.</param>
+  /// <returns>The <see cref="IFluentBogusBuilderOptionBeta{TEntity}"/> instance.</returns>
+  IFluentBogusBuilderOptionBeta<TEntity> UseRuleFor<TProperty, TPropEntity>(
+    Expression<Func<TEntity, TProperty>> propExpr,
+    FluentBogusBuilderBeta<TPropEntity>? builder)
+    where TPropEntity : class
+    where TProperty : TPropEntity?;
 }
 
 public interface IFluentBogusGeneratorBeta<TEntity>
   where TEntity : class
 {
-  /// <summary>
-  /// Generates a collection of <typeparamref name="TEntity"/>.
-  /// </summary>
-  /// <param name="count">The number of <typeparamref name="TEntity"/> to generates.</param>
-  /// <returns>The <see cref="ICollection{TEntity}"/> instance.</returns>
   ICollection<TEntity> Generate(int count);
 
-  /// <summary>
-  /// Generates a single <typeparamref name="TEntity"/>.
-  /// </summary>
-  /// <returns>A <typeparamref name="TEntity"/>.</returns>
   TEntity Generate();
+}
+
+public interface IFluentBogusBuilderBeta<TEntity>
+  where TEntity : class
+{
+  IFluentBogusGeneratorBeta<TEntity> Build();
+}
+
+public class RuleForModel
+{
+  public IFluentBogusBuilderBeta<object> Builder { get; set; }
+
+  public int GenCounter { get; set; } = 1;
+}
+
+public class FluentBogusBuilderOptionBeta<TEntity> : IFluentBogusBuilderOptionBeta<TEntity>
+  where TEntity : class
+{
+#if NET8_0_OR_GREATER
+  internal List<string> SkipProperties { get; set; } = [];
+
+  internal List<string> RuleSets { get; set; } = [];
+
+  internal Dictionary<string, dynamic> RulesFor { get; set; } = [];
+#else
+  internal List<string> SkipProperties { get;  set; } = new();
+
+  internal List<string> RuleSets { get; set; } = new();
+
+  internal Dictionary<string, RuleForModel> RulesFor { get; set; } = new();
+#endif
+
+  /// <summary>
+  /// Gets the RuleSets as a semicolon separated list.
+  /// </summary>
+  internal string RuleSetString => string.Join(",", this.RuleSets);
+
+  internal int Seed { get; set; }
+
+  internal AutoFaker<TEntity>? Faker { get; set; }
+
+  internal Type? FakerType { get; set; }
+
+  internal Action<IAutoGenerateConfigBuilder>? FakerConfiguration { get; set; }
+
+  internal object?[]? FakerArgs { get; set; }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> UseSeed(int seed)
+  {
+    this.Seed = seed;
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> UseFaker(Action<IAutoGenerateConfigBuilder> configBuilder, params object?[]? args)
+  {
+    this.FakerConfiguration = configBuilder;
+    this.FakerArgs = args;
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> UseFaker(params object?[]? args)
+  {
+    this.FakerArgs = args;
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> UseFaker<TFaker>(Action<IAutoGenerateConfigBuilder> configBuilder, params object?[]? args)
+    where TFaker : AutoFaker<TEntity>, new()
+  {
+    this.FakerConfiguration = configBuilder;
+    this.FakerArgs = args;
+    this.FakerType = typeof(TFaker);
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> UseFaker<TFaker>(params object?[]? args)
+    where TFaker : AutoFaker<TEntity>, new()
+  {
+    this.FakerArgs = args;
+    this.FakerType = typeof(TFaker);
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> UseRuleSet(string ruleset)
+  {
+    if (string.IsNullOrWhiteSpace(ruleset))
+    {
+      throw new ArgumentOutOfRangeException(nameof(ruleset), $"A ruleset must be provided.");
+    }
+
+    if (!this.RuleSets.Contains(ruleset))
+    {
+      this.RuleSets.Add(ruleset);
+    }
+    else
+    {
+      throw new InvalidOperationException($"The ruleset {ruleset} is already set to be used.");
+    }
+
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> UseRuleSet(params string[] rulesets)
+  {
+    foreach (var ruleset in rulesets)
+    {
+      this.UseRuleSet(ruleset);
+    }
+
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> Skip(params Expression<Func<TEntity, object?>>[] propExpressions)
+  {
+    foreach (var propExpr in propExpressions)
+    {
+      this.Skip(propExpr);
+    }
+
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> Skip<TProperty>(Expression<Func<TEntity, TProperty?>> propExpr)
+  {
+    var propertyOrFieldName = FluentExpression.MemberNameFor(propExpr);
+    FluentExpression.EnsureMemberExists<TEntity>(propertyOrFieldName);
+
+    if (!this.SkipProperties.Contains(propertyOrFieldName))
+    {
+      this.SkipProperties.Add(propertyOrFieldName);
+    }
+    else
+    {
+      throw new InvalidOperationException($"The property {propertyOrFieldName} for type {typeof(TEntity).Name} is already set to be skipped.");
+    }
+
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> UseRuleFor<TProperty, TPropEntity>(
+    Expression<Func<TEntity, TProperty>> propExpr,
+    FluentBogusBuilderBeta<TPropEntity>? builder,
+    int count)
+    where TProperty : ICollection<TPropEntity>?
+    where TPropEntity : class
+  {
+    var propOrFieldName = FluentExpression.MemberNameFor(propExpr);
+    FluentExpression.EnsureMemberExists<TEntity>(propOrFieldName);
+
+    if (builder == null)
+    {
+      this.Skip(e => propExpr);
+    }
+    else
+    {
+      this.RulesFor.Add(propOrFieldName, new RuleForModel { Builder = (IFluentBogusBuilderBeta<object>)builder, GenCounter = count });
+    }
+
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> UseRuleFor<TProperty, TPropEntity>(
+    Expression<Func<TEntity, TProperty>> propExpr,
+    FluentBogusBuilderBeta<TPropEntity>? builder)
+    where TProperty : TPropEntity?
+    where TPropEntity : class
+  {
+    var propOrFieldName = FluentExpression.MemberNameFor(propExpr);
+    FluentExpression.EnsureMemberExists<TEntity>(propOrFieldName);
+
+    if (builder == null)
+    {
+      this.Skip(e => propExpr);
+    }
+    else
+    {
+      this.RulesFor.Add(propOrFieldName, new RuleForModel { Builder = (IFluentBogusBuilderBeta<object>)builder });
+    }
+
+    return this;
+  }
+}
+
+public class FluentBogusGeneratorBeta
+{
+  public static FluentBogusBuilderBeta<TEntity> CreateBuilder<TEntity>()
+    where TEntity : class => new();
+
+  public static FluentBogusBuilderBeta<TEntity> CreateBuilder<TEntity>(IFluentBogusBuilderOptionBeta<TEntity> options)
+    where TEntity : class => new(options);
+
+  public static FluentBogusBuilderBeta<TEntity> CreateBuilder<TEntity>(Action<IFluentBogusBuilderOptionBeta<TEntity>> configure)
+    where TEntity : class
+  {
+    var options = new FluentBogusBuilderOptionBeta<TEntity>();
+    configure.Invoke(options);
+    return new FluentBogusBuilderBeta<TEntity>(options);
+  }
 }
 
 public class FluentBogusGeneratorBeta<TEntity> : IFluentBogusGeneratorBeta<TEntity>
   where TEntity : class
 {
+  protected internal IFluentBogusBuilderOptionBeta<TEntity> Options { get; }
+
+  public FluentBogusGeneratorBeta(IFluentBogusBuilderOptionBeta<TEntity> options)
+  {
+    this.Options = options;
+  }
+
   public ICollection<TEntity> Generate(int count)
   {
-    throw new NotImplementedException();
+    var options = Options as FluentBogusBuilderOptionBeta<TEntity>;
+    return options?.Faker?.Generate(count, options.RuleSetString) ?? throw new InvalidOperationException($"Generator has not been configured.");
   }
 
   public TEntity Generate()
   {
-    throw new NotImplementedException();
+    var options = Options as FluentBogusBuilderOptionBeta<TEntity>;
+    return options?.Faker?.Generate(options.RuleSetString) ?? throw new InvalidOperationException($"Generator has not been configured.");
   }
 }
 
-public class FluentBogusBuilderBeta<TEntity>
+public class FluentBogusBuilderBeta<TEntity> : IFluentBogusBuilderBeta<TEntity>
     where TEntity : class
 {
-  public FluentBogusBuilderBeta(IFluentBogusOptionBeta<TEntity> options)
+  protected internal IFluentBogusBuilderOptionBeta<TEntity> Options { get; }
+
+  public FluentBogusBuilderBeta()
   {
-    throw new NotImplementedException();
+    this.Options = new FluentBogusBuilderOptionBeta<TEntity>();
   }
 
-  public FluentBogusGeneratorBeta<TEntity> Configure()
+  public FluentBogusBuilderBeta(IFluentBogusBuilderOptionBeta<TEntity> options)
   {
-    throw new NotImplementedException();
+    this.Options = options;
+  }
+
+  public IFluentBogusGeneratorBeta<TEntity> Build()
+  {
+    // Get the concrete instance for the builder's Options.
+    var options = (FluentBogusBuilderOptionBeta<TEntity>)this.Options;
+
+    // Instantiate the Faker.
+    if (options.FakerType == null)
+    {
+      options.Faker = new AutoFaker<TEntity>();
+    }
+    else
+    {
+      options.Faker = Activator.CreateInstance(options.FakerType, options.FakerArgs) as AutoFaker<TEntity>;
+    }
+
+    // Configure the Faker.
+    options.Faker?.Configure(config =>
+    {
+      // Run custom faker configuration defined by user.
+      options.FakerConfiguration?.Invoke(config);
+
+      // Configures the default binding.
+      config.WithBinder<MoqBinder>();
+
+      // Configures members to be skipped for a type
+      foreach (var propName in options.SkipProperties)
+      {
+        config.WithSkip<TEntity>(propName);
+      }
+    });
+
+    options.Faker?.UseSeed(options.Seed);
+
+    foreach (var (prop, rule) in options.RulesFor)
+    {
+      // Ensure to not add a rule for skipped properties.
+      if (!options.SkipProperties.Contains(prop))
+      {
+        options.Faker?.RuleFor(prop, _ => rule.Builder.Build().Generate(rule.GenCounter));
+      }
+    }
+
+    return new FluentBogusGeneratorBeta<TEntity>(options);
   }
 }

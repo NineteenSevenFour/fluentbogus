@@ -42,7 +42,7 @@ public class FluentBogusRelationManyToAny<TSource, TDep, TKeyProp>
   /// <param name="source">The instance of the source of the relation.</param>
   /// <param name="dependency">The instance of the dependency of the relation.</param>
   /// <param name="keyExpr">The expression that defines the primary key of the relation.</param>
-  public FluentBogusRelationManyToAny(TSource source, ICollection<TDep>? dependency, Expression<Func<TSource, TKeyProp>>?keyExpr)
+  public FluentBogusRelationManyToAny(TSource source, ICollection<TDep>? dependency, Expression<Func<TSource, TKeyProp>>? keyExpr)
     : this(source, dependency)
   {
     ArgumentNullException.ThrowIfNull(keyExpr, nameof(keyExpr));
@@ -51,7 +51,7 @@ public class FluentBogusRelationManyToAny<TSource, TDep, TKeyProp>
   }
 
   /// <summary>
-  /// The expression that defines the primary key of the relation.
+  /// Gets the expression that defines the primary key of the relation.
   /// </summary>
   internal Expression<Func<TSource, TKeyProp>>? KeyExpression { get; private set; }
 
