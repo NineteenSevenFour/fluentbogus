@@ -3,6 +3,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 // </copyright>
 
+// ReSharper disable RedundantNameQualifier
 #pragma warning disable SA1600
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable SA1402
@@ -163,35 +164,20 @@ public interface IFluentBogusBuilderBeta<TEntity>
 
 public class RuleForModel
 {
+  public RuleForModel(IFluentBogusBuilderBeta<object> builder, int genCounter = 1)
+  {
+    this.Builder = builder;
+    this.GenCounter = genCounter;
+  }
+
   public IFluentBogusBuilderBeta<object> Builder { get; set; }
 
-  public int GenCounter { get; set; } = 1;
+  public int GenCounter { get; set; }
 }
 
 public class FluentBogusBuilderOptionBeta<TEntity> : IFluentBogusBuilderOptionBeta<TEntity>
   where TEntity : class
 {
-#if NET8_0_OR_GREATER
-  internal List<string> SkipProperties { get; set; } = [];
-
-  internal List<string> RuleSets { get; set; } = [];
-
-  internal Dictionary<string, dynamic> RulesFor { get; set; } = [];
-#else
-  internal List<string> SkipProperties { get;  set; } = new();
-
-  internal List<string> RuleSets { get; set; } = new();
-
-  internal Dictionary<string, RuleForModel> RulesFor { get; set; } = new();
-#endif
-
-  /// <summary>
-  /// Gets the RuleSets as a semicolon separated list.
-  /// </summary>
-  internal string RuleSetString => string.Join(",", this.RuleSets);
-
-  internal int Seed { get; set; }
-
   internal AutoFaker<TEntity>? Faker { get; set; }
 
   internal Type? FakerType { get; set; }
@@ -200,12 +186,22 @@ public class FluentBogusBuilderOptionBeta<TEntity> : IFluentBogusBuilderOptionBe
 
   internal object?[]? FakerArgs { get; set; }
 
-  /// <inheritdoc />
-  public IFluentBogusBuilderOptionBeta<TEntity> UseSeed(int seed)
-  {
-    this.Seed = seed;
-    return this;
-  }
+#if NET8_0_OR_GREATER
+  internal Dictionary<string, dynamic>? RulesFor { get; set; }
+#else
+  internal Dictionary<string, RuleForModel>? RulesFor { get; set; }
+#endif
+
+  internal List<string>? RuleSets { get; set; }
+
+  /// <summary>
+  /// Gets the RuleSets as a semicolon separated list.
+  /// </summary>
+  internal string RuleSetString => this.RuleSets?.Count <= 0 ? string.Empty : string.Join(",", this.RuleSets);
+
+  internal int Seed { get; set; }
+
+  internal List<string>? SkipProperties { get; set; }
 
   /// <inheritdoc />
   public IFluentBogusBuilderOptionBeta<TEntity> UseFaker(Action<IAutoGenerateConfigBuilder> configBuilder, params object?[]? args)
@@ -249,8 +245,14 @@ public class FluentBogusBuilderOptionBeta<TEntity> : IFluentBogusBuilderOptionBe
       throw new ArgumentOutOfRangeException(nameof(ruleset), $"A ruleset must be provided.");
     }
 
-    if (!this.RuleSets.Contains(ruleset))
+    if (!this.RuleSets?.Contains(ruleset) ?? true)
     {
+#if NET8_0_OR_GREATER
+      this.RuleSets ??= [];
+#else
+      this.RuleSets ??= new List<string>();
+#endif
+
       this.RuleSets.Add(ruleset);
     }
     else
@@ -273,29 +275,26 @@ public class FluentBogusBuilderOptionBeta<TEntity> : IFluentBogusBuilderOptionBe
   }
 
   /// <inheritdoc />
-  public IFluentBogusBuilderOptionBeta<TEntity> Skip(params Expression<Func<TEntity, object?>>[] propExpressions)
+  public IFluentBogusBuilderOptionBeta<TEntity> UseSeed(int seed)
   {
-    foreach (var propExpr in propExpressions)
-    {
-      this.Skip(propExpr);
-    }
-
+    this.Seed = seed;
     return this;
   }
 
   /// <inheritdoc />
   public IFluentBogusBuilderOptionBeta<TEntity> Skip<TProperty>(Expression<Func<TEntity, TProperty?>> propExpr)
   {
-    var propertyOrFieldName = FluentExpression.MemberNameFor(propExpr);
-    FluentExpression.EnsureMemberExists<TEntity>(propertyOrFieldName);
+    this.SkipProperty(propExpr);
 
-    if (!this.SkipProperties.Contains(propertyOrFieldName))
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IFluentBogusBuilderOptionBeta<TEntity> Skip(params Expression<Func<TEntity, object?>>[] propExpressions)
+  {
+    foreach (var propExpr in propExpressions)
     {
-      this.SkipProperties.Add(propertyOrFieldName);
-    }
-    else
-    {
-      throw new InvalidOperationException($"The property {propertyOrFieldName} for type {typeof(TEntity).Name} is already set to be skipped.");
+      this.SkipProperty(propExpr);
     }
 
     return this;
@@ -318,7 +317,12 @@ public class FluentBogusBuilderOptionBeta<TEntity> : IFluentBogusBuilderOptionBe
     }
     else
     {
-      this.RulesFor.Add(propOrFieldName, new RuleForModel { Builder = (IFluentBogusBuilderBeta<object>)builder, GenCounter = count });
+#if NET8_0_OR_GREATER
+      this.RulesFor ??= new Dictionary<string, dynamic>();
+#else
+      this.RulesFor ??= new Dictionary<string, RuleForModel>();
+#endif
+      this.RulesFor.Add(propOrFieldName, new RuleForModel((IFluentBogusBuilderBeta<object>)builder, count));
     }
 
     return this;
@@ -340,10 +344,32 @@ public class FluentBogusBuilderOptionBeta<TEntity> : IFluentBogusBuilderOptionBe
     }
     else
     {
-      this.RulesFor.Add(propOrFieldName, new RuleForModel { Builder = (IFluentBogusBuilderBeta<object>)builder });
+#if NET8_0_OR_GREATER
+      this.RulesFor ??= new Dictionary<string, dynamic>();
+#else
+      this.RulesFor ??= new Dictionary<string, RuleForModel>();
+#endif
+      this.RulesFor.Add(propOrFieldName, new RuleForModel((IFluentBogusBuilderBeta<object>)builder));
     }
 
     return this;
+  }
+
+  private void SkipProperty<TProperty>(Expression<Func<TEntity, TProperty>> propExpr)
+  {
+
+    var propertyOrFieldName = FluentExpression.MemberNameFor(propExpr);
+    FluentExpression.EnsureMemberExists<TEntity>(propertyOrFieldName);
+
+    if (!this.SkipProperties?.Contains(propertyOrFieldName) ?? true)
+    {
+      this.SkipProperties ??= new List<string>();
+      this.SkipProperties.Add(propertyOrFieldName);
+    }
+    else
+    {
+      throw new InvalidOperationException($"The property {propertyOrFieldName} for type {typeof(TEntity).Name} is already set to be skipped.");
+    }
   }
 }
 
