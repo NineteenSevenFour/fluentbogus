@@ -5,7 +5,7 @@
     <Title>NineteenSevenFour Testing FluentBogus/AutoMapper</Title>
     <Description>NineteenSevenFour FluentBogus/AutoMapper is a fluent API sitting atop of FluentBogus to add support for automapper.</Description>
 
-    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
 
     <ImplicitUsings>disable</ImplicitUsings>

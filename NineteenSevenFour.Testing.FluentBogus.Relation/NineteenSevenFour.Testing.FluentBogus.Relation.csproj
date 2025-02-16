@@ -6,7 +6,7 @@
     <Description>NineteenSevenFour FluentBogus/Relation is a fluent API aimed at helping generating linked data via navigation properties.</Description>
 
     <TargetFrameworks>net6.0</TargetFrameworks>
-    <!--<TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>-->
+    <!--<TargetFrameworks>net6.0;net8.0</TargetFrameworks>-->
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
 
     <ImplicitUsings>disable</ImplicitUsings>
