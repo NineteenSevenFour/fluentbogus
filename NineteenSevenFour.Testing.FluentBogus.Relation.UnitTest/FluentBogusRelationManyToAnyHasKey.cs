@@ -34,7 +34,7 @@ public class FluentBogusRelationManyToAnyHasKey
     // Assert
     var exception = Assert.Throws<ArgumentNullException>(result);
     exception.Should().NotBeNull();
-    exception.Message.Should().Be($"Value cannot be null. (Parameter 'sourceKeyExpression')");
+    exception.Message.Should().Be($"Value cannot be null. (Parameter 'keyExpr')");
   }
 
   [Fact]

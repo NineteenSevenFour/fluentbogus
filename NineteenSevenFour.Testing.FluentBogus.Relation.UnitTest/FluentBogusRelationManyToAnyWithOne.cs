@@ -32,7 +32,7 @@ public class FluentBogusRelationManyToAnyWithOne
     // Assert
     var exception = Assert.Throws<ArgumentNullException>(result);
     exception.Should().NotBeNull();
-    exception.Message.Should().Be($"Value cannot be null. (Parameter 'withOneExpression')");
+    exception.Message.Should().Be($"Value cannot be null. (Parameter 'withOneExpr')");
   }
 
   [Fact]

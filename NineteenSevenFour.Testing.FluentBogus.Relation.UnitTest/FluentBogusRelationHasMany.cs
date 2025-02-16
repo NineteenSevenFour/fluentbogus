@@ -34,7 +34,7 @@ public class FluentBogusRelationHasMany
     // Assert
     var exception = Assert.Throws<ArgumentNullException>(result);
     exception.Should().NotBeNull();
-    exception.Message.Should().Be($"Value cannot be null. (Parameter 'expression')");
+    exception.Message.Should().Be($"Value cannot be null. (Parameter 'depExpr')");
   }
 
   [Fact]
@@ -53,7 +53,7 @@ public class FluentBogusRelationHasMany
     // Assert
     var exception = Assert.Throws<ArgumentNullException>(result);
     exception.Should().NotBeNull();
-    exception.Message.Should().Be($"Value cannot be null. (Parameter 'expression')");
+    exception.Message.Should().Be($"Value cannot be null. (Parameter 'depExpr')");
   }
 
   [Fact]
