@@ -1,4 +1,7 @@
+# Contributing
+
 I trust that if you decide to work on this repo is that you know what ou re doing, therefore, simply:
+
 - Create tickets in backlog
 - Refine, Plan tickets
 - Add feature, fix bug
