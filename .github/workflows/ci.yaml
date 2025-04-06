@@ -24,7 +24,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
-        dotnet: [8.0.x]
+        dotnet: [9.0.103] # dotnet format fails with newest versions if no parameter is passed
 
     steps:
       - name: Checkout
