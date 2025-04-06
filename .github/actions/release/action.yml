@@ -20,7 +20,7 @@ runs:
   using: composite
   steps:
     - name: Semantic Release
-      uses: MansaGroup/nrwl-nx-action@v3.1.0
+      uses: MansaGroup/nrwl-nx-action@v3.2.2
       with:
         targets: semantic-release
         all: true
