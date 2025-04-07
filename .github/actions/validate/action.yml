@@ -38,7 +38,7 @@ runs:
       shell: bash
 
     - name: Report coverage (files)
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       if: "${{ inputs.coverage_files != '' }}"
       with:
         token: ${{ inputs.codecov_token }}
@@ -47,7 +47,7 @@ runs:
         files: ${{ inputs.coverage_files }}
 
     - name: Report coverage (directory)
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       if: "${{ inputs.coverage_directory != '' }}"
       with:
         token: ${{ inputs.codecov_token }}
