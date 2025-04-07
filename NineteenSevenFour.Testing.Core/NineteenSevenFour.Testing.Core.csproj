@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <SignAssembly>True</SignAssembly>
@@ -12,6 +12,13 @@
 
   <ItemGroup>
     <Content Include="..\NineteenFourSeven_logo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- START PACKAGE OVERRIDE FOR VULNERABILITIES -->
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <!-- END PACKAGE OVERRIDE FOR VULNERABILITIES -->
   </ItemGroup>
 
 </Project>

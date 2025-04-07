@@ -1,9 +1,0 @@
-name: Build
-description: Build project(s)
-
-runs:
-  using: composite
-  steps:
-    - name: Build
-      run: dotnet build --no-restore --configuration Release
-      shell: bash
