@@ -44,6 +44,6 @@ namespace NineteenSevenFour.Testing.Example.Domain.Faker
       //    .WithForeignKey(a => a.PersonId)
       //    .Apply();
       //});
-    }    
+    }
   }
 }
