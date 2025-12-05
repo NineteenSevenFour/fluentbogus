@@ -4,9 +4,9 @@ namespace NineteenSevenFour.Testing.FluentBogus.AutoMapper.UnitTest.Faker
 {
   public class PersonFaker : AutoFaker<PersonModel>
   {
-    public PersonFaker(int Id) : this()
+    public PersonFaker(int id) : this()
     {
-      RuleFor(o => o.Id, () => Id);
+      RuleFor(o => o.Id, () => id);
     }
 
     public PersonFaker() : base()

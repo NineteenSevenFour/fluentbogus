@@ -1,18 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <SignAssembly>True</SignAssembly>
-    <DelaySign>True</DelaySign>
-    <AssemblyOriginatorKeyFile>..\nineteensevenfour-public.snk</AssemblyOriginatorKeyFile>
-    <ApplicationIcon>..\NineteenFourSeven_logo.ico</ApplicationIcon>
-  </PropertyGroup>
+    <Title>NineteenSevenFour.Testing.Core</Title>
+    <PackageId>NineteenSevenFour.Testing.Core</PackageId>
 
-  <ItemGroup>
-    <Content Include="..\NineteenFourSeven_logo.ico" />
-  </ItemGroup>
+    <IsPackable>True</IsPackable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
 
   <ItemGroup>
     <!-- START PACKAGE OVERRIDE FOR VULNERABILITIES -->

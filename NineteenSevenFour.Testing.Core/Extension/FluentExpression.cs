@@ -6,6 +6,15 @@ using System.Reflection;
 
 namespace NineteenSevenFour.Testing.Core.Extension
 {
+  /// <summary>
+  /// Provides utility methods for extracting member names and types from lambda expressions, validating member
+  /// existence, and setting property values using expressions. Intended for advanced scenarios involving reflection and
+  /// expression trees.
+  /// </summary>
+  /// <remarks>This class is primarily used to facilitate fluent APIs that require introspection of object
+  /// members via lambda expressions, such as rule builders or data generation frameworks. Methods in this class can
+  /// help ensure type safety and reduce reliance on string-based member access. The class is marked as not browsable in
+  /// editor IntelliSense and is intended for internal or advanced usage. Thread safety is not guaranteed.</remarks>
   [EditorBrowsable(EditorBrowsableState.Never)]
   public static class FluentExpression
   {
@@ -106,14 +115,14 @@ namespace NineteenSevenFour.Testing.Core.Extension
     }
 
     /// <summary>
-    /// Ases the member expression.
+    /// Check an expression for valid MemberExpression and returns it.
     /// </summary>
     /// <param name="expression">The expression.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException">
     /// $"Your expression '{expressionString}' cant be used. Nested accessors like 'o => o.NestedObject.Foo' at " +
     ///          $"a parent level are not allowed. You should create a dedicated faker for " +
-    ///          $"NestedObject like new Faker<NestedObject>().RuleFor(o => o.Foo, ...) with its own rules " +
+    ///          $"NestedObject like new Faker{NestedObject}().RuleFor(o => o.Foo, ...) with its own rules " +
     ///          $"that define how 'Foo' is generated.
     /// or
     /// Expression was not of the form 'x => x.Property or x => x.Field'.

@@ -9,7 +9,7 @@ namespace NineteenSevenFour.Testing.Example.Domain.Faker
   [ExcludeFromCodeCoverage]
   public class PersonFakerWithRelation : PersonFaker
   {
-    private readonly Action<Bogus.Faker, PersonModel> finishWith = (f, o) =>
+    private readonly Action<Bogus.Faker, PersonModel> _finishWith = (f, o) =>
       {
         o.HasMany(parent => parent.Addresses)
           .HasKey(parent => parent.Id)
@@ -18,14 +18,14 @@ namespace NineteenSevenFour.Testing.Example.Domain.Faker
           .Apply();
       };
 
-    public PersonFakerWithRelation(int Id) : base(Id)
+    public PersonFakerWithRelation(int id) : base(id)
     {
-      FinishWith(finishWith);
+      FinishWith(_finishWith);
     }
 
     public PersonFakerWithRelation() : base()
     {
-      FinishWith(finishWith);
+      FinishWith(_finishWith);
     }
   }
 }

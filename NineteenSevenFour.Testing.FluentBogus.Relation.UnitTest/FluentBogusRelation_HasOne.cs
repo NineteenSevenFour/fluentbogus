@@ -7,7 +7,7 @@ using Xunit;
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
 {
-  public class FluentBogusRelation_HasOne
+  public class FluentBogusRelationHasOne
   {
     [Fact]
     public void ShouldThrow_ArgumentNullException_WhenCalledFrom_NullSource()

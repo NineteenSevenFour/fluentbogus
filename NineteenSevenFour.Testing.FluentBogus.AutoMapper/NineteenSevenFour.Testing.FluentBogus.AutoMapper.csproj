@@ -1,48 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Title>NineteenSevenFour.Testing.FluentBogus.AutoMapper</Title>
+    <PackageId>NineteenSevenFour.Testing.FluentBogus.AutoMapper</PackageId>
+
+    <IsPackable>True</IsPackable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>NineteenSevenFour FluentBogus/AutoMapper</Title>
-    <Copyright>NineteenSevenFour</Copyright>
-    <PackageProjectUrl>https://github.com/NineteenSevenFour/fluentbogus</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/NineteenSevenFour/fluentbogus</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <IncludeSymbols>True</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <SignAssembly>True</SignAssembly>
-    <DelaySign>True</DelaySign>
-    <AssemblyOriginatorKeyFile>..\nineteensevenfour-public.snk</AssemblyOriginatorKeyFile>
-    <ApplicationIcon>..\NineteenFourSeven_logo.ico</ApplicationIcon>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="..\NineteenFourSeven_logo.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoBogus" Version="2.13.1" />
     <PackageReference Include="AutoBogus.Moq" Version="2.13.1" />
-    <PackageReference Include="AutoMapper" Version="14.0.0" />
-    <PackageReference Include="AutoMapper.Collection" Version="11.0.0" />
-    <PackageReference Include="AutoMapper.Extensions.EnumMapping" Version="4.1.0" />
-    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="8.0.0" />
-    <PackageReference Include="Bogus" Version="35.6.2" />
+    <PackageReference Include="AutoMapper" Version="16.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="9.0.1" />
+    <PackageReference Include="Bogus" Version="35.6.5" />
   </ItemGroup>
 
   <ItemGroup>

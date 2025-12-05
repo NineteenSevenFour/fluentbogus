@@ -10,7 +10,7 @@ using Xunit;
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
 {
-  public class FluentBogusRelationManyToOne_Apply
+  public class FluentBogusRelationManyToOneApply
   {
     [Fact]
     public void ShouldSkip_WhenCalledWith_NullDependency()

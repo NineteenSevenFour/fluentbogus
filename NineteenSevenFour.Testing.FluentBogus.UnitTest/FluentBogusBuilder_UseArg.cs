@@ -6,7 +6,7 @@ using NineteenSevenFour.Testing.FluentBogus.Extension;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  public class FluentBogusBuilder_UseArg
+  public class FluentBogusBuilderUseArg
   {
     [Fact]
     public void Should_StoreFakerArg_WhenCalled()
@@ -21,7 +21,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
-      typedBuilder.fakerArgs.Should()
+      typedBuilder.FakerArgs.Should()
                             .NotBeEmpty().And
                             .HaveCount(args.Length);
     }

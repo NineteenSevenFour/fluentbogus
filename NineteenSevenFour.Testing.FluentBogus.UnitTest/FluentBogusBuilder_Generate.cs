@@ -6,7 +6,7 @@ using NineteenSevenFour.Testing.FluentBogus.Extension;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  public class FluentBogusBuilder_Generate
+  public class FluentBogusBuilderGenerate
   {
     [Fact]
     public void Should_ReturnAnInstanceOfEntity_WhenCalled_WithoutSkipOrConfigOrSeed()
@@ -21,7 +21,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       person.Should().NotBeNull();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-      typedBuilder.skipProperties.Should().HaveCount(0);
+      typedBuilder.SkipProperties.Should().HaveCount(0);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 
@@ -38,7 +38,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       person.Should().NotBeNull();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-      typedBuilder.skipProperties.Should().HaveCount(1);
+      typedBuilder.SkipProperties.Should().HaveCount(1);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 
@@ -55,8 +55,8 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       person.Should().NotBeNull();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-      typedBuilder.skipProperties.Should().HaveCount(0);
-      typedBuilder.fakerConfigBuilder.Should().NotBeNull();
+      typedBuilder.SkipProperties.Should().HaveCount(0);
+      typedBuilder.FakerConfigBuilder.Should().NotBeNull();
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 
@@ -73,7 +73,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       persons.Should().NotBeNullOrEmpty().And.HaveCount(2);
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-      typedBuilder.skipProperties.Should().HaveCount(0);
+      typedBuilder.SkipProperties.Should().HaveCount(0);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 
@@ -90,7 +90,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       persons.Should().NotBeNullOrEmpty().And.HaveCount(2);
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-      typedBuilder.skipProperties.Should().HaveCount(1);
+      typedBuilder.SkipProperties.Should().HaveCount(1);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 
@@ -107,8 +107,8 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       persons.Should().NotBeNullOrEmpty().And.HaveCount(2);
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-      typedBuilder.skipProperties.Should().HaveCount(0);
-      typedBuilder.fakerConfigBuilder.Should().NotBeNull();
+      typedBuilder.SkipProperties.Should().HaveCount(0);
+      typedBuilder.FakerConfigBuilder.Should().NotBeNull();
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
   }
