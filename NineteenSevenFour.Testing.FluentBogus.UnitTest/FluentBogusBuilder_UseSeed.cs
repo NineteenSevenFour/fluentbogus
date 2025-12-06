@@ -6,7 +6,7 @@ using NineteenSevenFour.Testing.FluentBogus.Extension;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  public class FluentBogusBuilder_UseSeed
+  public class FluentBogusBuilderUseSeed
   {
     [Fact]
     public void Should_StoreSeed_WhenCalled()
@@ -21,7 +21,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
-      typedBuilder.seed.Should()
+      typedBuilder.Seed.Should()
                        .Be(seed);
     }
   }

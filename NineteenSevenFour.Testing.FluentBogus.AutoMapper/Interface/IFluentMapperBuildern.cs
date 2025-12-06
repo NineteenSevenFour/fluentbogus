@@ -2,8 +2,6 @@ using AutoBogus;
 
 using AutoMapper;
 
-using System.Collections.Generic;
-
 namespace NineteenSevenFour.Testing.FluentBogus.AutoMapper.Interface
 {
   public interface IFluentMapperBuilder<TFaker, TEntity, TModel>

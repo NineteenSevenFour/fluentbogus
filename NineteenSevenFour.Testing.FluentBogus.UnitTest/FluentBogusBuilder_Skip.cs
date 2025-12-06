@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  public class FluentBogusBuilder_Skip
+  public class FluentBogusBuilderSkip
   {
     [Fact]
     public void Should_AddPropertyToSkipList_WhenCalled_WithSinglePropertyLambdaExpression()
@@ -22,7 +22,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
-      typedBuilder.skipProperties.Should()
+      typedBuilder.SkipProperties.Should()
                                  .NotBeNullOrEmpty()
                                  .And
                                  .HaveCount(1);
@@ -58,7 +58,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
-      typedBuilder.skipProperties.Should()
+      typedBuilder.SkipProperties.Should()
                                  .NotBeNullOrEmpty()
                                  .And
                                  .HaveCount(2);

@@ -6,7 +6,7 @@ using NineteenSevenFour.Testing.FluentBogus.Extension;
 
 namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
 {
-  public class FluentBogusBuilder_UseConfig
+  public class FluentBogusBuilderUseConfig
   {
     [Fact]
     public void Should_StoreFakerconfig_WhenCalled()
@@ -23,7 +23,7 @@ namespace NineteenSevenFour.Testing.FluentBogus.UnitTest
       // Assert
       var typedBuilder = builder as FluentBogusBuilder<PersonFaker, PersonModel>;
       Assert.NotNull(typedBuilder);
-      typedBuilder.fakerConfigBuilder.Should().NotBeNull().And.BeEquivalentTo(fakerConfig);
+      typedBuilder.FakerConfigBuilder.Should().NotBeNull().And.BeEquivalentTo(fakerConfig);
     }
   }
 }

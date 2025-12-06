@@ -1,8 +1,6 @@
 using AutoBogus;
 
 using NineteenSevenFour.Testing.Example.Domain.Model;
-
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace NineteenSevenFour.Testing.Example.Domain.Faker
@@ -10,9 +8,9 @@ namespace NineteenSevenFour.Testing.Example.Domain.Faker
   [ExcludeFromCodeCoverage]
   public class PersonFaker : AutoFaker<PersonModel>
   {
-    public PersonFaker(int Id) : this()
+    public PersonFaker(int id) : this()
     {
-      RuleFor(o => o.Id, () => Id);
+      RuleFor(o => o.Id, () => id);
     }
 
     public PersonFaker() : base()
@@ -44,6 +42,6 @@ namespace NineteenSevenFour.Testing.Example.Domain.Faker
       //    .WithForeignKey(a => a.PersonId)
       //    .Apply();
       //});
-    }    
+    }
   }
 }

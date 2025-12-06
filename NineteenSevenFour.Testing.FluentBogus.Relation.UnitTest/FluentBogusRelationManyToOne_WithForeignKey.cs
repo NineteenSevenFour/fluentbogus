@@ -9,7 +9,7 @@ using Xunit;
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.UnitTest
 {
-  public class FluentBogusRelationManyToOne_WithForeignKey
+  public class FluentBogusRelationManyToOneWithForeignKey
   {
     [Fact]
     public void ShouldSet_DependencyForeignKeyExpression_WhenCalledWith_NullExpression()

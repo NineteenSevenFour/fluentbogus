@@ -1,7 +1,4 @@
 using NineteenSevenFour.Testing.FluentBogus.Relation.Interface;
-
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace NineteenSevenFour.Testing.Example.Domain.Model

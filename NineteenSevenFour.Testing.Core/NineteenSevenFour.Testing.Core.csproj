@@ -1,17 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <SignAssembly>True</SignAssembly>
-    <DelaySign>True</DelaySign>
-    <AssemblyOriginatorKeyFile>..\nineteensevenfour-public.snk</AssemblyOriginatorKeyFile>
-    <ApplicationIcon>..\NineteenFourSeven_logo.ico</ApplicationIcon>
+    <Title>NineteenSevenFour.Testing.Core</Title>
+    <PackageId>NineteenSevenFour.Testing.Core</PackageId>
+
+    <IsPackable>True</IsPackable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\NineteenFourSeven_logo.ico" />
+    <!-- START PACKAGE OVERRIDE FOR VULNERABILITIES -->
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <!-- END PACKAGE OVERRIDE FOR VULNERABILITIES -->
   </ItemGroup>
 
 </Project>
