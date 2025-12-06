@@ -3,9 +3,6 @@ using AutoBogus;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using NineteenSevenFour.Testing.FluentBogus.AutoMapper.Interface;
-
-using System;
-using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
 namespace NineteenSevenFour.Testing.FluentBogus.AutoMapper

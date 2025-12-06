@@ -1,8 +1,6 @@
 using AutoBogus;
 
 using NineteenSevenFour.Testing.Example.Domain.Model;
-
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace NineteenSevenFour.Testing.Example.Domain.Faker

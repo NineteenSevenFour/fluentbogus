@@ -1,4 +1,3 @@
-using System;
 using System.Linq.Expressions;
 
 namespace NineteenSevenFour.Testing.FluentBogus.Relation.Interface

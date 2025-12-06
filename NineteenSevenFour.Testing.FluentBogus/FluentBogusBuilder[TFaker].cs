@@ -3,10 +3,6 @@ using AutoBogus.Moq;
 
 using NineteenSevenFour.Testing.Core.Extension;
 using NineteenSevenFour.Testing.FluentBogus.Interface;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.Extensions.Logging;
 
@@ -42,12 +38,12 @@ namespace NineteenSevenFour.Testing.FluentBogus
     /// <summary>
     /// Gets the list of property names to be skipped during processing.
     /// </summary>
-    internal readonly List<string> SkipProperties = new List<string>();
+    internal readonly List<string> SkipProperties = [];
 
     /// <summary>
     /// Contains the collection of rule set names associated with the current instance.
     /// </summary>
-    internal readonly List<string> RuleSets = new List<string>();
+    internal readonly List<string> RuleSets = [];
 
     /// <summary>
     /// Gets a comma-separated string representation of all rule sets.
@@ -57,7 +53,7 @@ namespace NineteenSevenFour.Testing.FluentBogus
     /// <summary>
     /// Stores the set of rules associated with their corresponding string keys.
     /// </summary>
-    internal Dictionary<string, dynamic> RulesFor = new Dictionary<string, dynamic>();
+    internal Dictionary<string, dynamic> RulesFor = [];
 
     /// <summary>
     /// Marks the specified property to be skipped during processing for the current entity type.
@@ -237,7 +233,7 @@ namespace NineteenSevenFour.Testing.FluentBogus
     /// <inheritdoc/>>
     public IFluentBogusBuilder<TFaker, TEntity> UseRuleSet(params string[] rulesets)
     {
-      if (rulesets?.All(r => string.IsNullOrWhiteSpace(r)) ?? true)
+      if (rulesets?.All(string.IsNullOrWhiteSpace) ?? true)
       {
         throw new ArgumentOutOfRangeException(nameof(rulesets), $"A List of ruleset must be provided.");
       }
@@ -271,7 +267,7 @@ namespace NineteenSevenFour.Testing.FluentBogus
     /// <inheritdoc/>>
     public IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropEntity, TPropFaker>(
         Expression<Func<TEntity, TProperty>> property,
-        IFluentBogusBuilder<TPropFaker, TPropEntity> builder,
+        IFluentBogusBuilder<TPropFaker, TPropEntity>? builder,
         int count)
         where TProperty : ICollection<TPropEntity?>?
         where TPropEntity : class
@@ -296,7 +292,7 @@ namespace NineteenSevenFour.Testing.FluentBogus
     /// <inheritdoc/>>
     public IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropFaker>(
         Expression<Func<TEntity, TProperty?>> property,
-        IFluentBogusBuilder<TPropFaker, TProperty> builder)
+        IFluentBogusBuilder<TPropFaker, TProperty>? builder)
         where TProperty : class
         where TPropFaker : AutoFaker<TProperty>, new()
     {

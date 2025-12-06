@@ -1,7 +1,4 @@
 using AutoBogus;
-
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace NineteenSevenFour.Testing.FluentBogus.Interface
@@ -94,16 +91,16 @@ namespace NineteenSevenFour.Testing.FluentBogus.Interface
     IFluentBogusBuilder<TFaker, TEntity> Skip<TProperty>(Expression<Func<TEntity, TProperty>> property);
 
     IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropEntity, TPropFaker>(
-        Expression<Func<TEntity, TProperty>> property,
-        IFluentBogusBuilder<TPropFaker, TPropEntity> builder,
-        int count)
+      Expression<Func<TEntity, TProperty>> property,
+      IFluentBogusBuilder<TPropFaker, TPropEntity>? builder,
+      int count)
         where TPropEntity : class
         where TProperty : ICollection<TPropEntity?>?
         where TPropFaker : AutoFaker<TPropEntity>, new();
 
     IFluentBogusBuilder<TFaker, TEntity> RuleFor<TProperty, TPropFaker>(
         Expression<Func<TEntity, TProperty?>> property,
-        IFluentBogusBuilder<TPropFaker, TProperty> builder)
+        IFluentBogusBuilder<TPropFaker, TProperty>? builder)
         where TProperty : class
         where TPropFaker : AutoFaker<TProperty>, new();
 
